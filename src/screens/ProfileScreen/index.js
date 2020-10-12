@@ -4,18 +4,22 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { useTheme } from '../../providers/ThemeProvider';
-import { images } from '../../assets';
+import { fonts, images } from '../../assets';
 import { convert, normalize } from '../../helpers/pixelSizeHelper';
 import { Label, Input, Button, Touchable } from '../../components';
+import { API_CONSTANTS } from '../../config/constants';
 
 const ProfileScreen = (props) => {
+  //Redux
+  const dispatch = useDispatch();
+  const userRole = useSelector(({ user }) => user.role);
+
   //Variables
   const { navigation } = props;
   const { theme, changeTheme } = useTheme();
   const insets = useSafeAreaInsets();
-  //Redux
-  const dispatch = useDispatch();
-  const userRole = useSelector(({ user }) => user.role);
+  const userRoleText =
+    userRole === API_CONSTANTS.USER.STUDENT ? 'Student' : 'Instructor';
 
   //Functions
 
@@ -28,6 +32,9 @@ const ProfileScreen = (props) => {
       borderColor: theme.secondaryThemeColor,
       backgroundColor: theme.primaryThemeColor,
     },
+    userRoleText: {
+      color: theme.teriateryColor,
+    },
   };
 
   return (
@@ -35,6 +42,9 @@ const ProfileScreen = (props) => {
       <View style={[styles.cameraContainer, _styles.cameraContainer]}>
         <Image style={styles.profilePicture} source={images.kaan} />
       </View>
+      <Label style={[styles.userRoleText, _styles.userRoleText]}>
+        {userRoleText}
+      </Label>
 
       <View style={styles.formContainer}>
         <Label style={styles.inputLabel}>Name</Label>
@@ -86,5 +96,11 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     marginTop: convert(20),
+  },
+  userRoleText: {
+    alignSelf: 'center',
+    marginTop: convert(5),
+    fontFamily: fonts.Montserrat.Medium,
+    fontSize: normalize(20),
   },
 });

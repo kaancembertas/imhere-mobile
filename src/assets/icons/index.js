@@ -8,6 +8,7 @@ const icons = {
   arrowRight: require('./icArrowRight.png'),
   tick: require('./icTick.png'),
   cross: require('./icCross.png'),
+  camera: require('./icCamera.png'),
 };
 
 export default icons;

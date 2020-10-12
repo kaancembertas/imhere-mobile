@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { icons, fonts } from '../../assets';
 import { convert } from '../../helpers/pixelSizeHelper';
 import { Label, ClassDetailListItem, Seperator } from '../../components';
+import { API_CONSTANTS } from '../../config/constants';
 
 const ClassDetailScreen = (props) => {
   //Variables
@@ -23,10 +24,12 @@ const ClassDetailScreen = (props) => {
 
   //Redux
   const dispatch = useDispatch();
+  const userRole = useSelector(({ user }) => user.role);
 
   //Functions
-  const renderHeader = useCallback(
-    () => (
+  const renderHeader = useCallback(() => {
+    if (userRole === API_CONSTANTS.USER.INSTRUCTOR) return null;
+    return (
       <>
         <View style={styles.header}>
           <View style={styles.infoBox}>
@@ -48,9 +51,8 @@ const ClassDetailScreen = (props) => {
         </View>
         <Seperator />
       </>
-    ),
-    [],
-  );
+    );
+  }, []);
 
   const renderClassDetailListItem = useCallback(
     ({ item }) => (

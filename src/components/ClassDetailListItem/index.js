@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import { useTheme } from '../../providers/ThemeProvider';
 import { fonts, icons } from '../../assets';
 import { convert, normalize } from '../../helpers/pixelSizeHelper';
-import { hexToRgba } from '../../helpers/colorHelper';
+import { useSelector } from 'react-redux';
 import Label from '../Label';
+import Touchable from '../Touchable';
+import { API_CONSTANTS } from '../../config/constants';
 
 const ClassDetailListItem = (props) => {
   const { theme } = useTheme();
@@ -15,10 +17,25 @@ const ClassDetailListItem = (props) => {
   1 - Joined
   2 - Not Joined
   */
-  const { style, status, week, date } = props;
+  const { style, status, week, date, onPress } = props;
+  const userRole = useSelector(({ user }) => user.role);
+
+  const _onPress = () => {
+    if (userRole === API_CONSTANTS.USER.INSTRUCTOR && onPress) {
+      onPress(week);
+    }
+  };
 
   const StatusBox = () => {
     if (status === 0) {
+      if (userRole === API_CONSTANTS.USER.INSTRUCTOR)
+        return (
+          <Image
+            resizeMethod="scale"
+            style={styles.cameraIcon}
+            source={icons.camera}
+          />
+        );
       return <Label style={styles.notProcessedLabel}>-</Label>;
     }
     return (
@@ -30,13 +47,16 @@ const ClassDetailListItem = (props) => {
     );
   };
   return (
-    <View style={[styles.container, style]}>
+    <Touchable
+      onPress={_onPress}
+      opacity={userRole === API_CONSTANTS.USER.INSTRUCTOR ? 0.8 : 1}
+      style={[styles.container, style]}>
       <View style={styles.leftContainer}>
         <Label>Week {week}</Label>
         <Label style={[styles.dateLabel]}>{date}</Label>
       </View>
       <StatusBox />
-    </View>
+    </Touchable>
   );
 };
 
@@ -68,6 +88,10 @@ const styles = StyleSheet.create({
     fontSize: normalize(30),
     marginRight: convert(6),
   },
+  cameraIcon: {
+    width: convert(30),
+    height: convert(30),
+  },
 });
 
 ClassDetailListItem.propTypes = {
@@ -75,4 +99,5 @@ ClassDetailListItem.propTypes = {
   status: PropTypes.oneOf([0, 1, 2]),
   week: PropTypes.number,
   date: PropTypes.string,
+  onPress: PropTypes.func,
 };
