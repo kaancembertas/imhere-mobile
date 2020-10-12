@@ -1,12 +1,12 @@
-import React from "react";
-import { View, StyleSheet, Image } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { useTheme } from "../../providers/ThemeProvider";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { images } from "../../assets";
-import { convert, normalize } from "../../helpers/pixelSizeHelper";
-import { Label, Input, Button, Touchable } from "../../components";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
+import React from 'react';
+import { View, StyleSheet, Image } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import { useTheme } from '../../providers/ThemeProvider';
+import { images } from '../../assets';
+import { convert, normalize } from '../../helpers/pixelSizeHelper';
+import { Label, Input, Button, Touchable } from '../../components';
 
 const ProfileScreen = (props) => {
   //Variables
@@ -42,7 +42,7 @@ const ProfileScreen = (props) => {
 
         <Label style={styles.inputLabel}>Surname</Label>
         <Input style={styles.input} value="Çembertaş" disabled />
-        {userRole === "student" && (
+        {userRole === 'student' && (
           <>
             <Label style={styles.inputLabel}>School Number</Label>
             <Input style={styles.input} value="200001684" disabled />
@@ -66,9 +66,9 @@ const styles = StyleSheet.create({
     width: convert(120),
     height: convert(120),
     borderRadius: convert(60),
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
     borderWidth: convert(2),
     marginTop: convert(30),
   },
