@@ -4,9 +4,11 @@ import reduxThunk from 'redux-thunk';
 
 //Reducers
 import auth from './reducers/authReducer';
+import user from './reducers/userReducer';
 
 const combinedReducers = combineReducers({
   auth,
+  user
 });
 
 const rootReducer = (state, action) => {
