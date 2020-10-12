@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ClassListItem, Seperator } from '../../components';
-import { API_CONSTANTS } from '../../config/constants';
 
 const ClassesScreen = (props) => {
   //Variables

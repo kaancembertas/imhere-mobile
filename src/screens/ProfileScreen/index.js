@@ -52,7 +52,7 @@ const ProfileScreen = (props) => {
 
         <Label style={styles.inputLabel}>Surname</Label>
         <Input style={styles.input} value="Çembertaş" disabled />
-        {userRole === 'student' && (
+        {userRole === API_CONSTANTS.USER.STUDENT && (
           <>
             <Label style={styles.inputLabel}>School Number</Label>
             <Input style={styles.input} value="200001684" disabled />

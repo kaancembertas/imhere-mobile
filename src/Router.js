@@ -40,8 +40,8 @@ const AuthStack = () => {
   );
 };
 
-const StudentStack = () => {
-  const StudentTab = () => (
+const AppStack = () => {
+  const AppTab = () => (
     <Tab.Navigator
       tabBar={(props) => <BottomTabBar {...props} />}
       initialRouteName="ClassesScreen">
@@ -52,14 +52,14 @@ const StudentStack = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName="StudentTab"
+      initialRouteName="AppTab"
       headerMode="screen"
       screenOptions={{
         header: NavigationHeader,
         title: "I'm here!",
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
-      <Stack.Screen name="StudentTab" component={StudentTab} />
+      <Stack.Screen name="AppTab" component={AppTab} />
       <Stack.Screen
         name="ClassDetailScreen"
         component={SCREENS.ClassDetailScreen}
@@ -72,7 +72,7 @@ const AppNavigator = () => {
   const isAuthenticated = useSelector(({ auth }) => auth.isAuthenticated);
   return (
     <NavigationContainer>
-      {isAuthenticated ? <StudentStack /> : <AuthStack />}
+      {isAuthenticated ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };
