@@ -8,13 +8,19 @@ import { convert } from '../../helpers/pixelSizeHelper';
 import { Label, Input, Button, Touchable } from '../../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import imHereApi from '../../api/ImHereApi';
+import { register } from '../../redux/actions/userActions';
 
 const SignUpScreen = (props) => {
+  //Props
+  const { navigation } = props;
+
   //Variables
   const { theme, changeTheme } = useTheme();
   const insets = useSafeAreaInsets();
+
   //Redux
   const dispatch = useDispatch();
+  const registerProgress = useSelector(({ user }) => user.registerProgress);
 
   //Refs
   const nameRef = useRef(null);
@@ -24,7 +30,14 @@ const SignUpScreen = (props) => {
   const passwordRef = useRef(null);
 
   //Functions
-  const onSubmitPress = async () => {
+  const onRegisterSuccess = () => {
+    navigation.goBack();
+  };
+  const onSubmitPress = () => {
+    // TODO: Email validation
+    // TODO: No validation
+    // TODO: IMAGE URL
+
     const registerBody = {
       no: schoolNumberRef.current.getValue(),
       email: emailRef.current.getValue(),
@@ -33,9 +46,10 @@ const SignUpScreen = (props) => {
       surname: surnameRef.current.getValue(),
       image_url: 'URL FROM MOBILE',
     };
-    const res = await imHereApi.register(registerBody);
-    console.log(res);
+
+    dispatch(register(registerBody, onRegisterSuccess));
   };
+
   //Conditional Style
   const _styles = {
     container: {
@@ -73,6 +87,7 @@ const SignUpScreen = (props) => {
         onPress={onSubmitPress}
         style={styles.submitButton}
         title="Submit"
+        loading={registerProgress}
         secondary
       />
       <View style={styles.footer} />
