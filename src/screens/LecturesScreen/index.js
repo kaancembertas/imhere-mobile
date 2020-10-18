@@ -18,7 +18,7 @@ const LecturesScreen = (props) => {
     ({ lecture }) => lecture.lecturesProgress,
   );
   const lectures = useSelector(({ lecture }) => lecture.lectures);
-  console.log(lectures);
+
   //Effects
   useEffect(() => {
     dispatch(getLectures());
@@ -31,7 +31,7 @@ const LecturesScreen = (props) => {
 
   const renderItemSeperator = useCallback(() => <Seperator />, []);
   const renderFooter = useCallback(() => <View style={_styles.footer} />, []);
-  const getClassListItemKey = (item) => 'CLI-' + item.code;
+  const getClassListItemKey = (item) => 'CLI-' + item.lectureCode;
 
   const renderClassListItem = useCallback(
     ({ item }) => (

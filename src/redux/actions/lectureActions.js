@@ -4,12 +4,19 @@ import {
   LECTURES_FAIL,
   LECTURES_PROGRESS,
   LECTURES_SUCCESS,
+  LECTURE_DETAIL_PROGRESS,
   RESET_LECTURES,
+  RESET_ATTENDENCE,
+  ATTENDENCE_FAIL,
+  ATTENDENCE_SUCCESS,
 } from '../actionTypes';
 
 export const getLectures = () => {
   return async (dispatch) => {
     try {
+      dispatch({
+        type: LECTURES_PROGRESS,
+      });
       const response = await ImHereApi.getLectures();
 
       if (!response.success) {
@@ -32,6 +39,37 @@ export const getLectures = () => {
   };
 };
 
-export const resetLectures = {
-  type: RESET_LECTURES,
+export const getAttendence = (lectureCode) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: ATTENDENCE_SUCCESS,
+      });
+      const response = await ImHereApi.getAttendence(lectureCode);
+      if (!response.success) {
+        Alert.alert('', response.errorMessage);
+        dispatch({
+          type: ATTENDENCE_FAIL,
+        });
+        return;
+      }
+
+      dispatch({
+        type: ATTENDENCE_SUCCESS,
+        payload: response.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: ATTENDENCE_FAIL,
+      });
+    }
+  };
 };
+
+export const resetLectures = () => ({
+  type: RESET_LECTURES,
+});
+
+export const resetLectureDetail = () => ({
+  type: RESET_ATTENDENCE,
+});

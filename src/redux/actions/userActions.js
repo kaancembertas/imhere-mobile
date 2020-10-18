@@ -20,7 +20,6 @@ export const register = (registerBody, onSuccess) => {
         Alert.alert('', 'Successfully registered!');
         if (onSuccess) onSuccess();
       }
-    } catch (e) {
     } finally {
       dispatch({
         type: USER_REGISTER_COMPLETE,
