@@ -13,7 +13,7 @@ const Input = (props, ref) => {
 
   const [inputValue, setInputValue] = useState(value || '');
 
-  const getValue = () => inputValue;
+  const getValue = () => inputValue.trim();
 
   if (ref) {
     ref.current = {

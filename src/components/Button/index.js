@@ -61,4 +61,5 @@ Button.propTypes = {
   title: PropTypes.string,
   onPress: PropTypes.func,
   secondary: PropTypes.bool,
+  loading: PropTypes.bool,
 };
