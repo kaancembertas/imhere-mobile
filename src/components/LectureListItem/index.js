@@ -8,7 +8,7 @@ import { hexToRgba } from '../../helpers/colorHelper';
 import Touchable from '../Touchable';
 import Label from '../Label';
 
-const ClassListItem = (props) => {
+const LectureListItem = (props) => {
   const { theme } = useTheme();
   const { style, name, code, instructor, onPress } = props;
 
@@ -37,7 +37,7 @@ const ClassListItem = (props) => {
   );
 };
 
-export default ClassListItem;
+export default LectureListItem;
 
 const styles = StyleSheet.create({
   container: {
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
 });
 
-ClassListItem.propTypes = {
+LectureListItem.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   name: PropTypes.string,
   code: PropTypes.string,

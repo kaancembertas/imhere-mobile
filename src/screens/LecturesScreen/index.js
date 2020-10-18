@@ -3,7 +3,7 @@ import { View, StyleSheet, FlatList } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ClassListItem, Loading, Seperator } from '../../components';
+import { LectureListItem, Loading, Seperator } from '../../components';
 import { getLectures } from '../../redux/actions/lectureActions';
 
 const LecturesScreen = (props) => {
@@ -25,18 +25,18 @@ const LecturesScreen = (props) => {
   }, []);
 
   //Functions
-  const onClassPress = (classItem) => {
+  const onLecturePress = (classItem) => {
     navigation.navigate('LectureDetailScreen', { classItem });
   };
 
   const renderItemSeperator = useCallback(() => <Seperator />, []);
   const renderFooter = useCallback(() => <View style={_styles.footer} />, []);
-  const getClassListItemKey = (item) => 'CLI-' + item.lectureCode;
+  const getLectureListItemKey = (item) => 'LLI-' + item.lectureCode;
 
-  const renderClassListItem = useCallback(
+  const renderLectureListItem = useCallback(
     ({ item }) => (
-      <ClassListItem
-        onPress={onClassPress}
+      <LectureListItem
+        onPress={onLecturePress}
         code={item.lectureCode}
         instructor={item.instructorName + ' ' + item.instructorSurname}
         name={item.lectureName}
@@ -53,8 +53,8 @@ const LecturesScreen = (props) => {
     return (
       <FlatList
         data={lectures}
-        renderItem={renderClassListItem}
-        keyExtractor={getClassListItemKey}
+        renderItem={renderLectureListItem}
+        keyExtractor={getLectureListItemKey}
         ItemSeparatorComponent={renderItemSeperator}
         ListFooterComponent={renderFooter}
       />

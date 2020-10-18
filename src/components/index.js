@@ -4,8 +4,8 @@ import Button from './Button';
 import Touchable from './Touchable';
 import BottomTabBar from './BottomTabBar';
 import Seperator from './Seperator';
-import ClassListItem from './ClassListItem';
-import ClassDetailListItem from './ClassDetailListItem';
+import LectureListItem from './LectureListItem';
+import LectureDetailListItem from './LectureDetailListItem';
 import Loading from './Loading';
 
 export {
@@ -15,7 +15,7 @@ export {
   Touchable,
   BottomTabBar,
   Seperator,
-  ClassListItem,
-  ClassDetailListItem,
+  LectureListItem,
+  LectureDetailListItem,
   Loading,
 };

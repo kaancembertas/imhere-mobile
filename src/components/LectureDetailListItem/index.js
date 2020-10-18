@@ -9,7 +9,7 @@ import Label from '../Label';
 import Touchable from '../Touchable';
 import { ENTITY } from '../../config/api';
 
-const ClassDetailListItem = (props) => {
+const LectureDetailListItem = (props) => {
   const { theme } = useTheme();
   /* 
   Status
@@ -60,7 +60,7 @@ const ClassDetailListItem = (props) => {
   );
 };
 
-export default ClassDetailListItem;
+export default LectureDetailListItem;
 
 const styles = StyleSheet.create({
   container: {
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
 });
 
-ClassDetailListItem.propTypes = {
+LectureDetailListItem.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   status: PropTypes.oneOf([0, 1, 2]),
   week: PropTypes.number,

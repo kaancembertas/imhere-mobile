@@ -5,7 +5,7 @@ import { useTheme } from '../../providers/ThemeProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { icons, fonts } from '../../assets';
 import { convert } from '../../helpers/pixelSizeHelper';
-import { Label, ClassDetailListItem, Seperator } from '../../components';
+import { Label, LectureDetailListItem, Seperator } from '../../components';
 import { ENTITY } from '../../config/api';
 
 const LectureDetailScreen = (props) => {
@@ -54,9 +54,9 @@ const LectureDetailScreen = (props) => {
     );
   }, []);
 
-  const renderClassDetailListItem = useCallback(
+  const renderLectureDetailListItem = useCallback(
     ({ item }) => (
-      <ClassDetailListItem
+      <LectureDetailListItem
         status={item.status}
         date={item.date}
         week={item.week}
@@ -70,7 +70,7 @@ const LectureDetailScreen = (props) => {
   const renderFooter = useCallback(() => <View style={_styles.footer} />, []);
 
   const getKey = useCallback(
-    (item, index) => 'classDetailListItem' + index,
+    (item, index) => 'lectureDetailListItem' + index,
     [],
   );
 
@@ -88,7 +88,7 @@ const LectureDetailScreen = (props) => {
     <View style={[styles.container, _styles.container]}>
       <FlatList
         data={sampleData}
-        renderItem={renderClassDetailListItem}
+        renderItem={renderLectureDetailListItem}
         keyExtractor={getKey}
         ItemSeparatorComponent={renderItemSeperator}
         ListHeaderComponent={renderHeader}
