@@ -19,6 +19,7 @@ const convertForStore = (value, type) => {
 
 export const storeData = async (key, type, value) => {
   const data = convertForStore(value, type);
+
   try {
     await AsyncStorage.setItem(key, data);
   } catch (e) {

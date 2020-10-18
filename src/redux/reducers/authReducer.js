@@ -1,28 +1,32 @@
-import {
-  AUTHENTICATE_PROGRESS,
-  AUTHENTICATE_SUCCESS,
-  AUTHENTICATE_FAIL,
-} from '../actionTypes';
+import { AUTH_PROGRESS, AUTH_SUCCESS, AUTH_FAIL } from '../actionTypes';
 
 const INITIAL_STATE = {
   isAuthenticated: false,
-  authenticateProgress: false,
+  authProgress: false,
 };
 
 export default (state = INITIAL_STATE, action = {}) => {
   const { type, payload } = action;
 
-  if (type === AUTHENTICATE_PROGRESS) {
+  if (type === AUTH_PROGRESS) {
     return {
       ...state,
-      authenticateProgress: true,
+      authProgress: true,
     };
   }
 
-  if (type === AUTHENTICATE_FAIL) {
+  if (type === AUTH_FAIL) {
     return {
       ...state,
-      authenticateProgress: false,
+      authProgress: false,
+    };
+  }
+
+  if (type === AUTH_SUCCESS) {
+    return {
+      ...state,
+      isAuthenticated: true,
+      authProgress: false,
     };
   }
 

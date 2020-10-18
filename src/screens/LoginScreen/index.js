@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { images } from '../../assets';
 import { convert, normalize } from '../../helpers/pixelSizeHelper';
 import { Label, Input, Button } from '../../components';
-import { login } from '../../redux/actions/authActions';
+import { authenticate } from '../../redux/actions/authActions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
 const LoginScreen = (props) => {
@@ -17,9 +17,11 @@ const LoginScreen = (props) => {
 
   //Refs
   const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
   //Redux
   const dispatch = useDispatch();
+  const authProgress = useSelector(({ auth }) => auth.authProgress);
 
   //Functions
   const onSignUpPress = () => {
@@ -27,7 +29,9 @@ const LoginScreen = (props) => {
   };
 
   const onLoginPress = () => {
-    dispatch(login());
+    const email = emailRef.current.getValue();
+    const password = passwordRef.current.getValue();
+    dispatch(authenticate(email, password));
   };
 
   //Conditional Style
@@ -51,12 +55,13 @@ const LoginScreen = (props) => {
         <Input ref={emailRef} style={styles.input} />
 
         <Label style={styles.passwordLabel}>Password</Label>
-        <Input style={styles.input} />
+        <Input ref={passwordRef} style={styles.input} />
 
         <Button
           style={styles.loginButton}
           title="Login"
           onPress={onLoginPress}
+          loading={authProgress}
         />
       </View>
 

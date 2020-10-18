@@ -12,14 +12,14 @@ import { ENTITY } from '../../config/api';
 const ProfileScreen = (props) => {
   //Redux
   const dispatch = useDispatch();
-  const userRole = useSelector(({ user }) => user.role);
+  const userInfo = useSelector(({ user }) => user.info);
 
   //Variables
   const { navigation } = props;
   const { theme, changeTheme } = useTheme();
   const insets = useSafeAreaInsets();
   const userRoleText =
-    userRole === ENTITY.USER.STUDENT ? 'Student' : 'Instructor';
+    userInfo.role === ENTITY.USER.STUDENT ? 'Student' : 'Instructor';
 
   //Functions
 
@@ -48,19 +48,19 @@ const ProfileScreen = (props) => {
 
       <View style={styles.formContainer}>
         <Label style={styles.inputLabel}>Name</Label>
-        <Input style={styles.input} value="Kaan" disabled />
+        <Input style={styles.input} value={userInfo.name} disabled />
 
         <Label style={styles.inputLabel}>Surname</Label>
-        <Input style={styles.input} value="Çembertaş" disabled />
-        {userRole === ENTITY.USER.STUDENT && (
+        <Input style={styles.input} value={userInfo.surname} disabled />
+        {userInfo.role === ENTITY.USER.STUDENT && (
           <>
             <Label style={styles.inputLabel}>School Number</Label>
-            <Input style={styles.input} value="200001684" disabled />
+            <Input style={styles.input} value={userInfo.no} disabled />
           </>
         )}
 
         <Label style={styles.inputLabel}>E-Mail</Label>
-        <Input style={styles.input} value="kaancembertas@gmail.com" disabled />
+        <Input style={styles.input} value={userInfo.email} disabled />
       </View>
     </KeyboardAwareScrollView>
   );

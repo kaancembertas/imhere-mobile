@@ -52,7 +52,7 @@ export default class HttpService {
     }
 
     if (response.status === 200) {
-      const responseBody = response.json();
+      const responseBody = await response.json();
       const apiResponse = new ApiResponseModel(200, true, responseBody);
       return apiResponse;
     }
