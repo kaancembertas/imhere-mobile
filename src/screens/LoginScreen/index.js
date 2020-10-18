@@ -37,6 +37,11 @@ const LoginScreen = (props) => {
     }
     dispatch(authenticate(email, password));
   };
+
+  const onEmailSubmit = () => {
+    passwordRef.current.focus();
+  };
+
   //Conditional Style
   const _styles = {
     container: {
@@ -55,10 +60,20 @@ const LoginScreen = (props) => {
       />
       <View style={styles.formContainer}>
         <Label style={styles.studentNoLabel}>E-Mail</Label>
-        <Input ref={emailRef} style={styles.input} />
+        <Input
+          onSubmit={onEmailSubmit}
+          keyboardType="email-address"
+          ref={emailRef}
+          style={styles.input}
+        />
 
         <Label style={styles.passwordLabel}>Password</Label>
-        <Input ref={passwordRef} style={styles.input} />
+        <Input
+          onSubmit={onLoginPress}
+          ref={passwordRef}
+          password
+          style={styles.input}
+        />
 
         <Button
           style={styles.loginButton}

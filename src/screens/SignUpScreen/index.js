@@ -50,6 +50,21 @@ const SignUpScreen = (props) => {
     dispatch(register(registerBody, onRegisterSuccess));
   };
 
+  const getTextInputRefs = () => {
+    return [
+      nameRef.current,
+      surnameRef.current,
+      schoolNumberRef.current,
+      emailRef.current,
+      passwordRef.current,
+    ];
+  };
+
+  const onNameSubmit = () => surnameRef.current.focus();
+  const onSurnameSubmit = () => schoolNumberRef.current.focus();
+  const onSchoolNumberSubmit = () => emailRef.current.focus();
+  const onEmailSubmit = () => passwordRef.current.focus();
+
   //Conditional Style
   const _styles = {
     container: {
@@ -62,26 +77,53 @@ const SignUpScreen = (props) => {
   };
 
   return (
-    <KeyboardAwareScrollView style={[styles.container, _styles.container]}>
+    <KeyboardAwareScrollView
+      getTextInputRefs={getTextInputRefs}
+      style={[styles.container, _styles.container]}>
       <Touchable style={[styles.cameraContainer, _styles.cameraContainer]}>
         <Image style={styles.cameraIcon} source={images.camera} />
       </Touchable>
       <Label style={styles.uploadText}>Upload your portrait photograph</Label>
       <View style={styles.formContainer}>
         <Label style={styles.inputLabel}>Name</Label>
-        <Input ref={nameRef} style={styles.input} />
+        <Input
+          onSubmit={onNameSubmit}
+          autoCapitalize="words"
+          ref={nameRef}
+          style={styles.input}
+        />
 
         <Label style={styles.inputLabel}>Surname</Label>
-        <Input ref={surnameRef} style={styles.input} />
+        <Input
+          onSubmit={onSurnameSubmit}
+          autoCapitalize="words"
+          ref={surnameRef}
+          style={styles.input}
+        />
 
         <Label style={styles.inputLabel}>School Number</Label>
-        <Input ref={schoolNumberRef} style={styles.input} />
+        <Input
+          onSubmit={onSchoolNumberSubmit}
+          keyboardType="number-pad"
+          ref={schoolNumberRef}
+          style={styles.input}
+        />
 
         <Label style={styles.inputLabel}>E-Mail</Label>
-        <Input ref={emailRef} style={styles.input} />
+        <Input
+          onSubmit={onEmailSubmit}
+          keyboardType="email-address"
+          ref={emailRef}
+          style={styles.input}
+        />
 
         <Label style={styles.inputLabel}>Password</Label>
-        <Input ref={passwordRef} style={styles.input} />
+        <Input
+          onSubmit={onSubmitPress}
+          password
+          ref={passwordRef}
+          style={styles.input}
+        />
       </View>
       <Button
         onPress={onSubmitPress}

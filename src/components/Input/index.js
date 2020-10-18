@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState, forwardRef, useRef } from 'react';
 import { Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { useTheme } from '../../providers/ThemeProvider';
@@ -9,13 +9,36 @@ import { TextInput } from 'react-native-gesture-handler';
 
 const Input = (props, ref) => {
   const { theme } = useTheme();
-  const { style, autoCapitalize, value, disabled, onChangeValue } = props;
+  const {
+    style,
+    autoCapitalize,
+    value,
+    disabled,
+    onChangeValue,
+    keyboardType,
+    password,
+    onSubmit,
+    returnKeyType,
+  } = props;
 
   const [inputValue, setInputValue] = useState(value || '');
+  const inputRef = useRef(null);
 
   const _onChangeValue = (text) => {
     setInputValue(text);
     if (onChangeValue) onChangeValue(text);
+  };
+
+  const _onSubmit = () => {
+    if (onSubmit) onSubmit();
+  };
+
+  const focus = () => {
+    inputRef.current.focus();
+  };
+
+  const isFocused = () => {
+    inputRef.current.isFocused();
   };
 
   const getValue = () => inputValue.trim();
@@ -23,6 +46,8 @@ const Input = (props, ref) => {
   if (ref) {
     ref.current = {
       getValue,
+      focus,
+      isFocused,
     };
   }
 
@@ -36,6 +61,11 @@ const Input = (props, ref) => {
 
   return (
     <TextInput
+      returnKeyType={returnKeyType || 'next'}
+      ref={inputRef}
+      onSubmitEditing={_onSubmit}
+      secureTextEntry={password}
+      keyboardType={keyboardType || 'default'}
       editable={!disabled}
       defaultValue={value}
       onChangeText={_onChangeValue}
@@ -68,4 +98,14 @@ Input.propTypes = {
   value: PropTypes.string,
   disabled: PropTypes.bool,
   onChangeValue: PropTypes.func,
+  password: PropTypes.bool,
+  returnKeyType: PropTypes.oneOf(['done', 'go', 'next', 'search', 'send']),
+  keyboardType: PropTypes.oneOf([
+    'default',
+    'number-pad',
+    'decimal-pad',
+    'numeric',
+    'email-address',
+    'phone-pad',
+  ]),
 };
