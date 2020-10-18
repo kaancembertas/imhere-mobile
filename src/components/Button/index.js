@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import { useTheme } from '../../providers/ThemeProvider';
 import { fonts } from '../../assets';
@@ -10,7 +10,7 @@ import Label from '../Label';
 
 const Button = (props) => {
   const { theme } = useTheme();
-  const { style, title, onPress, secondary } = props;
+  const { style, title, onPress, secondary, loading } = props;
 
   const _styles = {
     container: {
@@ -25,11 +25,20 @@ const Button = (props) => {
     },
   };
 
+  const loadingColor = secondary
+    ? theme.primaryThemeColor
+    : theme.secondaryThemeColor;
+
   return (
     <Touchable
+      disabled={loading}
       onPress={onPress}
       style={[styles.container, _styles.container, style]}>
-      <Label style={_styles.title}>{title}</Label>
+      {loading ? (
+        <ActivityIndicator color={loadingColor} />
+      ) : (
+        <Label style={_styles.title}>{title}</Label>
+      )}
     </Touchable>
   );
 };

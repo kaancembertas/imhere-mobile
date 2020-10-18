@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     height: convert(50),
   },
   uploadText: {
-    marginTop: convert(8),
+    marginTop: convert(15),
     alignSelf: 'center',
   },
   inputLabel: {

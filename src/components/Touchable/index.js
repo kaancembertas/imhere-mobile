@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 
 const Touchable = (props) => {
-  const { style, children, opacity, onPress } = props;
+  const { style, children, opacity, onPress, disabled } = props;
   const defaultOpacity = opacity || 0.8;
 
   const _onPress = () => {
@@ -12,6 +12,7 @@ const Touchable = (props) => {
 
   return (
     <TouchableOpacity
+      disabled={disabled}
       style={style}
       onPress={_onPress}
       activeOpacity={defaultOpacity}>
@@ -27,4 +28,5 @@ Touchable.propTypes = {
   opacity: PropTypes.number,
   onPress: PropTypes.func,
   children: PropTypes.any,
+  disabled: PropTypes.bool,
 };
