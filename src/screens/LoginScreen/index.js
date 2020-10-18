@@ -62,11 +62,11 @@ const LoginScreen = (props) => {
           title="Login"
           onPress={onLoginPress}
           loading={authProgress}
+          secondary
         />
       </View>
 
       <Button
-        secondary
         style={styles.signUpButton}
         title="Sign Up"
         onPress={onSignUpPress}

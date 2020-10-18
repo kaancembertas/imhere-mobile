@@ -8,7 +8,7 @@ import user from './reducers/userReducer';
 
 const combinedReducers = combineReducers({
   auth,
-  user
+  user,
 });
 
 const rootReducer = (state, action) => {

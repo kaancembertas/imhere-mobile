@@ -1,11 +1,18 @@
 import { Alert } from 'react-native';
 import ImHereApi from '../../api/ImHereApi';
-import { storageKeys, storageTypes, storeData } from '../../utils/asyncStorage';
+import {
+  removeData,
+  storageKeys,
+  storageTypes,
+  storeData,
+} from '../../utils/asyncStorage';
 import {
   AUTH_PROGRESS,
   AUTH_SUCCESS,
   AUTH_FAIL,
   USER_INFO_COMPLETE,
+  RESET_USER_INFO,
+  LOGOUT,
 } from '../actionTypes';
 
 export const authenticate = (email, password) => {
@@ -56,6 +63,18 @@ export const authenticate = (email, password) => {
       dispatch({
         type: AUTH_FAIL,
       });
+    }
+  };
+};
+
+export const logout = () => {
+  return async (dispatch) => {
+    try {
+      await removeData(storageKeys.ACCESS_TOKEN);
+      dispatch({ type: RESET_USER_INFO });
+      dispatch({ type: LOGOUT });
+    } catch (e) {
+      console.log('Logout Error', e);
     }
   };
 };

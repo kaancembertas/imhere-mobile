@@ -1,6 +1,10 @@
 import ImHereApi from '../../api/ImHereApi';
 import { Alert } from 'react-native';
-import { USER_REGISTER_PROGRESS, USER_REGISTER_COMPLETE } from '../actionTypes';
+import {
+  USER_REGISTER_PROGRESS,
+  USER_REGISTER_COMPLETE,
+  RESET_USER_INFO,
+} from '../actionTypes';
 
 export const register = (registerBody, onSuccess) => {
   return async (dispatch) => {
@@ -23,4 +27,8 @@ export const register = (registerBody, onSuccess) => {
       });
     }
   };
+};
+
+export const resetUserInfo = {
+  type: RESET_USER_INFO,
 };

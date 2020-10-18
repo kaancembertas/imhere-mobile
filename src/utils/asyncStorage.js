@@ -38,3 +38,11 @@ export const getData = async (key, type) => {
     throw new Error('asyncStorage getData error');
   }
 };
+
+export const removeData = async (key) => {
+  try {
+    await AsyncStorage.removeItem(key);
+  } catch (e) {
+    throw new Error('asyncStorage removeData error');
+  }
+};

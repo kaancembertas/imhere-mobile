@@ -2,6 +2,7 @@ import {
   USER_REGISTER_PROGRESS,
   USER_REGISTER_COMPLETE,
   USER_INFO_COMPLETE,
+  RESET_USER_INFO,
 } from '../actionTypes';
 const INITIAL_STATE = {
   registerProgress: false,
@@ -37,6 +38,10 @@ export default (state = INITIAL_STATE, action = {}) => {
       ...state,
       info: payload,
     };
+  }
+
+  if (type === RESET_USER_INFO) {
+    return INITIAL_STATE;
   }
   return state;
 };

@@ -30,11 +30,11 @@ export default class HttpService {
     }
 
     const response = await fetch(REQUEST_URL, fetchOptions);
-
+    console.log(response);
     if (response.status === 400) {
       const apiResponse = new ApiResponseModel(400, false);
       const responseBody = await response.json();
-      apiResponse.setErrorMessage(responseBody.errorMessage);
+      apiResponse.setErrorMessage(responseBody.errorMessage || 'Bad Request');
       return apiResponse;
     }
 

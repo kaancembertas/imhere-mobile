@@ -6,8 +6,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { useTheme } from '../../providers/ThemeProvider';
 import { fonts, images } from '../../assets';
 import { convert, normalize } from '../../helpers/pixelSizeHelper';
-import { Label, Input, Button, Touchable } from '../../components';
+import { Label, Input, Button } from '../../components';
 import { ENTITY } from '../../config/api';
+import { logout } from '../../redux/actions/authActions';
 
 const ProfileScreen = (props) => {
   //Redux
@@ -17,12 +18,13 @@ const ProfileScreen = (props) => {
   //Variables
   const { navigation } = props;
   const { theme, changeTheme } = useTheme();
-  const insets = useSafeAreaInsets();
   const userRoleText =
     userInfo.role === ENTITY.USER.STUDENT ? 'Student' : 'Instructor';
 
   //Functions
-
+  const onLogoutPress = () => {
+    dispatch(logout());
+  };
   //Conditional Style
   const _styles = {
     container: {
@@ -34,6 +36,9 @@ const ProfileScreen = (props) => {
     },
     userRoleText: {
       color: theme.teriateryColor,
+    },
+    logoutButton: {
+      backgroundColor: theme.secondaryDarkColor,
     },
   };
 
@@ -62,6 +67,12 @@ const ProfileScreen = (props) => {
         <Label style={styles.inputLabel}>E-Mail</Label>
         <Input style={styles.input} value={userInfo.email} disabled />
       </View>
+      <Button
+        onPress={onLogoutPress}
+        secondary
+        style={[styles.logoutButton, _styles.logoutButton]}
+        title="Logout"
+      />
     </KeyboardAwareScrollView>
   );
 };
@@ -102,5 +113,8 @@ const styles = StyleSheet.create({
     marginTop: convert(5),
     fontFamily: fonts.Montserrat.Medium,
     fontSize: normalize(20),
+  },
+  logoutButton: {
+    marginTop: convert(30),
   },
 });

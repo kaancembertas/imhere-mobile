@@ -6,6 +6,7 @@
 #94926D
 #9C75F4
 #AEB7D5
+#C62828
 */
 const themes = [
   {
@@ -15,6 +16,7 @@ const themes = [
     primaryTextColor: '#4A4849',
     secondaryTextColor: '#FCFDFD',
     teriateryColor: '#9C75F4',
+    secondaryDarkColor: '#C62828',
   },
   {
     key: 'DARK',
@@ -23,6 +25,7 @@ const themes = [
     primaryTextColor: '#DFDCEC',
     secondaryTextColor: '#AA00AA',
     teriateryColor: '#9C75F4',
+    secondaryDarkColor: '#C62828',
   },
 ];
 
