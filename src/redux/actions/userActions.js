@@ -1,4 +1,4 @@
-import imHereApi from '../../api/ImHereApi';
+import ImHereApi from '../../api/ImHereApi';
 import { Alert } from 'react-native';
 import { USER_REGISTER_PROGRESS, USER_REGISTER_COMPLETE } from '../actionTypes';
 
@@ -9,7 +9,7 @@ export const register = (registerBody, onSuccess) => {
         type: USER_REGISTER_PROGRESS,
       });
 
-      const response = await imHereApi.register(registerBody);
+      const response = await ImHereApi.register(registerBody);
       if (!response.success) {
         Alert.alert('', response.errorMessage);
       } else {

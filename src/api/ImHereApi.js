@@ -5,6 +5,12 @@ class ImHereApi extends BaseApi {
   register = (body) => {
     return this._doAnonymousPost('/api/user/register', body);
   };
+  authenticate = (body) => {
+    return this._doAnonymousPost('/api/authentication', body);
+  };
+  getUserInfo = () => {
+    return this._doGet('/api/user/info');
+  };
 }
 
 const imHereApi = new ImHereApi();
