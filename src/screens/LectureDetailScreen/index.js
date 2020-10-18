@@ -92,7 +92,7 @@ const LectureDetailScreen = (props) => {
         <Seperator />
       </>
     );
-  }, []);
+  }, [attendence]);
 
   const renderLectureDetailListItem = useCallback(
     ({ item }) => (

@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { View, StyleSheet, Image, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { images } from '../../assets';
 import { convert } from '../../helpers/pixelSizeHelper';
 import { Label, Input, Button, Touchable } from '../../components';

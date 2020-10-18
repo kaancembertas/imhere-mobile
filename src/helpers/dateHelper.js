@@ -1,13 +1,16 @@
 export const formatDate = (date) => {
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+  let hour = date.getHours();
+  let minute = date.getMinutes();
+
+  if (day < 10) day = '0' + day;
+  if (month < 10) month = '0' + month;
+  if (hour < 10) hour = '0' + hour;
+  if (minute < 10) minute = '0' + minute;
+
   const formattedDate =
-    date.getDate() +
-    '/' +
-    (date.getMonth() + 1) +
-    '/' +
-    date.getFullYear() +
-    ' ' +
-    date.getHours() +
-    ':' +
-    date.getMinutes();
+    day + '/' + month + '/' + year + ' ' + hour + ':' + minute;
   return formattedDate;
 };
