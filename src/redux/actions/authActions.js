@@ -29,7 +29,6 @@ export const authenticate = (email, password) => {
       }
 
       const accessToken = response.data.token;
-      console.log('login resss', response);
       await storeData(
         storageKeys.ACCESS_TOKEN,
         storageTypes.VALUE,
