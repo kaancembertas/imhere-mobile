@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -44,6 +44,16 @@ const SignUpScreen = (props) => {
       surname: surnameRef.current.getValue(),
       image_url: 'URL FROM MOBILE',
     };
+    if (
+      registerBody.no == '' ||
+      registerBody.email == '' ||
+      registerBody.password == '' ||
+      registerBody.name == '' ||
+      registerBody.surname == ''
+    ) {
+      Alert.alert('', 'Fill the all inputs correctly!');
+      return;
+    }
 
     dispatch(register(registerBody, onRegisterSuccess));
   };
