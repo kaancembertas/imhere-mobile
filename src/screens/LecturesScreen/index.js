@@ -5,7 +5,7 @@ import { useTheme } from '../../providers/ThemeProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ClassListItem, Seperator } from '../../components';
 
-const ClassesScreen = (props) => {
+const LecturesScreen = (props) => {
   //Variables
   const { navigation } = props;
   const { theme, changeTheme } = useTheme();
@@ -16,7 +16,7 @@ const ClassesScreen = (props) => {
 
   //Functions
   const onClassPress = (classItem) => {
-    navigation.navigate('ClassDetailScreen', { classItem });
+    navigation.navigate('LectureDetailScreen', { classItem });
   };
 
   const renderClassListItem = useCallback(
@@ -59,7 +59,7 @@ const ClassesScreen = (props) => {
   );
 };
 
-export default ClassesScreen;
+export default LecturesScreen;
 
 const styles = StyleSheet.create({
   container: {

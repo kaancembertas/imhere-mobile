@@ -1,13 +1,13 @@
 import LoginScreen from './LoginScreen';
 import SignUpScreen from './SignUpScreen';
-import ClassesScreen from './ClassesScreen';
+import LecturesScreen from './LecturesScreen';
 import ProfileScreen from './ProfileScreen';
-import ClassDetailScreen from './ClassDetailScreen';
+import LectureDetailScreen from './LectureDetailScreen';
 
 export default {
   LoginScreen,
   SignUpScreen,
-  ClassesScreen,
+  LecturesScreen,
   ProfileScreen,
-  ClassDetailScreen,
+  LectureDetailScreen,
 };

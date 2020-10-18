@@ -11,6 +11,12 @@ class ImHereApi extends BaseApi {
   getUserInfo = () => {
     return this._doGet('/api/user/info');
   };
+  getLectures = () => {
+    return this._doGet('/api/user/lectures');
+  };
+  getAttendence = (lectureCode) => {
+    return this._doGet('/api/user/attendence/' + lectureCode);
+  };
 }
 
 const imHereApi = new ImHereApi();

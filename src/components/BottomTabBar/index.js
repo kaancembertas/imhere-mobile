@@ -30,10 +30,10 @@ const BottomTabBar = ({ state, navigation }) => {
   //Functions
   const getIconSource = (routeName, isFocused) => {
     if (isFocused) {
-      if (routeName === 'ClassesScreen') return icons.classWhite;
+      if (routeName === 'LecturesScreen') return icons.classWhite;
       if (routeName === 'ProfileScreen') return icons.personWhite;
     } else {
-      if (routeName === 'ClassesScreen') return icons.classBlack;
+      if (routeName === 'LecturesScreen') return icons.classBlack;
       if (routeName === 'ProfileScreen') return icons.personBlack;
     }
     return null;

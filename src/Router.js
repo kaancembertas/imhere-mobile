@@ -44,8 +44,8 @@ const AppStack = () => {
   const AppTab = () => (
     <Tab.Navigator
       tabBar={(props) => <BottomTabBar {...props} />}
-      initialRouteName="ClassesScreen">
-      <Tab.Screen name="ClassesScreen" component={SCREENS.ClassesScreen} />
+      initialRouteName="LecturesScreen">
+      <Tab.Screen name="LecturesScreen" component={SCREENS.LecturesScreen} />
       <Tab.Screen name="ProfileScreen" component={SCREENS.ProfileScreen} />
     </Tab.Navigator>
   );
@@ -56,13 +56,13 @@ const AppStack = () => {
       headerMode="screen"
       screenOptions={{
         header: NavigationHeader,
-        title: "I'm here!",
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        title: "I'm here!",
       }}>
       <Stack.Screen name="AppTab" component={AppTab} />
       <Stack.Screen
-        name="ClassDetailScreen"
-        component={SCREENS.ClassDetailScreen}
+        name="LectureDetailScreen"
+        component={SCREENS.LectureDetailScreen}
       />
     </Stack.Navigator>
   );

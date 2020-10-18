@@ -8,7 +8,7 @@ import { convert } from '../../helpers/pixelSizeHelper';
 import { Label, ClassDetailListItem, Seperator } from '../../components';
 import { ENTITY } from '../../config/api';
 
-const ClassDetailScreen = (props) => {
+const LectureDetailScreen = (props) => {
   //Variables
   const { navigation, route } = props;
   const { theme, changeTheme } = useTheme();
@@ -98,7 +98,7 @@ const ClassDetailScreen = (props) => {
   );
 };
 
-export default ClassDetailScreen;
+export default LectureDetailScreen;
 
 const styles = StyleSheet.create({
   container: {
