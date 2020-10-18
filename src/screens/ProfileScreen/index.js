@@ -7,7 +7,7 @@ import { useTheme } from '../../providers/ThemeProvider';
 import { fonts, images } from '../../assets';
 import { convert, normalize } from '../../helpers/pixelSizeHelper';
 import { Label, Input, Button, Touchable } from '../../components';
-import { API_CONSTANTS } from '../../config/constants';
+import { ENTITY } from '../../config/api';
 
 const ProfileScreen = (props) => {
   //Redux
@@ -19,7 +19,7 @@ const ProfileScreen = (props) => {
   const { theme, changeTheme } = useTheme();
   const insets = useSafeAreaInsets();
   const userRoleText =
-    userRole === API_CONSTANTS.USER.STUDENT ? 'Student' : 'Instructor';
+    userRole === ENTITY.USER.STUDENT ? 'Student' : 'Instructor';
 
   //Functions
 
@@ -52,7 +52,7 @@ const ProfileScreen = (props) => {
 
         <Label style={styles.inputLabel}>Surname</Label>
         <Input style={styles.input} value="Çembertaş" disabled />
-        {userRole === API_CONSTANTS.USER.STUDENT && (
+        {userRole === ENTITY.USER.STUDENT && (
           <>
             <Label style={styles.inputLabel}>School Number</Label>
             <Input style={styles.input} value="200001684" disabled />

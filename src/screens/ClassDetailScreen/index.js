@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { icons, fonts } from '../../assets';
 import { convert } from '../../helpers/pixelSizeHelper';
 import { Label, ClassDetailListItem, Seperator } from '../../components';
-import { API_CONSTANTS } from '../../config/constants';
+import { ENTITY } from '../../config/api';
 
 const ClassDetailScreen = (props) => {
   //Variables
@@ -28,7 +28,7 @@ const ClassDetailScreen = (props) => {
 
   //Functions
   const renderHeader = useCallback(() => {
-    if (userRole === API_CONSTANTS.USER.INSTRUCTOR) return null;
+    if (userRole === ENTITY.USER.INSTRUCTOR) return null;
     return (
       <>
         <View style={styles.header}>

@@ -7,7 +7,7 @@ import { convert, normalize } from '../../helpers/pixelSizeHelper';
 import { useSelector } from 'react-redux';
 import Label from '../Label';
 import Touchable from '../Touchable';
-import { API_CONSTANTS } from '../../config/constants';
+import { ENTITY } from '../../config/api';
 
 const ClassDetailListItem = (props) => {
   const { theme } = useTheme();
@@ -21,14 +21,14 @@ const ClassDetailListItem = (props) => {
   const userRole = useSelector(({ user }) => user.role);
 
   const _onPress = () => {
-    if (userRole === API_CONSTANTS.USER.INSTRUCTOR && onPress) {
+    if (userRole === ENTITY.USER.INSTRUCTOR && onPress) {
       onPress(week);
     }
   };
 
   const StatusBox = () => {
     if (status === 0) {
-      if (userRole === API_CONSTANTS.USER.INSTRUCTOR)
+      if (userRole === ENTITY.USER.INSTRUCTOR)
         return (
           <Image
             resizeMethod="scale"
@@ -49,7 +49,7 @@ const ClassDetailListItem = (props) => {
   return (
     <Touchable
       onPress={_onPress}
-      opacity={userRole === API_CONSTANTS.USER.INSTRUCTOR ? 0.8 : 1}
+      opacity={userRole === ENTITY.USER.INSTRUCTOR ? 0.8 : 1}
       style={[styles.container, style]}>
       <View style={styles.leftContainer}>
         <Label>Week {week}</Label>

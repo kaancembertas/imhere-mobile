@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
@@ -7,6 +7,7 @@ import { images } from '../../assets';
 import { convert } from '../../helpers/pixelSizeHelper';
 import { Label, Input, Button, Touchable } from '../../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import imHereApi from '../../api/ImHereApi';
 
 const SignUpScreen = (props) => {
   //Variables
@@ -15,8 +16,26 @@ const SignUpScreen = (props) => {
   //Redux
   const dispatch = useDispatch();
 
-  //Functions
+  //Refs
+  const nameRef = useRef(null);
+  const surnameRef = useRef(null);
+  const schoolNumberRef = useRef(null);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
+  //Functions
+  const onSubmitPress = async () => {
+    const registerBody = {
+      no: schoolNumberRef.current.getValue(),
+      email: emailRef.current.getValue(),
+      password: passwordRef.current.getValue(),
+      name: nameRef.current.getValue(),
+      surname: surnameRef.current.getValue(),
+      image_url: 'URL FROM MOBILE',
+    };
+    const res = await imHereApi.register(registerBody);
+    console.log(res);
+  };
   //Conditional Style
   const _styles = {
     container: {
@@ -36,21 +55,26 @@ const SignUpScreen = (props) => {
       <Label style={styles.uploadText}>Upload your portrait photograph</Label>
       <View style={styles.formContainer}>
         <Label style={styles.inputLabel}>Name</Label>
-        <Input style={styles.input} />
+        <Input ref={nameRef} style={styles.input} />
 
         <Label style={styles.inputLabel}>Surname</Label>
-        <Input style={styles.input} />
+        <Input ref={surnameRef} style={styles.input} />
 
         <Label style={styles.inputLabel}>School Number</Label>
-        <Input style={styles.input} />
+        <Input ref={schoolNumberRef} style={styles.input} />
 
         <Label style={styles.inputLabel}>E-Mail</Label>
-        <Input style={styles.input} />
+        <Input ref={emailRef} style={styles.input} />
 
         <Label style={styles.inputLabel}>Password</Label>
-        <Input style={styles.input} />
+        <Input ref={passwordRef} style={styles.input} />
       </View>
-      <Button style={styles.submitButton} title="Submit" secondary />
+      <Button
+        onPress={onSubmitPress}
+        style={styles.submitButton}
+        title="Submit"
+        secondary
+      />
       <View style={styles.footer} />
     </KeyboardAwareScrollView>
   );

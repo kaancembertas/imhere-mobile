@@ -6,11 +6,4 @@ const screen = {
   height,
 };
 
-const API_CONSTANTS = {
-  USER: {
-    STUDENT: 0,
-    INSTRUCTOR: 1,
-  },
-};
-
-export { screen, API_CONSTANTS };
+export { screen };
