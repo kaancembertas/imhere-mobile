@@ -1,9 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ClassListItem, Seperator } from '../../components';
+import { ClassListItem, Loading, Seperator } from '../../components';
+import { getLectures } from '../../redux/actions/lectureActions';
 
 const LecturesScreen = (props) => {
   //Variables
@@ -13,28 +14,52 @@ const LecturesScreen = (props) => {
 
   //Redux
   const dispatch = useDispatch();
+  const lecturesProgress = useSelector(
+    ({ lecture }) => lecture.lecturesProgress,
+  );
+  const lectures = useSelector(({ lecture }) => lecture.lectures);
+  console.log(lectures);
+  //Effects
+  useEffect(() => {
+    dispatch(getLectures());
+  }, []);
 
   //Functions
   const onClassPress = (classItem) => {
     navigation.navigate('LectureDetailScreen', { classItem });
   };
 
+  const renderItemSeperator = useCallback(() => <Seperator />, []);
+  const renderFooter = useCallback(() => <View style={_styles.footer} />, []);
+  const getClassListItemKey = (item) => 'CLI-' + item.code;
+
   const renderClassListItem = useCallback(
     ({ item }) => (
       <ClassListItem
         onPress={onClassPress}
-        code={item.code}
-        instructor={item.instructor}
-        name={item.name}
+        code={item.lectureCode}
+        instructor={item.instructorName + ' ' + item.instructorSurname}
+        name={item.lectureName}
       />
     ),
     [],
   );
 
-  const renderItemSeperator = useCallback(() => <Seperator />, []);
-  const renderFooter = useCallback(() => <View style={_styles.footer} />, []);
+  const Lectures = useCallback(() => {
+    if (lecturesProgress) {
+      return <Loading />;
+    }
 
-  const getClassListItemKey = (item) => 'CLI-' + item.code;
+    return (
+      <FlatList
+        data={lectures}
+        renderItem={renderClassListItem}
+        keyExtractor={getClassListItemKey}
+        ItemSeparatorComponent={renderItemSeperator}
+        ListFooterComponent={renderFooter}
+      />
+    );
+  }, [lecturesProgress]);
 
   //Conditional Style
   const _styles = {
@@ -48,13 +73,7 @@ const LecturesScreen = (props) => {
 
   return (
     <View style={[styles.container, _styles.container]}>
-      <FlatList
-        data={sampleData}
-        renderItem={renderClassListItem}
-        keyExtractor={getClassListItemKey}
-        ItemSeparatorComponent={renderItemSeperator}
-        ListFooterComponent={renderFooter}
-      />
+      <Lectures />
     </View>
   );
 };
@@ -66,36 +85,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-const sampleData = [
-  {
-    name: 'Computer Networks',
-    code: 'BIL441',
-    instructor: 'Abdül Halim Zaim',
-  },
-  {
-    name: 'Bilişim Tasarım Projesi',
-    code: 'BIL451',
-    instructor: 'Arzu Kakışım',
-  },
-  {
-    name: 'Bilgisayar Sistemleri Lab.',
-    code: 'BIL53',
-    instructor: 'Mustafa Cem Kasapbaşı',
-  },
-  {
-    name: 'Veri Madenciliği',
-    code: 'BIL460',
-    instructor: 'Arzu Kakışım',
-  },
-  {
-    name: 'Paralel Bilgisayarlar',
-    code: 'BIL461',
-    instructor: 'Turgay Altılar',
-  },
-  {
-    name: 'Bulut Bilişim',
-    code: 'BIL465',
-    instructor: 'Alper Özpınar',
-  },
-];

@@ -6,6 +6,7 @@ import BottomTabBar from './BottomTabBar';
 import Seperator from './Seperator';
 import ClassListItem from './ClassListItem';
 import ClassDetailListItem from './ClassDetailListItem';
+import Loading from './Loading';
 
 export {
   Label,
@@ -16,4 +17,5 @@ export {
   Seperator,
   ClassListItem,
   ClassDetailListItem,
+  Loading,
 };

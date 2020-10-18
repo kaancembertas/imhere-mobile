@@ -13,6 +13,7 @@ import {
   USER_INFO_COMPLETE,
   RESET_USER_INFO,
   LOGOUT,
+  RESET_LECTURES,
 } from '../actionTypes';
 
 export const authenticate = (email, password) => {
@@ -72,6 +73,7 @@ export const logout = () => {
     try {
       await removeData(storageKeys.ACCESS_TOKEN);
       dispatch({ type: RESET_USER_INFO });
+      dispatch({ type: RESET_LECTURES });
       dispatch({ type: LOGOUT });
     } catch (e) {
       console.log('Logout Error', e);
