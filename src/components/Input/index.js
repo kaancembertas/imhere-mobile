@@ -9,9 +9,14 @@ import { TextInput } from 'react-native-gesture-handler';
 
 const Input = (props, ref) => {
   const { theme } = useTheme();
-  const { style, autoCapitalize, value, disabled } = props;
+  const { style, autoCapitalize, value, disabled, onChangeValue } = props;
 
   const [inputValue, setInputValue] = useState(value || '');
+
+  const _onChangeValue = (text) => {
+    setInputValue(text);
+    if (onChangeValue) onChangeValue(text);
+  };
 
   const getValue = () => inputValue.trim();
 
@@ -33,7 +38,7 @@ const Input = (props, ref) => {
     <TextInput
       editable={!disabled}
       defaultValue={value}
-      onChangeText={setInputValue}
+      onChangeText={_onChangeValue}
       value={inputValue}
       autoCapitalize={autoCapitalize || 'none'}
       style={[styles.input, _styles.input, style]}
@@ -62,4 +67,5 @@ Input.propTypes = {
   autoCapitalize: PropTypes.oneOf(['characters', 'none', 'sentences', 'words']),
   value: PropTypes.string,
   disabled: PropTypes.bool,
+  onChangeValue: PropTypes.func,
 };

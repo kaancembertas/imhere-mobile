@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -31,9 +31,12 @@ const LoginScreen = (props) => {
   const onLoginPress = () => {
     const email = emailRef.current.getValue();
     const password = passwordRef.current.getValue();
+    if (email == '' || password == '') {
+      Alert.alert('', 'Please enter E-Mail and Password correctly');
+      return;
+    }
     dispatch(authenticate(email, password));
   };
-
   //Conditional Style
   const _styles = {
     container: {
