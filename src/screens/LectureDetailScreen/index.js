@@ -1,34 +1,74 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { View, StyleSheet, Image, FlatList } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { icons, fonts } from '../../assets';
 import { convert } from '../../helpers/pixelSizeHelper';
-import { Label, LectureDetailListItem, Seperator } from '../../components';
+import {
+  Label,
+  LectureDetailListItem,
+  Loading,
+  Seperator,
+} from '../../components';
 import { ENTITY } from '../../config/api';
+import {
+  getAttendence,
+  resetAttendence,
+} from '../../redux/actions/lectureActions';
+import { formatDate } from '../../helpers/dateHelper';
 
 const LectureDetailScreen = (props) => {
   //Variables
   const { navigation, route } = props;
   const { theme, changeTheme } = useTheme();
   const insets = useSafeAreaInsets();
-  const classItem = route.params.classItem;
+  const lecture = route.params.lecture;
+  const { lectureCode, lectureName, lectureStartDate } = lecture;
 
   //Effects
   useEffect(() => {
     navigation.setOptions({
-      title: classItem.name,
+      title: lectureName,
     });
-  });
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAttendence(lectureCode));
+
+    return () => dispatch(resetAttendence());
+  }, []);
 
   //Redux
   const dispatch = useDispatch();
-  const userRole = useSelector(({ user }) => user.role);
+  const userRole = useSelector(({ user }) => user.info.role);
+  const attendenceProgress = useSelector(
+    ({ lecture }) => lecture.attendenceProgress,
+  );
+  const attendence = useSelector(({ lecture }) => lecture.attendence);
+  const attendenceList = useMemo(() => {
+    if (attendenceProgress || !attendence) return [];
+
+    return attendence.map((a) => {
+      const lectureDate = new Date(lectureStartDate);
+      lectureDate.setDate(lectureDate.getDate() + a.week * 7);
+      return {
+        date: formatDate(lectureDate),
+        week: a.week,
+        status: a.status,
+      };
+    });
+  }, [attendenceProgress, attendence]);
 
   //Functions
   const renderHeader = useCallback(() => {
     if (userRole === ENTITY.USER.INSTRUCTOR) return null;
+    const joined = attendence.filter(
+      (a) => a.status === ENTITY.ATTENDENCE.JOINED,
+    ).length;
+    const notJoined = attendence.filter(
+      (a) => a.status === ENTITY.ATTENDENCE.NOT_JOINED,
+    ).length;
     return (
       <>
         <View style={styles.header}>
@@ -38,7 +78,7 @@ const LectureDetailScreen = (props) => {
               style={styles.icon}
               source={icons.tick}
             />
-            <Label style={styles.infoText}>JOINED: 3</Label>
+            <Label style={styles.infoText}>JOINED: {joined}</Label>
           </View>
           <View style={styles.infoBox}>
             <Image
@@ -46,7 +86,7 @@ const LectureDetailScreen = (props) => {
               style={styles.icon}
               source={icons.cross}
             />
-            <Label style={styles.infoText}>NOT JOINED: 2</Label>
+            <Label style={styles.infoText}>NOT JOINED: {notJoined}</Label>
           </View>
         </View>
         <Seperator />
@@ -74,6 +114,25 @@ const LectureDetailScreen = (props) => {
     [],
   );
 
+  const Attendence = useCallback(() => {
+    if (attendenceProgress || attendenceList.length === 0) {
+      return <Loading />;
+    }
+
+    return (
+      <FlatList
+        indicatorStyle="black"
+        scrollIndicatorInsets={{ right: 1 }}
+        data={attendenceList}
+        renderItem={renderLectureDetailListItem}
+        keyExtractor={getKey}
+        ItemSeparatorComponent={renderItemSeperator}
+        ListHeaderComponent={renderHeader}
+        ListFooterComponent={renderFooter}
+      />
+    );
+  }, [attendenceProgress, attendenceList]);
+
   //Conditional Style
   const _styles = {
     container: {
@@ -86,14 +145,7 @@ const LectureDetailScreen = (props) => {
 
   return (
     <View style={[styles.container, _styles.container]}>
-      <FlatList
-        data={sampleData}
-        renderItem={renderLectureDetailListItem}
-        keyExtractor={getKey}
-        ItemSeparatorComponent={renderItemSeperator}
-        ListHeaderComponent={renderHeader}
-        ListFooterComponent={renderFooter}
-      />
+      <Attendence />
     </View>
   );
 };
@@ -125,76 +177,3 @@ const styles = StyleSheet.create({
     marginTop: convert(5),
   },
 });
-
-const sampleData = [
-  {
-    status: 1,
-    date: '05.10.2020 - 15:00',
-    week: 1,
-  },
-  {
-    status: 2,
-    date: '05.10.2020 - 15:00',
-    week: 2,
-  },
-  {
-    status: 1,
-    date: '05.10.2020 - 15:00',
-    week: 3,
-  },
-  {
-    status: 2,
-    date: '05.10.2020 - 15:00',
-    week: 4,
-  },
-  {
-    status: 1,
-    date: '05.10.2020 - 15:00',
-    week: 5,
-  },
-  {
-    status: 0,
-    date: '05.10.2020 - 15:00',
-    week: 6,
-  },
-  {
-    status: 0,
-    date: '05.10.2020 - 15:00',
-    week: 7,
-  },
-  {
-    status: 0,
-    date: '05.10.2020 - 15:00',
-    week: 8,
-  },
-  {
-    status: 0,
-    date: '05.10.2020 - 15:00',
-    week: 9,
-  },
-  {
-    status: 0,
-    date: '05.10.2020 - 15:00',
-    week: 10,
-  },
-  {
-    status: 0,
-    date: '05.10.2020 - 15:00',
-    week: 11,
-  },
-  {
-    status: 0,
-    date: '05.10.2020 - 15:00',
-    week: 12,
-  },
-  {
-    status: 0,
-    date: '05.10.2020 - 15:00',
-    week: 13,
-  },
-  {
-    status: 0,
-    date: '05.10.2020 - 15:00',
-    week: 14,
-  },
-];

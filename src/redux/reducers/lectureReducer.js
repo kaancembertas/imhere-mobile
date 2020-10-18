@@ -70,7 +70,7 @@ export default (state = INITIAL_STATE, action = {}) => {
     return {
       ...state,
       attendenceProgress: false,
-      attendence: [],
+      attendence: payload,
     };
   }
   return state;

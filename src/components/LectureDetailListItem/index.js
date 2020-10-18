@@ -18,7 +18,7 @@ const LectureDetailListItem = (props) => {
   2 - Not Joined
   */
   const { style, status, week, date, onPress } = props;
-  const userRole = useSelector(({ user }) => user.role);
+  const userRole = useSelector(({ user }) => user.info.role);
 
   const _onPress = () => {
     if (userRole === ENTITY.USER.INSTRUCTOR && onPress) {

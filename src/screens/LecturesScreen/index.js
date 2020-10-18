@@ -25,8 +25,8 @@ const LecturesScreen = (props) => {
   }, []);
 
   //Functions
-  const onLecturePress = (classItem) => {
-    navigation.navigate('LectureDetailScreen', { classItem });
+  const onLecturePress = (lecture) => {
+    navigation.navigate('LectureDetailScreen', { lecture });
   };
 
   const renderItemSeperator = useCallback(() => <Seperator />, []);
@@ -37,9 +37,10 @@ const LecturesScreen = (props) => {
     ({ item }) => (
       <LectureListItem
         onPress={onLecturePress}
-        code={item.lectureCode}
-        instructor={item.instructorName + ' ' + item.instructorSurname}
-        name={item.lectureName}
+        lectureCode={item.lectureCode}
+        lectureInstructor={item.instructorName + ' ' + item.instructorSurname}
+        lectureName={item.lectureName}
+        lectureStartDate={item.lectureStartDate}
       />
     ),
     [],
@@ -52,6 +53,8 @@ const LecturesScreen = (props) => {
 
     return (
       <FlatList
+        scrollIndicatorInsets={{ right: 1 }}
+        indicatorStyle="black"
         data={lectures}
         renderItem={renderLectureListItem}
         keyExtractor={getLectureListItemKey}

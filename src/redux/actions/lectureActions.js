@@ -69,6 +69,6 @@ export const resetLectures = () => ({
   type: RESET_LECTURES,
 });
 
-export const resetLectureDetail = () => ({
+export const resetAttendence = () => ({
   type: RESET_ATTENDENCE,
 });

@@ -10,11 +10,23 @@ import Label from '../Label';
 
 const LectureListItem = (props) => {
   const { theme } = useTheme();
-  const { style, name, code, instructor, onPress } = props;
+  const {
+    style,
+    lectureName,
+    lectureCode,
+    lectureInstructor,
+    lectureStartDate,
+    onPress,
+  } = props;
 
   const _onPress = () => {
     if (onPress) {
-      const param = { name, code, instructor };
+      const param = {
+        lectureName,
+        lectureCode,
+        lectureInstructor,
+        lectureStartDate,
+      };
       onPress(param);
     }
   };
@@ -27,10 +39,10 @@ const LectureListItem = (props) => {
 
   return (
     <Touchable onPress={_onPress} style={[styles.container, style]}>
-      <Label>{name}</Label>
-      <Label style={[styles.classCodeLabel]}>{code}</Label>
+      <Label>{lectureName}</Label>
+      <Label style={[styles.classCodeLabel]}>{lectureCode}</Label>
       <Label style={[styles.instructorLabel, _styles.instructorLabel]}>
-        {instructor}
+        {lectureInstructor}
       </Label>
       <Image style={styles.arrowIcon} source={icons.arrowRight} />
     </Touchable>
@@ -67,8 +79,9 @@ const styles = StyleSheet.create({
 
 LectureListItem.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  name: PropTypes.string,
-  code: PropTypes.string,
-  instructor: PropTypes.string,
+  lectureName: PropTypes.string,
+  lectureCode: PropTypes.string,
+  lectureInstructor: PropTypes.string,
+  lectureStartDate: PropTypes.any,
   onPress: PropTypes.func,
 };
