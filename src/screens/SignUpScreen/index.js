@@ -7,7 +7,6 @@ import { images } from '../../assets';
 import { convert } from '../../helpers/pixelSizeHelper';
 import { Label, Input, Button, Touchable } from '../../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
-import imHereApi from '../../api/ImHereApi';
 import { register } from '../../redux/actions/userActions';
 
 const SignUpScreen = (props) => {
@@ -15,8 +14,7 @@ const SignUpScreen = (props) => {
   const { navigation } = props;
 
   //Variables
-  const { theme, changeTheme } = useTheme();
-  const insets = useSafeAreaInsets();
+  const { theme } = useTheme();
 
   //Redux
   const dispatch = useDispatch();
