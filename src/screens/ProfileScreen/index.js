@@ -64,7 +64,7 @@ const ProfileScreen = (props) => {
           </>
         )}
 
-        <Label style={styles.inputLabel}>E-Mail</Label>
+        <Label style={styles.inputLabel}>Email</Label>
         <Input style={styles.input} value={userInfo.email} disabled />
       </View>
       <Button

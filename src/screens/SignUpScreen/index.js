@@ -54,7 +54,7 @@ const SignUpScreen = (props) => {
     }
 
     if (!validateEmail(registerBody.email)) {
-      Alert.alert('', 'Enter a valid E-Mail!');
+      Alert.alert('', 'Enter a valid Email!');
       return;
     }
 
@@ -120,7 +120,7 @@ const SignUpScreen = (props) => {
           style={styles.input}
         />
 
-        <Label style={styles.inputLabel}>E-Mail</Label>
+        <Label style={styles.inputLabel}>Email</Label>
         <Input
           onSubmit={onEmailSubmit}
           keyboardType="email-address"

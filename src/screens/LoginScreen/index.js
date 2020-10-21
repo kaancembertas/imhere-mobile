@@ -34,12 +34,12 @@ const LoginScreen = (props) => {
     const password = passwordRef.current.getValue();
 
     if (email == '' || password == '') {
-      Alert.alert('', 'Please enter E-Mail and Password correctly');
+      Alert.alert('', 'Please enter Email and Password correctly');
       return;
     }
 
     if (!validateEmail(email)) {
-      Alert.alert('', 'Enter a valid E-Mail!');
+      Alert.alert('', 'Enter a valid Email!');
       return;
     }
 
@@ -67,7 +67,7 @@ const LoginScreen = (props) => {
         source={images.student}
       />
       <View style={styles.formContainer}>
-        <Label style={styles.studentNoLabel}>E-Mail</Label>
+        <Label style={styles.studentNoLabel}>Email</Label>
         <Input
           onSubmit={onEmailSubmit}
           keyboardType="email-address"
