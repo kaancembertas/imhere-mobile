@@ -7,6 +7,7 @@ import { convert } from '../../helpers/pixelSizeHelper';
 import { Label, Input, Button, Touchable } from '../../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { register } from '../../redux/actions/userActions';
+import { validateEmail } from '../../helpers/validationHelper';
 
 const SignUpScreen = (props) => {
   //Props
@@ -31,8 +32,6 @@ const SignUpScreen = (props) => {
     navigation.goBack();
   };
   const onSubmitPress = () => {
-    // TODO: Email validation
-    // TODO: No validation
     // TODO: IMAGE URL
 
     const registerBody = {
@@ -51,6 +50,11 @@ const SignUpScreen = (props) => {
       registerBody.surname == ''
     ) {
       Alert.alert('', 'Fill the all inputs correctly!');
+      return;
+    }
+
+    if (!validateEmail(registerBody.email)) {
+      Alert.alert('', 'Enter a valid E-Mail!');
       return;
     }
 

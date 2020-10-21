@@ -8,6 +8,7 @@ import { convert, normalize } from '../../helpers/pixelSizeHelper';
 import { Label, Input, Button } from '../../components';
 import { authenticate } from '../../redux/actions/authActions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import { validateEmail } from '../../helpers/validationHelper';
 
 const LoginScreen = (props) => {
   //Variables
@@ -31,10 +32,17 @@ const LoginScreen = (props) => {
   const onLoginPress = () => {
     const email = emailRef.current.getValue();
     const password = passwordRef.current.getValue();
+
     if (email == '' || password == '') {
       Alert.alert('', 'Please enter E-Mail and Password correctly');
       return;
     }
+
+    if (!validateEmail(email)) {
+      Alert.alert('', 'Enter a valid E-Mail!');
+      return;
+    }
+
     dispatch(authenticate(email, password));
   };
 
