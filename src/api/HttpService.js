@@ -66,7 +66,7 @@ export default class HttpService {
 
   fetch = async (options) => {
     const authData = await getData(storageKeys.AUTH_DATA, storageTypes.JSON);
-    const accessToken = authData.accessToken;
+    const accessToken = authData.token;
 
     const newOptions = {
       ...options,

@@ -1,30 +1,28 @@
 import React, { useRef } from 'react';
 import { View, StyleSheet, Image, Alert } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { images } from '../../assets';
-import { convert, normalize } from '../../helpers/pixelSizeHelper';
+import { convert } from '../../helpers/pixelSizeHelper';
 import { Label, Input, Button } from '../../components';
-import { authenticate } from '../../redux/actions/authActions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { validateEmail } from '../../helpers/validationHelper';
+import { useAuthentication } from '../../providers/AuthenticationProvider';
 
 const LoginScreen = (props) => {
-  //Variables
+  // Variables
   const { theme, changeTheme } = useTheme();
   const insets = useSafeAreaInsets();
   const { navigation } = props;
 
-  //Refs
+  // Uses
+  const { authProgress, authenticate } = useAuthentication();
+
+  // Refs
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
-  //Redux
-  const dispatch = useDispatch();
-  const authProgress = useSelector(({ auth }) => auth.authProgress);
-
-  //Functions
+  // Functions
   const onSignUpPress = () => {
     navigation.navigate('SignUpScreen');
   };
@@ -42,8 +40,7 @@ const LoginScreen = (props) => {
       Alert.alert('', 'Enter a valid Email!');
       return;
     }
-
-    dispatch(authenticate(email, password));
+    authenticate(email, password);
   };
 
   const onEmailSubmit = () => {

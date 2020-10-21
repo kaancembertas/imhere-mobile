@@ -1,31 +1,32 @@
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { useTheme } from '../../providers/ThemeProvider';
 import { fonts, images } from '../../assets';
 import { convert, normalize } from '../../helpers/pixelSizeHelper';
 import { Label, Input, Button } from '../../components';
 import { ENTITY } from '../../config/api';
-import { logout } from '../../redux/actions/authActions';
+import { useAuthentication } from '../../providers/AuthenticationProvider';
 
 const ProfileScreen = (props) => {
-  //Redux
-  const dispatch = useDispatch();
+  // Redux
   const userInfo = useSelector(({ user }) => user.info);
 
-  //Variables
-  const { navigation } = props;
-  const { theme, changeTheme } = useTheme();
+  // Uses
+  const { logout } = useAuthentication();
+
+  // Variables
+  const { theme } = useTheme();
   const userRoleText =
     userInfo.role === ENTITY.USER.STUDENT ? 'Student' : 'Instructor';
 
-  //Functions
+  // Functions
   const onLogoutPress = () => {
-    dispatch(logout());
+    logout();
   };
-  //Conditional Style
+
+  // Conditional Style
   const _styles = {
     container: {
       backgroundColor: theme.primaryThemeColor,

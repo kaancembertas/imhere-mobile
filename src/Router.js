@@ -7,7 +7,7 @@ import {
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import NavigationHeader from './components/NavigationHeader';
 import BottomTabBar from './components/BottomTabBar';
-import { useSelector } from 'react-redux';
+import { useAuthentication } from './providers/AuthenticationProvider';
 import SCREENS from './screens';
 
 const Stack = createStackNavigator();
@@ -69,7 +69,7 @@ const AppStack = () => {
 };
 
 const AppNavigator = () => {
-  const isAuthenticated = useSelector(({ auth }) => auth.isAuthenticated);
+  const { isAuthenticated } = useAuthentication();
   return (
     <NavigationContainer>
       {isAuthenticated ? <AppStack /> : <AuthStack />}

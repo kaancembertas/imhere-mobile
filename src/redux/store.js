@@ -2,6 +2,9 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import reduxThunk from 'redux-thunk';
 
+//Middlewares
+import authMiddleware from './middlewares/authMiddleware';
+
 //Reducers
 import auth from './reducers/authReducer';
 import user from './reducers/userReducer';
@@ -22,7 +25,7 @@ const composeEnhancers = compose;
 
 const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(reduxThunk, logger)),
+  composeEnhancers(applyMiddleware(authMiddleware, reduxThunk, logger)),
 );
 
 export default store;

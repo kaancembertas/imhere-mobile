@@ -1,16 +1,9 @@
 import { Alert } from 'react-native';
 import ImHereApi from '../../api/ImHereApi';
 import {
-  removeData,
-  storageKeys,
-  storageTypes,
-  storeData,
-} from '../../utils/asyncStorage';
-import {
   AUTH_PROGRESS,
   AUTH_SUCCESS,
   AUTH_FAIL,
-  USER_INFO_COMPLETE,
   RESET_USER_INFO,
   LOGOUT,
   RESET_LECTURES,
@@ -36,28 +29,9 @@ export const authenticate = (email, password) => {
         return;
       }
 
-      const accessToken = response.data.token;
-      const expireDate = response.data.expireDate;
-      const authData = { accessToken, expireDate };
-      console.log('AUTH DATA', authData);
-      await storeData(storageKeys.AUTH_DATA, storageTypes.JSON, authData);
-
-      const userInfoResponse = await ImHereApi.getUserInfo();
-      if (!userInfoResponse.success) {
-        Alert.alert('', userInfoResponse.errorMessage);
-        dispatch({
-          type: AUTH_FAIL,
-        });
-        return;
-      }
-
-      dispatch({
-        type: USER_INFO_COMPLETE,
-        payload: userInfoResponse.data,
-      });
-
       dispatch({
         type: AUTH_SUCCESS,
+        payload: response.data,
       });
     } catch (err) {
       dispatch({
@@ -69,14 +43,8 @@ export const authenticate = (email, password) => {
 
 export const logout = () => {
   return async (dispatch) => {
-    try {
-      await removeData(storageKeys.AUTH_DATA);
-    } catch (e) {
-      console.log('Logout Error (Remove AUTH Data)', e);
-    } finally {
-      dispatch({ type: RESET_USER_INFO });
-      dispatch({ type: RESET_LECTURES });
-      dispatch({ type: LOGOUT });
-    }
+    dispatch({ type: RESET_USER_INFO });
+    dispatch({ type: RESET_LECTURES });
+    dispatch({ type: LOGOUT });
   };
 };

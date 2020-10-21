@@ -4,6 +4,9 @@ import {
   USER_REGISTER_PROGRESS,
   USER_REGISTER_COMPLETE,
   RESET_USER_INFO,
+  USER_INFO_SUCCESS,
+  USER_INFO_FAIL,
+  USER_INFO_PROGRESS,
 } from '../actionTypes';
 
 export const register = (registerBody, onSuccess) => {
@@ -23,6 +26,33 @@ export const register = (registerBody, onSuccess) => {
     } finally {
       dispatch({
         type: USER_REGISTER_COMPLETE,
+      });
+    }
+  };
+};
+
+export const getUserInfo = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: USER_INFO_PROGRESS,
+      });
+      const response = await ImHereApi.getUserInfo();
+      if (!response.success) {
+        Alert.alert('', response.errorMessage);
+        dispatch({
+          type: USER_INFO_FAIL,
+        });
+        return;
+      }
+
+      dispatch({
+        type: USER_INFO_SUCCESS,
+        payload: response.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: USER_INFO_FAIL,
       });
     }
   };
