@@ -8,7 +8,7 @@ export const storageTypes = {
 export const storageKeys = {
   THEME_ID: '@THEME_ID',
   TEST_KEY: '@TEST_KEY',
-  ACCESS_TOKEN: '@ACCESS_TOKEN',
+  AUTH_DATA: '@AUTH_DATA',
 };
 
 const convertForStore = (value, type) => {

@@ -63,15 +63,13 @@ export default class HttpService {
   };
 
   fetch = async (options) => {
-    const ACCESS_TOKEN = await getData(
-      storageKeys.ACCESS_TOKEN,
-      storageTypes.VALUE,
-    );
+    const authData = await getData(storageKeys.AUTH_DATA, storageTypes.JSON);
+    const accessToken = authData.accessToken;
 
     const newOptions = {
       ...options,
       headers: {
-        Authorization: 'Bearer ' + ACCESS_TOKEN,
+        Authorization: 'Bearer ' + accessToken,
       },
     };
 

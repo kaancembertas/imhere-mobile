@@ -37,11 +37,9 @@ export const authenticate = (email, password) => {
       }
 
       const accessToken = response.data.token;
-      await storeData(
-        storageKeys.ACCESS_TOKEN,
-        storageTypes.VALUE,
-        accessToken,
-      );
+      const expireDate = response.data.expireDate;
+      const authData = { accessToken, expireDate };
+      await storeData(storageKeys.AUTH_DATA, storageTypes.JSON, authData);
 
       const userInfoResponse = await ImHereApi.getUserInfo();
       if (!userInfoResponse.success) {
@@ -71,12 +69,13 @@ export const authenticate = (email, password) => {
 export const logout = () => {
   return async (dispatch) => {
     try {
-      await removeData(storageKeys.ACCESS_TOKEN);
+      await removeData(storageKeys.AUTH_DATA);
+    } catch (e) {
+      console.log('Logout Error (Remove AUTH Data)', e);
+    } finally {
       dispatch({ type: RESET_USER_INFO });
       dispatch({ type: RESET_LECTURES });
       dispatch({ type: LOGOUT });
-    } catch (e) {
-      console.log('Logout Error', e);
     }
   };
 };
