@@ -1,5 +1,7 @@
 import ApiResponseModel from './models/ApiResponseModel';
 import { getData, storageKeys, storageTypes } from '../utils/asyncStorage';
+import store from '../redux/store';
+import { logout } from '../redux/actions/authActions';
 
 export default class HttpService {
   apiHost = '';
@@ -41,10 +43,10 @@ export default class HttpService {
     if (response.status === 401) {
       const apiResponse = new ApiResponseModel(401, false);
       apiResponse.setErrorMessage(
-        'The session has been expired, please login again.',
+        'Your session has been expired, please login again.',
       );
+      store.dispatch(logout());
       return apiResponse;
-      //TODO: Dispatch authStack
     }
 
     if (response.status === 204) {

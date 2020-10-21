@@ -39,6 +39,7 @@ export const authenticate = (email, password) => {
       const accessToken = response.data.token;
       const expireDate = response.data.expireDate;
       const authData = { accessToken, expireDate };
+      console.log('AUTH DATA', authData);
       await storeData(storageKeys.AUTH_DATA, storageTypes.JSON, authData);
 
       const userInfoResponse = await ImHereApi.getUserInfo();
