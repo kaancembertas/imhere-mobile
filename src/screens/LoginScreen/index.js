@@ -64,7 +64,7 @@ const LoginScreen = (props) => {
         resizeMethod="resize"
         resizeMode="contain"
         style={styles.loginImage}
-        source={images.student}
+        source={images.logo}
       />
       <View style={styles.formContainer}>
         <Label style={styles.studentNoLabel}>Email</Label>
@@ -109,8 +109,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   loginImage: {
-    width: convert(175),
-    height: convert(175),
+    width: convert(200),
+    height: convert(200),
     alignSelf: 'center',
     marginTop: convert(40),
   },
