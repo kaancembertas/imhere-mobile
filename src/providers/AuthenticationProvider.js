@@ -42,6 +42,7 @@ const AuthenticationProvider = ({ children }) => {
   };
 
   const _logout = () => {
+    setAuthenticated(false);
     dispatch(logout());
   };
 
