@@ -1,7 +1,7 @@
 import ApiResponseModel from './models/ApiResponseModel';
 import { getData, storageKeys, storageTypes } from '../utils/asyncStorage';
 import store from '../redux/store';
-import { logout } from '../redux/actions/authActions';
+import { useAuthentication } from '../providers/AuthenticationProvider';
 
 export default class HttpService {
   apiHost = '';
@@ -32,34 +32,34 @@ export default class HttpService {
     }
 
     const response = await fetch(REQUEST_URL, fetchOptions);
-    console.log(response);
+    const apiResponse = new ApiResponseModel();
+    apiResponse.setStatusCode(response.status);
+
     if (response.status === 400) {
-      const apiResponse = new ApiResponseModel(400, false);
       const responseBody = await response.json();
       apiResponse.setErrorMessage(responseBody.errorMessage || 'Bad Request');
       return apiResponse;
     }
 
     if (response.status === 401) {
-      const apiResponse = new ApiResponseModel(401, false);
       apiResponse.setErrorMessage(
         'Your session has been expired, please login again.',
       );
-      store.dispatch(logout());
+      //FIX LOGOUT
       return apiResponse;
     }
 
     if (response.status === 204) {
-      return new ApiResponseModel(204, true, null);
+      apiResponse.setSuccess(true);
+      return apiResponse;
     }
 
     if (response.status === 200) {
       const responseBody = await response.json();
-      const apiResponse = new ApiResponseModel(200, true, responseBody);
+      apiResponse.setData(responseBody);
       return apiResponse;
     }
 
-    const apiResponse = new ApiResponseModel(response.status, false);
     apiResponse.setErrorMessage('Unhandled error occured [HttpService]');
     return apiResponse;
   };
