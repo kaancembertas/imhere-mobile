@@ -74,6 +74,7 @@ const ProfileScreen = (props) => {
         style={[styles.logoutButton, _styles.logoutButton]}
         title="Logout"
       />
+      <View style={styles.bottomPadding} />
     </KeyboardAwareScrollView>
   );
 };
@@ -117,5 +118,8 @@ const styles = StyleSheet.create({
   },
   logoutButton: {
     marginTop: convert(30),
+  },
+  bottomPadding: {
+    height: convert(30),
   },
 });

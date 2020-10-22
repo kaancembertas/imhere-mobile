@@ -55,7 +55,7 @@ const Input = (props, ref) => {
     input: {
       backgroundColor: theme.primaryThemeColor,
       borderColor: hexToRgba(theme.secondaryThemeColor, 0.5),
-      opacity: disabled ? 0.6 : 1,
+      color: hexToRgba(theme.primaryTextColor, disabled ? 0.4 : 1),
     },
   };
 
