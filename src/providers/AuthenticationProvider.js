@@ -1,11 +1,11 @@
 import React, {
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from 'react';
+import SplashScreen from 'react-native-splash-screen';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticate, logout } from '../redux/actions/authActions';
 import { getUserInfo } from '../redux/actions/userActions';
@@ -50,7 +50,7 @@ const AuthenticationProvider = ({ children }) => {
     const authData = await getData(storageKeys.AUTH_DATA, storageTypes.JSON);
     if (authData === null) {
       console.log('[AutenticationProvider] No token found');
-      //Close Splash here
+      SplashScreen.hide();
       return;
     }
 
@@ -58,11 +58,12 @@ const AuthenticationProvider = ({ children }) => {
     const now = new Date();
 
     if (now > expireDate) {
-      console.log('[AutenticationProvider] Removed token');
+      console.log('[AutenticationProvider] Token expired, removed token');
       await removeData(storageKeys.AUTH_DATA);
-      //Close Splash here
+      SplashScreen.hide();
       return;
     }
+
     // We have valid token, get userInfo
     console.log('[AutenticationProvider] We have valid token');
     dispatch(getUserInfo());
@@ -107,6 +108,11 @@ const AuthenticationProvider = ({ children }) => {
       setAuthenticated(true);
     }
   }, [userInfoProgress]);
+
+  useEffect(() => {
+    // When user is granted, close SplashScreen
+    if (_isAuthenticated) SplashScreen.hide();
+  }, [_isAuthenticated]);
 
   return useMemo(
     () => (

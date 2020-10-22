@@ -4,14 +4,8 @@ import { Provider } from 'react-redux';
 import ThemeProvider from './ThemeProvider';
 import AuthenticationProvider from './AuthenticationProvider';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import SplashScreen from 'react-native-splash-screen';
 
 const RootProvider = ({ children }) => {
-  //TODO: Change here
-  useEffect(() => {
-    SplashScreen.hide();
-  });
-
   return (
     <Provider store={store}>
       <SafeAreaProvider>
