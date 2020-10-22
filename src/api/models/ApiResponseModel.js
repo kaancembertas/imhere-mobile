@@ -4,11 +4,18 @@ export default class ApiResponseModel {
   errorMessage = null;
   data = null;
 
-  constructor(statusCode, success, data) {
-    this.statusCode = statusCode;
-    this.success = success;
+  setData = (data) => {
     this.data = data;
-  }
+    this.success = true;
+  };
+
+  setSuccess = (success) => {
+    this.success = success;
+  };
+
+  setStatusCode = (statusCode) => {
+    this.statusCode = statusCode;
+  };
 
   setErrorMessage = (errorMessage) => {
     this.errorMessage = errorMessage;
