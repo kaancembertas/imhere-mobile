@@ -3,11 +3,18 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticate, logout } from '../redux/actions/authActions';
 import { getUserInfo } from '../redux/actions/userActions';
+import {
+  getData,
+  removeData,
+  storageKeys,
+  storageTypes,
+} from '../utils/asyncStorage';
 
 const AuthenticationContext = createContext({
   isAuthenticated: false,
@@ -28,6 +35,7 @@ const AuthenticationProvider = ({ children }) => {
   const [_authProgress, setAuthprogress] = useState(false);
   const [_isAuthenticated, setAuthenticated] = useState(false);
 
+  // Functions
   const _authenticate = (email, password) => {
     setAuthprogress(true);
     dispatch(authenticate(email, password));
@@ -35,8 +43,41 @@ const AuthenticationProvider = ({ children }) => {
 
   const _logout = () => {
     dispatch(logout());
-    setAuthenticated(false);
   };
+
+  const initializeAuthentication = async () => {
+    const authData = await getData(storageKeys.AUTH_DATA, storageTypes.JSON);
+    if (authData === null) {
+      console.log('[AutenticationProvider] No token found');
+      //Close Splash here
+      return;
+    }
+
+    const expireDate = new Date(authData.expireDate);
+    const now = new Date();
+
+    if (now > expireDate) {
+      console.log('[AutenticationProvider] Removed token');
+      await removeData(storageKeys.AUTH_DATA);
+      //Close Splash here
+      return;
+    }
+    // We have valid token, get userInfo
+    console.log('[AutenticationProvider] We have valid token');
+    dispatch(getUserInfo());
+  };
+
+  // Effects
+
+  // Effect for autologin
+  useEffect(() => {
+    initializeAuthentication();
+  }, []);
+
+  // Effect for logout
+  useEffect(() => {
+    if (!isAuthenticated) setAuthenticated(false);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     // Cannot authenticate finish progress
@@ -66,7 +107,7 @@ const AuthenticationProvider = ({ children }) => {
     }
   }, [userInfoProgress]);
 
-  const Provider = useCallback(
+  return useMemo(
     () => (
       <AuthenticationContext.Provider
         value={{
@@ -78,10 +119,8 @@ const AuthenticationProvider = ({ children }) => {
         {children}
       </AuthenticationContext.Provider>
     ),
-    [_authProgress, _isAuthenticated],
+    [_isAuthenticated, _authProgress],
   );
-
-  return Provider();
 };
 
 export const useAuthentication = () => {
