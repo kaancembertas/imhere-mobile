@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
@@ -21,6 +21,9 @@ const SignUpScreen = (props) => {
   //Redux
   const dispatch = useDispatch();
   const registerProgress = useSelector(({ user }) => user.registerProgress);
+
+  //State
+  const [isImageUploading, setImageUploading] = useState(false);
 
   //Refs
   const imageRef = useRef(null);
@@ -47,8 +50,6 @@ const SignUpScreen = (props) => {
   };
 
   const onSubmitPress = async () => {
-    // TODO: IMAGE URL
-
     const imagePath = imageRef.current.getImage();
     const registerBody = {
       no: schoolNumberRef.current.getValue(),
@@ -56,7 +57,6 @@ const SignUpScreen = (props) => {
       password: passwordRef.current.getValue(),
       name: nameRef.current.getValue(),
       surname: surnameRef.current.getValue(),
-      image_url: 'URL FROM MOBILE',
     };
 
     if (imagePath === null) {
@@ -85,9 +85,11 @@ const SignUpScreen = (props) => {
       Alert.alert('', 'Already registered with this Email! TEST');
       return;
     }
-
-    uploadUserPicture(imagePath, registerBody.email);
-    //dispatch(register(registerBody, onRegisterSuccess));
+    setImageUploading(true);
+    const image_url = await uploadUserPicture(imagePath, registerBody.email);
+    registerBody['image_url'] = image_url;
+    dispatch(register(registerBody, onRegisterSuccess));
+    setImageUploading(false);
   };
 
   const getTextInputRefs = () => {

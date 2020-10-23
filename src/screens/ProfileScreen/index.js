@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { useTheme } from '../../providers/ThemeProvider';
@@ -46,7 +46,16 @@ const ProfileScreen = (props) => {
   return (
     <KeyboardAwareScrollView style={[styles.container, _styles.container]}>
       <View style={[styles.cameraContainer, _styles.cameraContainer]}>
-        <Image style={styles.profilePicture} source={images.kaan} />
+        <View style={styles.pictureIndicatorContainer}>
+          <ActivityIndicator size="large" color={theme.secondaryDarkColor} />
+        </View>
+        <Image
+          resizeMethod="scale"
+          width={convert(110)}
+          height={convert(110)}
+          style={styles.profilePicture}
+          source={{ uri: userInfo.image_url }}
+        />
       </View>
       <Label style={[styles.userRoleText, _styles.userRoleText]}>
         {userRoleText}
@@ -96,6 +105,7 @@ const styles = StyleSheet.create({
     marginTop: convert(30),
   },
   profilePicture: {
+    backgroundColor: 'transparent',
     width: convert(110),
     height: convert(110),
     borderRadius: convert(55),
@@ -121,5 +131,8 @@ const styles = StyleSheet.create({
   },
   bottomPadding: {
     height: convert(30),
+  },
+  pictureIndicatorContainer: {
+    position: 'absolute',
   },
 });

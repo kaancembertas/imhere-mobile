@@ -79,6 +79,9 @@ const ProfilePictureTouchable = (props, ref) => {
         <ActivityIndicator size="large" color={theme.secondaryDarkColor} />
       ) : (
         <Image
+          width={convert(110)}
+          height={convert(110)}
+          resizeMethod="scale"
           style={image === null ? styles.cameraIcon : styles.profilePicture}
           source={image === null ? images.camera : { uri: image }}
         />
