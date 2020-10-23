@@ -76,7 +76,7 @@ const ProfilePictureTouchable = (props, ref) => {
       onPress={onCameraPress}
       style={[styles.cameraContainer, _styles.cameraContainer, style]}>
       {loading ? (
-        <ActivityIndicator size="large" color={theme.secondaryThemeColor} />
+        <ActivityIndicator size="large" color={theme.secondaryDarkColor} />
       ) : (
         <Image
           style={image === null ? styles.cameraIcon : styles.profilePicture}
