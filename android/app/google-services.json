@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "699421119390",
+    "firebase_url": "https://im-here-mobile.firebaseio.com",
+    "project_id": "im-here-mobile",
+    "storage_bucket": "im-here-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699421119390:android:fe9339adbf181485a53c8f",
+        "android_client_info": {
+          "package_name": "com.twitchsozluk.imhere"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699421119390-fek5k1228j7g2ijci7r1klojs83ce96k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqA9BZHpZIDjsjVHwi4XZLSkavN6TZZaA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699421119390-fek5k1228j7g2ijci7r1klojs83ce96k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "699421119390-evo3u006be6lg71q57lpo0s4pgc2ljpe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.twitchsozluk.imhere"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-package com.ticaret_rollcall_mobile;
+package com.twitchsozluk.imhere;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;

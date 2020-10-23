@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   profilePicture: {
     width: convert(110),
     height: convert(110),
-    borderRadius: convert(60),
+    borderRadius: convert(55),
   },
   inputLabel: {
     marginTop: convert(15),

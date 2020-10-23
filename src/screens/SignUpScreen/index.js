@@ -8,6 +8,7 @@ import { Label, Input, Button, Touchable } from '../../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { register } from '../../redux/actions/userActions';
 import { validateEmail } from '../../helpers/validationHelper';
+import ProfilePictureTouchable from '../../components/ProfilePictureTouchable';
 
 const SignUpScreen = (props) => {
   //Props
@@ -28,6 +29,11 @@ const SignUpScreen = (props) => {
   const passwordRef = useRef(null);
 
   //Functions
+  const onNameSubmit = () => surnameRef.current.focus();
+  const onSurnameSubmit = () => schoolNumberRef.current.focus();
+  const onSchoolNumberSubmit = () => emailRef.current.focus();
+  const onEmailSubmit = () => passwordRef.current.focus();
+
   const onRegisterSuccess = () => {
     navigation.goBack();
   };
@@ -71,18 +77,9 @@ const SignUpScreen = (props) => {
     ];
   };
 
-  const onNameSubmit = () => surnameRef.current.focus();
-  const onSurnameSubmit = () => schoolNumberRef.current.focus();
-  const onSchoolNumberSubmit = () => emailRef.current.focus();
-  const onEmailSubmit = () => passwordRef.current.focus();
-
   //Conditional Style
   const _styles = {
     container: {
-      backgroundColor: theme.primaryThemeColor,
-    },
-    cameraContainer: {
-      borderColor: theme.secondaryThemeColor,
       backgroundColor: theme.primaryThemeColor,
     },
   };
@@ -91,9 +88,7 @@ const SignUpScreen = (props) => {
     <KeyboardAwareScrollView
       getTextInputRefs={getTextInputRefs}
       style={[styles.container, _styles.container]}>
-      <Touchable style={[styles.cameraContainer, _styles.cameraContainer]}>
-        <Image style={styles.cameraIcon} source={images.camera} />
-      </Touchable>
+      <ProfilePictureTouchable style={styles.profilePicture} />
       <Label style={styles.uploadText}>Upload your portrait photograph</Label>
       <View style={styles.formContainer}>
         <Label style={styles.inputLabel}>Name</Label>
@@ -154,20 +149,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  cameraContainer: {
-    width: convert(120),
-    height: convert(120),
-    borderRadius: convert(60),
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    borderWidth: convert(3),
-    marginTop: convert(20),
-  },
-  cameraIcon: {
-    width: convert(50),
-    height: convert(50),
-  },
   uploadText: {
     marginTop: convert(15),
     alignSelf: 'center',
@@ -187,5 +168,8 @@ const styles = StyleSheet.create({
   },
   footer: {
     height: convert(40),
+  },
+  profilePicture: {
+    marginTop: convert(20),
   },
 });

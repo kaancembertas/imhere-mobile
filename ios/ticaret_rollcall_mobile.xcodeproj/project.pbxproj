@@ -51,7 +51,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ticaret_rollcall_mobileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ticaret_rollcall_mobileTests.m; sourceTree = "<group>"; };
 		0EC862E65C4C8E5CDEF1B7A0 /* libPods-ticaret_rollcall_mobile-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ticaret_rollcall_mobile-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07F961A680F5B00A75B9A /* ticaret_rollcall_mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ticaret_rollcall_mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* I'm Here.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "I'm Here.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ticaret_rollcall_mobile/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ticaret_rollcall_mobile/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ticaret_rollcall_mobile/Images.xcassets; sourceTree = "<group>"; };
@@ -188,7 +188,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* ticaret_rollcall_mobile.app */,
+				13B07F961A680F5B00A75B9A /* I'm Here.app */,
 				00E356EE1AD99517003FC87E /* ticaret_rollcall_mobileTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* ticaret_rollcall_mobile-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* ticaret_rollcall_mobile-tvOSTests.xctest */,
@@ -265,7 +265,7 @@
 			);
 			name = ticaret_rollcall_mobile;
 			productName = ticaret_rollcall_mobile;
-			productReference = 13B07F961A680F5B00A75B9A /* ticaret_rollcall_mobile.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* I'm Here.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* ticaret_rollcall_mobile-tvOS */ = {
@@ -707,7 +707,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.twitchsozluk.imhere;
-				PRODUCT_NAME = ticaret_rollcall_mobile;
+				PRODUCT_NAME = "I'm Here";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -729,7 +729,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.twitchsozluk.imhere;
-				PRODUCT_NAME = ticaret_rollcall_mobile;
+				PRODUCT_NAME = "I'm Here";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
