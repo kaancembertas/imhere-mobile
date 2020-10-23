@@ -1,11 +1,10 @@
 import React, { useState, forwardRef, useRef } from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { StyleSheet, TextInput } from 'react-native';
 import PropTypes from 'prop-types';
 import { useTheme } from '../../providers/ThemeProvider';
 import { fonts } from '../../assets';
 import { convert, normalize } from '../../helpers/pixelSizeHelper';
 import { hexToRgba } from '../../helpers/colorHelper';
-import { TextInput } from 'react-native-gesture-handler';
 
 const Input = (props, ref) => {
   const { theme } = useTheme();

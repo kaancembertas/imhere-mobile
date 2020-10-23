@@ -1,14 +1,15 @@
 import React, { useRef } from 'react';
-import { View, StyleSheet, Image, Alert } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
-import { images } from '../../assets';
 import { convert } from '../../helpers/pixelSizeHelper';
-import { Label, Input, Button, Touchable } from '../../components';
+import { Label, Input, Button } from '../../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { register } from '../../redux/actions/userActions';
 import { validateEmail } from '../../helpers/validationHelper';
 import ProfilePictureTouchable from '../../components/ProfilePictureTouchable';
+import { uploadUserPicture } from '../../helpers/firebaseHelper';
+import ImHereApi from '../../api/ImHereApi';
 
 const SignUpScreen = (props) => {
   //Props
@@ -22,6 +23,7 @@ const SignUpScreen = (props) => {
   const registerProgress = useSelector(({ user }) => user.registerProgress);
 
   //Refs
+  const imageRef = useRef(null);
   const nameRef = useRef(null);
   const surnameRef = useRef(null);
   const schoolNumberRef = useRef(null);
@@ -37,9 +39,17 @@ const SignUpScreen = (props) => {
   const onRegisterSuccess = () => {
     navigation.goBack();
   };
-  const onSubmitPress = () => {
+
+  const checkEmailExists = async (email) => {
+    const response = await ImHereApi.checkEmailExists(email);
+    if (!response.success) return true;
+    return response.data.isExists;
+  };
+
+  const onSubmitPress = async () => {
     // TODO: IMAGE URL
 
+    const imagePath = imageRef.current.getImage();
     const registerBody = {
       no: schoolNumberRef.current.getValue(),
       email: emailRef.current.getValue(),
@@ -48,6 +58,12 @@ const SignUpScreen = (props) => {
       surname: surnameRef.current.getValue(),
       image_url: 'URL FROM MOBILE',
     };
+
+    if (imagePath === null) {
+      Alert.alert('', 'Upload your profile picture');
+      return;
+    }
+
     if (
       registerBody.no == '' ||
       registerBody.email == '' ||
@@ -64,7 +80,14 @@ const SignUpScreen = (props) => {
       return;
     }
 
-    dispatch(register(registerBody, onRegisterSuccess));
+    const isEmailExists = await checkEmailExists(registerBody.email);
+    if (isEmailExists) {
+      Alert.alert('', 'Already registered with this Email! TEST');
+      return;
+    }
+
+    uploadUserPicture(imagePath, registerBody.email);
+    //dispatch(register(registerBody, onRegisterSuccess));
   };
 
   const getTextInputRefs = () => {
@@ -88,7 +111,7 @@ const SignUpScreen = (props) => {
     <KeyboardAwareScrollView
       getTextInputRefs={getTextInputRefs}
       style={[styles.container, _styles.container]}>
-      <ProfilePictureTouchable style={styles.profilePicture} />
+      <ProfilePictureTouchable ref={imageRef} style={styles.profilePicture} />
       <Label style={styles.uploadText}>Upload your portrait photograph</Label>
       <View style={styles.formContainer}>
         <Label style={styles.inputLabel}>Name</Label>

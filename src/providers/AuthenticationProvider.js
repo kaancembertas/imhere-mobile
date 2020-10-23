@@ -9,6 +9,7 @@ import SplashScreen from 'react-native-splash-screen';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticate, logout } from '../redux/actions/authActions';
 import { getUserInfo } from '../redux/actions/userActions';
+import auth from '@react-native-firebase/auth';
 import {
   getData,
   removeData,
@@ -47,6 +48,7 @@ const AuthenticationProvider = ({ children }) => {
   };
 
   const initializeAuthentication = async () => {
+    await auth().signInAnonymously();
     const authData = await getData(storageKeys.AUTH_DATA, storageTypes.JSON);
     if (authData === null) {
       console.log('[AutenticationProvider] No token found');

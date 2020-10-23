@@ -34,7 +34,7 @@ const ProfilePictureTouchable = (props, ref) => {
         } else if (response.customButton) {
           reject('User tapped custom button: ' + response.customButton);
         } else {
-          const source = { uri: response.uri };
+          const source = response.uri;
           resolve(source);
         }
       });
@@ -58,7 +58,7 @@ const ProfilePictureTouchable = (props, ref) => {
 
   // Export ref
   if (ref != null) {
-    ref.curren = {
+    ref.current = {
       getImage,
     };
   }
@@ -80,7 +80,7 @@ const ProfilePictureTouchable = (props, ref) => {
       ) : (
         <Image
           style={image === null ? styles.cameraIcon : styles.profilePicture}
-          source={image === null ? images.camera : image}
+          source={image === null ? images.camera : { uri: image }}
         />
       )}
     </Touchable>
