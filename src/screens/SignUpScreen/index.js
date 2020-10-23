@@ -80,12 +80,13 @@ const SignUpScreen = (props) => {
       return;
     }
 
+    setImageUploading(true);
     const isEmailExists = await checkEmailExists(registerBody.email);
     if (isEmailExists) {
-      Alert.alert('', 'Already registered with this Email! TEST');
+      Alert.alert('', 'Already registered with this Email!');
+      setImageUploading(false);
       return;
     }
-    setImageUploading(true);
     const image_url = await uploadUserPicture(imagePath, registerBody.email);
     registerBody['image_url'] = image_url;
     dispatch(register(registerBody, onRegisterSuccess));
@@ -160,7 +161,7 @@ const SignUpScreen = (props) => {
         onPress={onSubmitPress}
         style={styles.submitButton}
         title="Submit"
-        loading={registerProgress}
+        loading={registerProgress || isImageUploading}
         secondary
       />
       <View style={styles.footer} />
