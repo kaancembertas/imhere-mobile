@@ -61,6 +61,7 @@ export default class HttpService {
     }
 
     apiResponse.setErrorMessage('Unhandled error occured [HttpService]');
+    console.log(response.body);
     return apiResponse;
   };
 

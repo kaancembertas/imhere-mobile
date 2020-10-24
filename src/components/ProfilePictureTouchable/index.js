@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react';
-import { StyleSheet, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, Image, ActivityIndicator, Platform } from 'react-native';
 import PropTypes from 'prop-types';
 import { useTheme } from '../../providers/ThemeProvider';
 import { images } from '../../assets';
@@ -34,8 +34,8 @@ const ProfilePictureTouchable = (props, ref) => {
         } else if (response.customButton) {
           reject('User tapped custom button: ' + response.customButton);
         } else {
-          const source = response.uri;
-          resolve(source);
+          if (Platform.OS === 'android') resolve('file:///' + response.path);
+          resolve(response.uri);
         }
       });
     });
@@ -45,6 +45,7 @@ const ProfilePictureTouchable = (props, ref) => {
     try {
       setLoading(true);
       const response = await showImagePicker();
+      console.log(response);
       setImage(response);
       setLoading(false);
     } catch (err) {

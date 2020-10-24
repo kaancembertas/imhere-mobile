@@ -66,6 +66,7 @@ const LoginScreen = (props) => {
       <View style={styles.formContainer}>
         <Label style={styles.studentNoLabel}>Email</Label>
         <Input
+          maxLength={50}
           onSubmit={onEmailSubmit}
           keyboardType="email-address"
           ref={emailRef}
@@ -74,6 +75,7 @@ const LoginScreen = (props) => {
 
         <Label style={styles.passwordLabel}>Password</Label>
         <Input
+          maxLength={60}
           onSubmit={onLoginPress}
           ref={passwordRef}
           password

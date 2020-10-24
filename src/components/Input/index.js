@@ -18,6 +18,7 @@ const Input = (props, ref) => {
     password,
     onSubmit,
     returnKeyType,
+    maxLength,
   } = props;
 
   const [inputValue, setInputValue] = useState(value || '');
@@ -60,6 +61,7 @@ const Input = (props, ref) => {
 
   return (
     <TextInput
+      maxLength={maxLength || 60}
       returnKeyType={returnKeyType || 'next'}
       ref={inputRef}
       onSubmitEditing={_onSubmit}
@@ -99,6 +101,7 @@ Input.propTypes = {
   onChangeValue: PropTypes.func,
   password: PropTypes.bool,
   returnKeyType: PropTypes.oneOf(['done', 'go', 'next', 'search', 'send']),
+  maxLength: PropTypes.number,
   keyboardType: PropTypes.oneOf([
     'default',
     'number-pad',

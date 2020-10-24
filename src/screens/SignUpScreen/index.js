@@ -51,6 +51,7 @@ const SignUpScreen = (props) => {
 
   const onSubmitPress = async () => {
     const imagePath = imageRef.current.getImage();
+
     const registerBody = {
       no: schoolNumberRef.current.getValue(),
       email: emailRef.current.getValue(),
@@ -80,17 +81,24 @@ const SignUpScreen = (props) => {
       return;
     }
 
-    setImageUploading(true);
-    const isEmailExists = await checkEmailExists(registerBody.email);
-    if (isEmailExists) {
-      Alert.alert('', 'Already registered with this Email!');
+    try {
+      setImageUploading(true);
+      const isEmailExists = await checkEmailExists(registerBody.email);
+
+      if (isEmailExists) {
+        Alert.alert('', 'Already registered with this Email!');
+        setImageUploading(false);
+        return;
+      }
+      const image_url = await uploadUserPicture(imagePath, registerBody.email);
+      registerBody['image_url'] = image_url;
+      console.log(registerBody);
+      dispatch(register(registerBody, onRegisterSuccess));
       setImageUploading(false);
-      return;
+    } catch (err) {
+      console.log(['[SignUpScreen - onSubmitPress]', err]);
+      setImageUploading(false);
     }
-    const image_url = await uploadUserPicture(imagePath, registerBody.email);
-    registerBody['image_url'] = image_url;
-    dispatch(register(registerBody, onRegisterSuccess));
-    setImageUploading(false);
   };
 
   const getTextInputRefs = () => {
@@ -119,6 +127,7 @@ const SignUpScreen = (props) => {
       <View style={styles.formContainer}>
         <Label style={styles.inputLabel}>Name</Label>
         <Input
+          maxLength={50}
           onSubmit={onNameSubmit}
           autoCapitalize="words"
           ref={nameRef}
@@ -127,6 +136,7 @@ const SignUpScreen = (props) => {
 
         <Label style={styles.inputLabel}>Surname</Label>
         <Input
+          maxLength={50}
           onSubmit={onSurnameSubmit}
           autoCapitalize="words"
           ref={surnameRef}
@@ -135,6 +145,7 @@ const SignUpScreen = (props) => {
 
         <Label style={styles.inputLabel}>School Number</Label>
         <Input
+          maxLength={9}
           onSubmit={onSchoolNumberSubmit}
           keyboardType="number-pad"
           ref={schoolNumberRef}
@@ -143,6 +154,7 @@ const SignUpScreen = (props) => {
 
         <Label style={styles.inputLabel}>Email</Label>
         <Input
+          maxLength={50}
           onSubmit={onEmailSubmit}
           keyboardType="email-address"
           ref={emailRef}
@@ -151,6 +163,7 @@ const SignUpScreen = (props) => {
 
         <Label style={styles.inputLabel}>Password</Label>
         <Input
+          maxLength={60}
           onSubmit={onSubmitPress}
           password
           ref={passwordRef}
