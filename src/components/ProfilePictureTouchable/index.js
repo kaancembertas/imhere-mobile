@@ -23,8 +23,8 @@ const ProfilePictureTouchable = (props, ref) => {
         skipBackup: true,
         path: 'images',
       },
-      maxWidth: 500,
-      maxHeight: 500,
+      maxWidth: 300,
+      maxHeight: 300,
     };
 
     return new Promise((resolve, reject) => {
