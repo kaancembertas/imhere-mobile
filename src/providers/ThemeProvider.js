@@ -40,7 +40,7 @@ const ThemeProvider = ({ children }) => {
         setTheme(themes[1]);
       }
     } catch (e) {
-      console.log('Change theme error', e);
+      console.log('[ThemeProvider] Change theme error', e);
     }
   };
 

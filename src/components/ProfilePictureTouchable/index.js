@@ -47,7 +47,6 @@ const ProfilePictureTouchable = (props, ref) => {
     try {
       setLoading(true);
       const response = await showImagePicker();
-      console.log(response);
       setImage(response);
       setLoading(false);
     } catch (err) {

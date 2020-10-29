@@ -92,11 +92,10 @@ const SignUpScreen = (props) => {
       }
       const image_url = await uploadUserPicture(imagePath, registerBody.email);
       registerBody['image_url'] = image_url;
-      console.log(registerBody);
       dispatch(register(registerBody, onRegisterSuccess));
       setImageUploading(false);
     } catch (err) {
-      console.log(['[SignUpScreen - onSubmitPress]', err]);
+      console.log('[SignUpScreen - onSubmitPress]', err);
       setImageUploading(false);
     }
   };

@@ -21,7 +21,6 @@ const LecturesScreen = (props) => {
 
   //Effects
   useEffect(() => {
-    console.log('LECTURESS ÇALIŞTIII');
     dispatch(getLectures());
   }, []);
 
