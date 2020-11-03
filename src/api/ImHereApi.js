@@ -12,10 +12,10 @@ class ImHereApi extends BaseApi {
     return this._doGet('/api/user/info');
   };
   getLectures = () => {
-    return this._doGet('/api/user/lectures');
+    return this._doGet('/api/lecture');
   };
   getAttendence = (lectureCode) => {
-    return this._doGet('/api/user/attendence/' + lectureCode);
+    return this._doGet('/api/attendence/' + lectureCode);
   };
 
   checkEmailExists = (email) => {
