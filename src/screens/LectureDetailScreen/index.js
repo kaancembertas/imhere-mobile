@@ -10,6 +10,7 @@ import {
   LectureDetailListItem,
   Loading,
   Seperator,
+  Touchable,
 } from '../../components';
 import { ENTITY } from '../../config/api';
 import {
@@ -30,6 +31,7 @@ const LectureDetailScreen = (props) => {
   useEffect(() => {
     navigation.setOptions({
       title: lectureName,
+      headerRight: headerRight,
     });
   }, []);
 
@@ -60,7 +62,7 @@ const LectureDetailScreen = (props) => {
     });
   }, [attendenceProgress, attendence]);
 
-  //Functions
+  // Design Renders
   const renderHeader = useCallback(() => {
     if (userRole === ENTITY.USER.INSTRUCTOR) return null;
     const joined = attendence.filter(
@@ -104,6 +106,12 @@ const LectureDetailScreen = (props) => {
     ),
     [],
   );
+
+  const headerRight = useMemo(() => (
+    <Touchable style={styles.headerRightContainer}>
+      <Image source={icons.people} style={styles.peopleIcon} />
+    </Touchable>
+  ));
 
   const renderItemSeperator = useCallback(() => <Seperator />, []);
 
@@ -175,5 +183,15 @@ const styles = StyleSheet.create({
     fontFamily: fonts.Montserrat.Medium,
     letterSpacing: convert(0.1),
     marginTop: convert(5),
+  },
+  headerRightContainer: {
+    width: convert(70),
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  peopleIcon: {
+    width: convert(30),
+    height: convert(30),
   },
 });

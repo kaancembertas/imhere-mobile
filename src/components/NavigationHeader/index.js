@@ -14,6 +14,7 @@ const NavigationHeader = (props) => {
   const { scene, previous } = props;
   const { options, navigation } = scene.descriptor;
   const canGoBack = useMemo(() => previous, []);
+  const headerRight = options.headerRight;
 
   const title =
     options.headerTitle !== undefined
@@ -38,6 +39,9 @@ const NavigationHeader = (props) => {
     titleContainer: {
       top: insets.top,
     },
+    headerRightContainer: {
+      marginTop: insets.top,
+    },
   };
 
   const BackButton = () => {
@@ -52,6 +56,15 @@ const NavigationHeader = (props) => {
     );
   };
 
+  const HeaderRight = () => {
+    if (!headerRight) return null;
+    return (
+      <View style={[styles.headerRightContainer, _styles.headerRightContainer]}>
+        {headerRight}
+      </View>
+    );
+  };
+
   return (
     <>
       <StatusBar
@@ -63,6 +76,7 @@ const NavigationHeader = (props) => {
           <Label style={[styles.title, _styles.title]}>{title}</Label>
         </View>
         <BackButton />
+        <HeaderRight />
       </View>
     </>
   );
@@ -73,8 +87,6 @@ export default NavigationHeader;
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    //borderBottomLeftRadius: convert(30),
-    //borderBottomRightRadius: convert(30),
   },
   backButtonContainer: {
     width: convert(50),
@@ -96,5 +108,13 @@ const styles = StyleSheet.create({
   },
   title: {
     letterSpacing: convert(0.1),
+  },
+  headerRightContainer: {
+    position: 'absolute',
+    width: convert(50),
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'flex-end',
   },
 });
