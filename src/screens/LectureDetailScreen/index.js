@@ -22,24 +22,10 @@ import { formatDate } from '../../helpers/dateHelper';
 const LectureDetailScreen = (props) => {
   //Variables
   const { navigation, route } = props;
-  const { theme, changeTheme } = useTheme();
+  const { theme } = useTheme();
   const insets = useSafeAreaInsets();
   const lecture = route.params.lecture;
   const { lectureCode, lectureName, lectureStartDate } = lecture;
-
-  //Effects
-  useEffect(() => {
-    navigation.setOptions({
-      title: lectureName,
-      headerRight: headerRight,
-    });
-  }, []);
-
-  useEffect(() => {
-    dispatch(getAttendence(lectureCode));
-
-    return () => dispatch(resetAttendence());
-  }, []);
 
   //Redux
   const dispatch = useDispatch();
@@ -61,6 +47,25 @@ const LectureDetailScreen = (props) => {
       };
     });
   }, [attendenceProgress, attendence]);
+
+  //Effects
+  useEffect(() => {
+    navigation.setOptions({
+      title: lectureName,
+    });
+
+    if (userRole === ENTITY.USER.INSTRUCTOR) {
+      navigation.setOptions({
+        headerRight: headerRight,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAttendence(lectureCode));
+
+    return () => dispatch(resetAttendence());
+  }, []);
 
   // Design Renders
   const renderHeader = useCallback(() => {
