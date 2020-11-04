@@ -64,6 +64,13 @@ const AppStack = () => {
         name="LectureDetailScreen"
         component={SCREENS.LectureDetailScreen}
       />
+      <Stack.Screen
+        name="StudentListScreen"
+        component={SCREENS.StudentListScreen}
+        options={{
+          title: 'Student List',
+        }}
+      />
     </Stack.Navigator>
   );
 };

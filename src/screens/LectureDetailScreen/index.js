@@ -67,6 +67,11 @@ const LectureDetailScreen = (props) => {
     return () => dispatch(resetAttendence());
   }, []);
 
+  // Functions
+  const onStudentsPress = () => {
+    navigation.navigate('StudentListScreen');
+  };
+
   // Design Renders
   const renderHeader = useCallback(() => {
     if (userRole === ENTITY.USER.INSTRUCTOR) return null;
@@ -113,7 +118,7 @@ const LectureDetailScreen = (props) => {
   );
 
   const headerRight = useMemo(() => (
-    <Touchable style={styles.headerRightContainer}>
+    <Touchable onPress={onStudentsPress} style={styles.headerRightContainer}>
       <Image source={icons.people} style={styles.peopleIcon} />
     </Touchable>
   ));
