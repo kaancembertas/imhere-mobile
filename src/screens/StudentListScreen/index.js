@@ -26,7 +26,7 @@ const StudentListScreen = (props) => {
 
   return (
     <View style={[styles.container, _styles.container]}>
-      <StudentListItem />
+      <StudentListItem name="deneme" surname="deneme" no="deneme" />
     </View>
   );
 };

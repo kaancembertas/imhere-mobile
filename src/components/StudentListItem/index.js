@@ -9,7 +9,7 @@ import Label from '../Label';
 
 const StudentListItem = (props) => {
   const { theme } = useTheme();
-  const { style, onPress, id, name, no } = props;
+  const { style, onPress, id, name, surname, no } = props;
 
   const _onPress = () => {
     if (onPress) {
@@ -18,11 +18,7 @@ const StudentListItem = (props) => {
     }
   };
 
-  const _styles = {
-    instructorLabel: {
-      color: theme.teriateryColor,
-    },
-  };
+  const _styles = {};
 
   return (
     <Touchable onPress={_onPress} style={[styles.container, style]}>
@@ -33,8 +29,8 @@ const StudentListItem = (props) => {
           </View>
         </View>
         <View style={styles.studentInfoContainer}>
-          <Label>KAAN ÇEMBERTAŞ</Label>
-          <Label style={styles.noLabel}>200001684</Label>
+          <Label>{name + ' ' + surname}</Label>
+          <Label style={styles.noLabel}>{no}</Label>
         </View>
       </View>
       <Image style={styles.arrowIcon} source={icons.arrowRight} />
@@ -86,4 +82,7 @@ const styles = StyleSheet.create({
 
 StudentListItem.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  name: PropTypes.string,
+  surname: PropTypes.string,
+  no: PropTypes.string,
 };
