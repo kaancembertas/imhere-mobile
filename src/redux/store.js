@@ -9,11 +9,13 @@ import authMiddleware from './middlewares/authMiddleware';
 import auth from './reducers/authReducer';
 import user from './reducers/userReducer';
 import lecture from './reducers/lectureReducer';
+import attendence from './reducers/attendenceReducer';
 
 const combinedReducers = combineReducers({
   auth,
   user,
   lecture,
+  attendence,
 });
 
 const rootReducer = (state, action) => {

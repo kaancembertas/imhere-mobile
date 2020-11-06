@@ -16,7 +16,7 @@ import { ENTITY } from '../../config/api';
 import {
   getAttendence,
   resetAttendence,
-} from '../../redux/actions/lectureActions';
+} from '../../redux/actions/attendenceActions';
 import { formatDate } from '../../helpers/dateHelper';
 
 const LectureDetailScreen = (props) => {
@@ -31,9 +31,9 @@ const LectureDetailScreen = (props) => {
   const dispatch = useDispatch();
   const userRole = useSelector(({ user }) => user.info.role);
   const attendenceProgress = useSelector(
-    ({ lecture }) => lecture.attendenceProgress,
+    ({ attendence }) => attendence.attendenceProgress,
   );
-  const attendence = useSelector(({ lecture }) => lecture.attendence);
+  const attendence = useSelector(({ attendence }) => attendence.attendence);
   const attendenceList = useMemo(() => {
     if (attendenceProgress || !attendence) return [];
 
