@@ -7,6 +7,7 @@ import Seperator from './Seperator';
 import LectureListItem from './LectureListItem';
 import LectureDetailListItem from './LectureDetailListItem';
 import Loading from './Loading';
+import StudentListItem from './StudentListItem';
 
 export {
   Label,
@@ -18,4 +19,5 @@ export {
   LectureListItem,
   LectureDetailListItem,
   Loading,
+  StudentListItem,
 };

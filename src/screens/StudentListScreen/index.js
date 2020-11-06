@@ -5,7 +5,7 @@ import { useTheme } from '../../providers/ThemeProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { images } from '../../assets';
 import { convert, normalize } from '../../helpers/pixelSizeHelper';
-import { Label, Input, Button } from '../../components';
+import { Label, Input, Button, StudentListItem } from '../../components';
 
 const StudentListScreen = (props) => {
   //Variables
@@ -24,7 +24,11 @@ const StudentListScreen = (props) => {
     },
   };
 
-  return <View style={[styles.container, _styles.container]}></View>;
+  return (
+    <View style={[styles.container, _styles.container]}>
+      <StudentListItem />
+    </View>
+  );
 };
 
 export default StudentListScreen;

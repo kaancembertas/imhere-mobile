@@ -1,0 +1,89 @@
+import React from 'react';
+import { View, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import PropTypes from 'prop-types';
+import { useTheme } from '../../providers/ThemeProvider';
+import { fonts, icons } from '../../assets';
+import { convert } from '../../helpers/pixelSizeHelper';
+import Touchable from '../Touchable';
+import Label from '../Label';
+
+const StudentListItem = (props) => {
+  const { theme } = useTheme();
+  const { style, onPress, id, name, no } = props;
+
+  const _onPress = () => {
+    if (onPress) {
+      const params = { id, name, no };
+      onPress(params);
+    }
+  };
+
+  const _styles = {
+    instructorLabel: {
+      color: theme.teriateryColor,
+    },
+  };
+
+  return (
+    <Touchable onPress={_onPress} style={[styles.container, style]}>
+      <View style={styles.leftContainer}>
+        <View style={styles.studentImageContainer}>
+          <View style={styles.pictureIndicatorContainer}>
+            <ActivityIndicator color={theme.primaryTextColor} />
+          </View>
+        </View>
+        <View style={styles.studentInfoContainer}>
+          <Label>KAAN ÇEMBERTAŞ</Label>
+          <Label style={styles.noLabel}>200001684</Label>
+        </View>
+      </View>
+      <Image style={styles.arrowIcon} source={icons.arrowRight} />
+    </Touchable>
+  );
+};
+
+export default StudentListItem;
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: convert(100),
+    justifyContent: 'center',
+    paddingHorizontal: convert(20),
+  },
+  leftContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  arrowIcon: {
+    width: convert(35),
+    height: convert(35),
+    position: 'absolute',
+    marginRight: convert(8),
+    right: 0,
+  },
+  studentImageContainer: {
+    width: convert(60),
+    height: convert(60),
+    borderRadius: convert(30),
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'gray',
+  },
+  studentInfoContainer: {
+    marginLeft: convert(10),
+  },
+  noLabel: {
+    marginTop: convert(5),
+    fontFamily: fonts.Montserrat.Medium,
+  },
+  pictureIndicatorContainer: {
+    position: 'absolute',
+  },
+});
+
+StudentListItem.propTypes = {
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+};
