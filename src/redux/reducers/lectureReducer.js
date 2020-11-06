@@ -3,12 +3,18 @@ import {
   LECTURES_PROGRESS,
   LECTURES_SUCCESS,
   LECTURE_DETAIL_PROGRESS,
+  LECTURE_STUDENTS_FAIL,
+  LECTURE_STUDENTS_PROGRESS,
+  LECTURE_STUDENTS_SUCCESS,
   RESET_LECTURES,
+  RESET_LECTURE_STUDENTS,
 } from '../actionTypes';
 
 const INITIAL_STATE = {
   lecturesProgress: true,
   lectures: [],
+  getLectureStudentsProgress: true,
+  lectureStudents: [],
 };
 
 export default (state = INITIAL_STATE, action = {}) => {
@@ -43,6 +49,37 @@ export default (state = INITIAL_STATE, action = {}) => {
     return {
       ...state,
       attendenceProgress: true,
+    };
+  }
+
+  if (type === RESET_LECTURE_STUDENTS) {
+    return {
+      ...state,
+      getLectureStudentsProgress: true,
+      lectureStudents: [],
+    };
+  }
+
+  if (type === LECTURE_STUDENTS_PROGRESS) {
+    return {
+      ...state,
+      getLectureStudentsProgress: true,
+    };
+  }
+
+  if (type === LECTURE_STUDENTS_SUCCESS) {
+    return {
+      ...state,
+      getLectureStudentsProgress: false,
+      lectureStudents: payload,
+    };
+  }
+
+  if (type === LECTURE_STUDENTS_FAIL) {
+    return {
+      ...state,
+      getLectureStudentsProgress: false,
+      lectureStudents: [],
     };
   }
 

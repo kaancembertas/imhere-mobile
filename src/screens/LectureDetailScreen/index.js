@@ -69,7 +69,7 @@ const LectureDetailScreen = (props) => {
 
   // Functions
   const onStudentsPress = () => {
-    navigation.navigate('StudentListScreen');
+    navigation.navigate('StudentListScreen', { lectureCode });
   };
 
   // Design Renders

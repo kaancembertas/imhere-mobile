@@ -9,11 +9,11 @@ import Label from '../Label';
 
 const StudentListItem = (props) => {
   const { theme } = useTheme();
-  const { style, onPress, id, name, surname, no } = props;
+  const { style, onPress, id, name, surname, no, image_url } = props;
 
   const _onPress = () => {
     if (onPress) {
-      const params = { id, name, no };
+      const params = { id, name, surname, no, image_url };
       onPress(params);
     }
   };
@@ -27,6 +27,7 @@ const StudentListItem = (props) => {
           <View style={styles.pictureIndicatorContainer}>
             <ActivityIndicator color={theme.primaryTextColor} />
           </View>
+          <Image source={{ uri: image_url }} style={styles.profilePicture} />
         </View>
         <View style={styles.studentInfoContainer}>
           <Label>{name + ' ' + surname}</Label>
@@ -78,11 +79,18 @@ const styles = StyleSheet.create({
   pictureIndicatorContainer: {
     position: 'absolute',
   },
+  profilePicture: {
+    width: convert(60),
+    height: convert(60),
+    borderRadius: convert(30),
+  },
 });
 
 StudentListItem.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  id: PropTypes.number,
   name: PropTypes.string,
   surname: PropTypes.string,
   no: PropTypes.string,
+  image_url: PropTypes.string,
 };
