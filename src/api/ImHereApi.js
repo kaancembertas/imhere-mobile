@@ -21,8 +21,16 @@ class ImHereApi extends BaseApi {
   checkEmailExists = (email) => {
     return this._doAnonymousGet('/api/user/check/' + email);
   };
+
   getLectureStudents = (lectureCode) => {
     return this._doGet('/api/lecture/students/' + lectureCode);
+  };
+
+  getAttendenceByUser = (lectureCode, userId) => {
+    return this._doPost('/api/attendence/attendencebyuser', {
+      lectureCode,
+      userId,
+    });
   };
 }
 

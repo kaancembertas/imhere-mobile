@@ -17,7 +17,7 @@ const LectureDetailListItem = (props) => {
   1 - Joined
   2 - Not Joined
   */
-  const { style, status, week, date, onPress } = props;
+  const { style, status, week, date, onPress, disableCameraIcon } = props;
   const userRole = useSelector(({ user }) => user.info.role);
 
   const _onPress = () => {
@@ -28,7 +28,7 @@ const LectureDetailListItem = (props) => {
 
   const StatusBox = () => {
     if (status === 0) {
-      if (userRole === ENTITY.USER.INSTRUCTOR)
+      if (!disableCameraIcon && userRole === ENTITY.USER.INSTRUCTOR)
         return (
           <Image
             resizeMethod="scale"
@@ -49,7 +49,9 @@ const LectureDetailListItem = (props) => {
   return (
     <Touchable
       onPress={_onPress}
-      opacity={userRole === ENTITY.USER.INSTRUCTOR ? 0.8 : 1}
+      opacity={
+        userRole === ENTITY.USER.INSTRUCTOR && !disableCameraIcon ? 0.8 : 1
+      }
       style={[styles.container, style]}>
       <View style={styles.leftContainer}>
         <Label>Week {week}</Label>
@@ -100,4 +102,5 @@ LectureDetailListItem.propTypes = {
   week: PropTypes.number,
   date: PropTypes.string,
   onPress: PropTypes.func,
+  disableCameraIcon: PropTypes.bool,
 };

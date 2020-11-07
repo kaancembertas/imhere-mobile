@@ -17,7 +17,7 @@ const StudentListScreen = (props) => {
   //Variables
   const { navigation, route } = props;
   const { params } = route;
-  const lectureCode = params.lectureCode;
+  const { lectureCode, lectureStartDate } = params;
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
 
@@ -35,6 +35,13 @@ const StudentListScreen = (props) => {
   }, []);
 
   //Functions
+  const onStudentItemPress = (student) => {
+    navigation.navigate('StudentDetailScreen', {
+      student,
+      lectureCode,
+      lectureStartDate,
+    });
+  };
 
   //Conditional Style
   const _styles = {
@@ -50,11 +57,13 @@ const StudentListScreen = (props) => {
   const renderStudentListItem = useCallback(
     ({ item }) => (
       <StudentListItem
+        onPress={onStudentItemPress}
         id={item.id}
         name={item.name}
         surname={item.surname}
         no={item.no}
         image_url={item.image_url}
+        email={item.email}
       />
     ),
     [],

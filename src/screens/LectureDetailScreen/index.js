@@ -35,7 +35,7 @@ const LectureDetailScreen = (props) => {
   );
   const attendence = useSelector(({ attendence }) => attendence.attendence);
   const attendenceList = useMemo(() => {
-    if (attendenceProgress || !attendence) return [];
+    if (attendenceProgress) return [];
 
     return attendence.map((a) => {
       const lectureDate = new Date(lectureStartDate);
@@ -46,7 +46,7 @@ const LectureDetailScreen = (props) => {
         status: a.status,
       };
     });
-  }, [attendenceProgress, attendence]);
+  }, [attendenceProgress]);
 
   //Effects
   useEffect(() => {
@@ -69,7 +69,10 @@ const LectureDetailScreen = (props) => {
 
   // Functions
   const onStudentsPress = () => {
-    navigation.navigate('StudentListScreen', { lectureCode });
+    navigation.navigate('StudentListScreen', {
+      lectureCode,
+      lectureStartDate,
+    });
   };
 
   // Design Renders
@@ -117,23 +120,24 @@ const LectureDetailScreen = (props) => {
     [],
   );
 
-  const headerRight = useMemo(() => (
-    <Touchable onPress={onStudentsPress} style={styles.headerRightContainer}>
-      <Image source={icons.people} style={styles.peopleIcon} />
-    </Touchable>
-  ));
+  const headerRight = useMemo(
+    () => (
+      <Touchable onPress={onStudentsPress} style={styles.headerRightContainer}>
+        <Image source={icons.people} style={styles.peopleIcon} />
+      </Touchable>
+    ),
+    [],
+  );
 
   const renderItemSeperator = useCallback(() => <Seperator />, []);
-
   const renderFooter = useCallback(() => <View style={_styles.footer} />, []);
-
   const getKey = useCallback(
     (item, index) => 'lectureDetailListItem' + index,
     [],
   );
 
   const Attendence = useCallback(() => {
-    if (attendenceProgress || attendenceList.length === 0) {
+    if (attendenceProgress) {
       return <Loading />;
     }
 
@@ -149,7 +153,7 @@ const LectureDetailScreen = (props) => {
         ListFooterComponent={renderFooter}
       />
     );
-  }, [attendenceProgress, attendenceList]);
+  }, [attendenceProgress]);
 
   //Conditional Style
   const _styles = {
