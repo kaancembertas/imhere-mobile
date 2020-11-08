@@ -39,7 +39,7 @@ const LectureDetailScreen = (props) => {
 
     return attendence.map((a) => {
       const lectureDate = new Date(lectureStartDate);
-      lectureDate.setDate(lectureDate.getDate() + a.week * 7);
+      lectureDate.setDate(lectureDate.getDate() + (a.week - 1) * 7);
       return {
         date: formatDate(lectureDate),
         week: a.week,

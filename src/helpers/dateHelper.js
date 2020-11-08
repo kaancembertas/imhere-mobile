@@ -1,9 +1,9 @@
 export const formatDate = (date) => {
-  let day = date.getDate();
-  let month = date.getMonth() + 1;
+  let day = date.getUTCDate();
+  let month = date.getUTCMonth() + 1;
   let year = date.getFullYear();
-  let hour = date.getHours();
-  let minute = date.getMinutes();
+  let hour = date.getUTCHours();
+  let minute = date.getUTCMinutes();
 
   if (day < 10) day = '0' + day;
   if (month < 10) month = '0' + month;
