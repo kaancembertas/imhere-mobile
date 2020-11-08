@@ -10,6 +10,7 @@ import BottomTabBar from './components/BottomTabBar';
 import { useAuthentication } from './providers/AuthenticationProvider';
 import SCREENS from './screens';
 import { useSelector } from 'react-redux';
+import { ENTITY } from './config/api';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -45,8 +46,9 @@ const AppStack = () => {
   const isSelectedLecture = useSelector(
     ({ user }) => user.info.isSelectedLecture,
   );
+  const role = useSelector(({ user }) => user.info.role);
 
-  if (!isSelectedLecture) {
+  if (!isSelectedLecture && role === ENTITY.USER.STUDENT) {
     return (
       <Stack.Navigator
         screenOptions={{
