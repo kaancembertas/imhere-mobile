@@ -1,4 +1,4 @@
-const IMHERE_API_HOST = 'http://192.168.0.12:51168';
+const IMHERE_API_HOST = 'http://192.168.0.12:5000';
 const ENTITY = {
   USER: {
     STUDENT: 0,
