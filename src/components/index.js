@@ -8,6 +8,7 @@ import LectureListItem from './LectureListItem';
 import LectureDetailListItem from './LectureDetailListItem';
 import Loading from './Loading';
 import StudentListItem from './StudentListItem';
+import SelectLectureItem from './SelectLectureItem';
 
 export {
   Label,
@@ -20,4 +21,5 @@ export {
   LectureDetailListItem,
   Loading,
   StudentListItem,
+  SelectLectureItem,
 };

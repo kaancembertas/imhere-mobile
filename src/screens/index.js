@@ -5,6 +5,7 @@ import ProfileScreen from './ProfileScreen';
 import LectureDetailScreen from './LectureDetailScreen';
 import StudentListScreen from './StudentListScreen';
 import StudentDetailScreen from './StudentDetailScreen';
+import SelectLecturesScreen from './SelectLecturesScreen';
 
 export default {
   LoginScreen,
@@ -14,4 +15,5 @@ export default {
   LectureDetailScreen,
   StudentListScreen,
   StudentDetailScreen,
+  SelectLecturesScreen,
 };

@@ -32,6 +32,10 @@ class ImHereApi extends BaseApi {
       userId,
     });
   };
+
+  getAllLectures = () => {
+    return this._doGet('/api/lecture/getall');
+  };
 }
 
 const imHereApi = new ImHereApi();

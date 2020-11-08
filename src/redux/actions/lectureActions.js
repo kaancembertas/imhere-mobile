@@ -1,6 +1,9 @@
 import ImHereApi from '../../api/ImHereApi';
 import { Alert } from 'react-native';
 import {
+  ALL_LECTURES_FAIL,
+  ALL_LECTURES_PROGRESS,
+  ALL_LECTURES_SUCCESS,
   LECTURES_FAIL,
   LECTURES_PROGRESS,
   LECTURES_SUCCESS,
@@ -63,3 +66,24 @@ export const getLectureStudents = (lectureCode) => {
 export const resetLectureStudents = () => ({
   type: RESET_LECTURE_STUDENTS,
 });
+
+export const getAllLectures = () => {
+  return async (dispatch) => {
+    dispatch({ type: ALL_LECTURES_PROGRESS });
+    try {
+      const response = await ImHereApi.getAllLectures();
+      if (!response.success) {
+        Alert.alert('', response.errorMessage);
+        dispatch({ type: ALL_LECTURES_FAIL });
+        return;
+      }
+
+      dispatch({
+        type: ALL_LECTURES_SUCCESS,
+        payload: response.data,
+      });
+    } catch (err) {
+      dispatch({ type: ALL_LECTURES_FAIL });
+    }
+  };
+};

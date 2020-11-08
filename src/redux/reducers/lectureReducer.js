@@ -1,4 +1,7 @@
 import {
+  ALL_LECTURES_FAIL,
+  ALL_LECTURES_PROGRESS,
+  ALL_LECTURES_SUCCESS,
   LECTURES_FAIL,
   LECTURES_PROGRESS,
   LECTURES_SUCCESS,
@@ -15,6 +18,8 @@ const INITIAL_STATE = {
   lectures: [],
   getLectureStudentsProgress: true,
   lectureStudents: [],
+  allLectures: [],
+  allLecturesProgress: true,
 };
 
 export default (state = INITIAL_STATE, action = {}) => {
@@ -80,6 +85,29 @@ export default (state = INITIAL_STATE, action = {}) => {
       ...state,
       getLectureStudentsProgress: false,
       lectureStudents: [],
+    };
+  }
+
+  if (type === ALL_LECTURES_PROGRESS) {
+    return {
+      ...state,
+      allLecturesProgress: true,
+    };
+  }
+
+  if (type === ALL_LECTURES_FAIL) {
+    return {
+      ...state,
+      allLecturesProgress: false,
+      allLectures: [],
+    };
+  }
+
+  if (type === ALL_LECTURES_SUCCESS) {
+    return {
+      ...state,
+      allLecturesProgress: false,
+      allLectures: payload,
     };
   }
 

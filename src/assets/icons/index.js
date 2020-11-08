@@ -10,6 +10,7 @@ const icons = {
   cross: require('./icCross.png'),
   camera: require('./icCamera.png'),
   people: require('./icPeople.png'),
+  checkWhite: require('./icCheckWhite.png'),
 };
 
 export default icons;

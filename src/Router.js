@@ -62,7 +62,8 @@ const AppStack = () => {
       <Stack.Screen name="AppTab" component={AppTab} />
       <Stack.Screen
         name="LectureDetailScreen"
-        component={SCREENS.LectureDetailScreen}
+        //component={SCREENS.LectureDetailScreen}
+        component={SCREENS.SelectLecturesScreen}
       />
       <Stack.Screen
         name="StudentListScreen"
