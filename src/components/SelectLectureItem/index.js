@@ -14,14 +14,9 @@ const SelectLectureItem = (props) => {
   const [isSelected, setSelected] = useState(false);
 
   const _onPress = () => {
+    if (onPress) onPress(lectureCode, !isSelected);
     setSelected((x) => !x);
   };
-
-  useEffect(() => {
-    if (onPress) {
-      onPress(lectureCode, isSelected);
-    }
-  }, [isSelected]);
 
   const _styles = {
     instructorLabel: {

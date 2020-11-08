@@ -36,6 +36,10 @@ class ImHereApi extends BaseApi {
   getAllLectures = () => {
     return this._doGet('/api/lecture/getall');
   };
+
+  selectLectures = (lectureCodes) => {
+    return this._doPost('/api/lecture/selectlectures', lectureCodes);
+  };
 }
 
 const imHereApi = new ImHereApi();

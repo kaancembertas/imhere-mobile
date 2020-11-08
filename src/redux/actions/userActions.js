@@ -61,3 +61,7 @@ export const getUserInfo = () => {
 export const resetUserInfo = {
   type: RESET_USER_INFO,
 };
+
+export const setIsSelectedLectures = () => ({
+  type: SET_IS_SELECTED_LECTURES,
+});

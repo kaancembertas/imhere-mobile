@@ -36,6 +36,10 @@ const AuthenticationProvider = ({ children }) => {
   const [_authProgress, setAuthprogress] = useState(false);
   const [_isAuthenticated, setAuthenticated] = useState(false);
 
+  const isSelectedLecture = useSelector(
+    ({ user }) => user.info.isSelectedLecture,
+  );
+
   // Functions
   const _authenticate = (email, password) => {
     setAuthprogress(true);
@@ -128,7 +132,7 @@ const AuthenticationProvider = ({ children }) => {
         {children}
       </AuthenticationContext.Provider>
     ),
-    [_isAuthenticated, _authProgress],
+    [_isAuthenticated, _authProgress, isSelectedLecture],
   );
 };
 

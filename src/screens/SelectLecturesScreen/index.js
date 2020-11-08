@@ -1,25 +1,24 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { View, StyleSheet, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { images } from '../../assets';
-import { convert, normalize } from '../../helpers/pixelSizeHelper';
-import {
-  Label,
-  Input,
-  Button,
-  Loading,
-  SelectLectureItem,
-} from '../../components';
+import { convert } from '../../helpers/pixelSizeHelper';
+import { Button, Loading, SelectLectureItem } from '../../components';
 import { FlatList } from 'react-native-gesture-handler';
-import { getAllLectures } from '../../redux/actions/lectureActions';
+import {
+  getAllLectures,
+  selectLectures,
+} from '../../redux/actions/lectureActions';
+import { setIsSelectedLectures } from '../../redux/actions/userActions';
 
 const SelectLecturesScreen = (props) => {
   //Variables
-  const { navigation } = props;
-  const { theme, changeTheme } = useTheme();
+  const { theme } = useTheme();
   const insets = useSafeAreaInsets();
+
+  //States
+  let [selectedLectures, setSelectedLectures] = useState([]);
 
   //Redux
   const dispatch = useDispatch();
@@ -27,6 +26,42 @@ const SelectLecturesScreen = (props) => {
   const allLecturesProgress = useSelector(
     ({ lecture }) => lecture.allLecturesProgress,
   );
+
+  const selectLecturesProgress = useSelector(
+    ({ lecture }) => lecture.selectLecturesProgress,
+  );
+
+  //Functions
+  const getKey = useCallback((item) => 'selectLecture' + item.lectureCode, []);
+
+  const onLectureItemPress = (lectureCode, isSelected) => {
+    if (isSelected && !selectedLectures.includes(lectureCode)) {
+      setSelectedLectures((selecteds) => [...selecteds, lectureCode]);
+    }
+
+    if (!isSelected) {
+      setSelectedLectures((selecteds) =>
+        selecteds.filter((s) => s != lectureCode),
+      );
+    }
+  };
+
+  const onSavePress = () => {
+    if (selectedLectures.length === 0) {
+      Alert.alert('', 'You must select at least one lecture!');
+      return;
+    }
+
+    Alert.alert('', 'Are you sure your lectures which you have selected?', [
+      {
+        text: 'No',
+      },
+      {
+        text: 'Yes',
+        onPress: () => dispatch(selectLectures(selectedLectures)),
+      },
+    ]);
+  };
 
   //Effects
   useEffect(() => {
@@ -50,6 +85,7 @@ const SelectLecturesScreen = (props) => {
   const renderSelectLectureItem = useCallback(
     ({ item }) => (
       <SelectLectureItem
+        onPress={onLectureItemPress}
         style={styles.listItem}
         lectureCode={item.lectureCode}
         lectureInstructor={item.instructorName + ' ' + item.instructorSurname}
@@ -66,9 +102,12 @@ const SelectLecturesScreen = (props) => {
 
     return (
       <FlatList
+        indicatorStyle="black"
+        scrollIndicatorInsets={{ right: 1 }}
         data={allLectures}
         renderItem={renderSelectLectureItem}
         ListFooterComponent={ListFooter}
+        keyExtractor={getKey}
       />
     );
   }, [allLecturesProgress]);
@@ -77,9 +116,11 @@ const SelectLecturesScreen = (props) => {
     <View style={[styles.container, _styles.container]}>
       <LecturesList />
       <Button
-        secondary
+        loading={selectLecturesProgress}
         style={[styles.saveButton, _styles.saveButton]}
+        secondary
         title="Save Lectures"
+        onPress={onSavePress}
       />
     </View>
   );

@@ -9,6 +9,7 @@ import NavigationHeader from './components/NavigationHeader';
 import BottomTabBar from './components/BottomTabBar';
 import { useAuthentication } from './providers/AuthenticationProvider';
 import SCREENS from './screens';
+import { useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -41,6 +42,27 @@ const AuthStack = () => {
 };
 
 const AppStack = () => {
+  const isSelectedLecture = useSelector(
+    ({ user }) => user.info.isSelectedLecture,
+  );
+
+  if (!isSelectedLecture) {
+    return (
+      <Stack.Navigator
+        screenOptions={{
+          header: NavigationHeader,
+        }}>
+        <Stack.Screen
+          name="SelectLecturesScreen"
+          component={SCREENS.SelectLecturesScreen}
+          options={{
+            title: 'Select your lectures',
+          }}
+        />
+      </Stack.Navigator>
+    );
+  }
+
   const AppTab = () => (
     <Tab.Navigator
       tabBar={(props) => <BottomTabBar {...props} />}
@@ -62,8 +84,7 @@ const AppStack = () => {
       <Stack.Screen name="AppTab" component={AppTab} />
       <Stack.Screen
         name="LectureDetailScreen"
-        //component={SCREENS.LectureDetailScreen}
-        component={SCREENS.SelectLecturesScreen}
+        component={SCREENS.LectureDetailScreen}
       />
       <Stack.Screen
         name="StudentListScreen"

@@ -10,7 +10,7 @@ import Label from '../Label';
 
 const Button = (props) => {
   const { theme } = useTheme();
-  const { style, title, onPress, secondary, loading } = props;
+  const { style, title, onPress, secondary, loading, disabled } = props;
 
   const _styles = {
     container: {
@@ -31,7 +31,8 @@ const Button = (props) => {
 
   return (
     <Touchable
-      disabled={loading}
+      disabled={loading || disabled}
+      opacity={loading || disabled ? 1 : 0.8}
       onPress={onPress}
       style={[styles.container, _styles.container, style]}>
       {loading ? (
@@ -62,4 +63,5 @@ Button.propTypes = {
   onPress: PropTypes.func,
   secondary: PropTypes.bool,
   loading: PropTypes.bool,
+  disabled: PropTypes.bool,
 };

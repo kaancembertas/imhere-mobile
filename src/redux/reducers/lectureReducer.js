@@ -11,15 +11,22 @@ import {
   LECTURE_STUDENTS_SUCCESS,
   RESET_LECTURES,
   RESET_LECTURE_STUDENTS,
+  SELECT_LECTURES_FAIL,
+  SELECT_LECTURES_PROGRESS,
+  SELECT_LECTURES_SUCCESS,
 } from '../actionTypes';
 
 const INITIAL_STATE = {
   lecturesProgress: true,
   lectures: [],
+
   getLectureStudentsProgress: true,
   lectureStudents: [],
+
   allLectures: [],
   allLecturesProgress: true,
+
+  selectLecturesProgress: false,
 };
 
 export default (state = INITIAL_STATE, action = {}) => {
@@ -108,6 +115,27 @@ export default (state = INITIAL_STATE, action = {}) => {
       ...state,
       allLecturesProgress: false,
       allLectures: payload,
+    };
+  }
+
+  if (type === SELECT_LECTURES_PROGRESS) {
+    return {
+      ...state,
+      selectLecturesProgress: true,
+    };
+  }
+
+  if (type === SELECT_LECTURES_SUCCESS) {
+    return {
+      ...state,
+      selectLecturesProgress: false,
+    };
+  }
+
+  if (type === SELECT_LECTURES_FAIL) {
+    return {
+      ...state,
+      selectLecturesProgress: false,
     };
   }
 

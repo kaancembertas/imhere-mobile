@@ -12,6 +12,10 @@ import {
   LECTURE_STUDENTS_SUCCESS,
   RESET_LECTURES,
   RESET_LECTURE_STUDENTS,
+  SELECT_LECTURES_FAIL,
+  SELECT_LECTURES_PROGRESS,
+  SELECT_LECTURES_SUCCESS,
+  SET_IS_SELECTED_LECTURES,
 } from '../actionTypes';
 
 export const getLectures = () => {
@@ -84,6 +88,26 @@ export const getAllLectures = () => {
       });
     } catch (err) {
       dispatch({ type: ALL_LECTURES_FAIL });
+    }
+  };
+};
+
+export const selectLectures = (lectureCodes) => {
+  return async (dispatch) => {
+    dispatch({ type: SELECT_LECTURES_PROGRESS });
+    try {
+      const response = await ImHereApi.selectLectures(lectureCodes);
+      if (!response.success) {
+        Alert.alert('', response.errorMessage);
+        dispatch({ type: SELECT_LECTURES_FAIL });
+        return;
+      }
+
+      Alert.alert('', 'Successfully registered to lectures!');
+      dispatch({ type: SELECT_LECTURES_SUCCESS });
+      dispatch({ type: SET_IS_SELECTED_LECTURES });
+    } catch {
+      dispatch({ type: SELECT_LECTURES_FAIL });
     }
   };
 };

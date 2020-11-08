@@ -5,6 +5,7 @@ import {
   USER_INFO_FAIL,
   USER_INFO_PROGRESS,
   RESET_USER_INFO,
+  SET_IS_SELECTED_LECTURES,
 } from '../actionTypes';
 const INITIAL_STATE = {
   registerProgress: false,
@@ -18,6 +19,7 @@ const INITIAL_STATE = {
     surname: '',
     role: null, // 0: Student - 1: Instructor
     image_url: '',
+    isSelectedLecture: null,
   },
 };
 
@@ -63,6 +65,16 @@ export default (state = INITIAL_STATE, action = {}) => {
 
   if (type === RESET_USER_INFO) {
     return INITIAL_STATE;
+  }
+
+  if (type === SET_IS_SELECTED_LECTURES) {
+    return {
+      ...state,
+      info: {
+        ...state.info,
+        isSelectedLecture: true,
+      },
+    };
   }
   return state;
 };
