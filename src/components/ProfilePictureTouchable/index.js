@@ -36,8 +36,13 @@ const ProfilePictureTouchable = (props, ref) => {
         } else if (response.customButton) {
           reject('User tapped custom button: ' + response.customButton);
         } else {
-          if (Platform.OS === 'android') resolve('file:///' + response.path);
-          resolve(response.uri);
+          resolve({
+            ...response,
+            uri:
+              Platform.OS === 'android'
+                ? 'file:///' + response.path
+                : response.uri,
+          });
         }
       });
     });
@@ -85,7 +90,7 @@ const ProfilePictureTouchable = (props, ref) => {
           height={convert(110)}
           resizeMethod="scale"
           style={image === null ? styles.cameraIcon : styles.profilePicture}
-          source={image === null ? images.camera : { uri: image }}
+          source={image === null ? images.camera : image}
         />
       )}
     </Touchable>

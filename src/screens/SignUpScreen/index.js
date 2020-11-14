@@ -8,8 +8,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { register } from '../../redux/actions/userActions';
 import { validateEmail } from '../../helpers/validationHelper';
 import ProfilePictureTouchable from '../../components/ProfilePictureTouchable';
-import { uploadUserPicture } from '../../helpers/firebaseHelper';
 import ImHereApi from '../../api/ImHereApi';
+import FaceRecognitionApi from '../../api/FaceRecognitionApi';
 
 const SignUpScreen = (props) => {
   //Props
@@ -43,14 +43,8 @@ const SignUpScreen = (props) => {
     navigation.goBack();
   };
 
-  const checkEmailExists = async (email) => {
-    const response = await ImHereApi.checkEmailExists(email);
-    if (!response.success) return true;
-    return response.data.isExists;
-  };
-
   const onSubmitPress = async () => {
-    const imagePath = imageRef.current.getImage();
+    const image = imageRef.current.getImage();
 
     const registerBody = {
       no: schoolNumberRef.current.getValue(),
@@ -60,8 +54,8 @@ const SignUpScreen = (props) => {
       surname: surnameRef.current.getValue(),
     };
 
-    if (imagePath === null) {
-      Alert.alert('', 'Upload your profile picture');
+    if (image === null) {
+      Alert.alert('', 'Take your profile picture!');
       return;
     }
 
@@ -83,15 +77,18 @@ const SignUpScreen = (props) => {
 
     try {
       setImageUploading(true);
-      const isEmailExists = await checkEmailExists(registerBody.email);
-
-      if (isEmailExists) {
-        Alert.alert('', 'Already registered with this Email!');
+      const apiResponse = await FaceRecognitionApi.checkFace(image.data);
+      if (!apiResponse.success) {
+        Alert.alert('', apiResponse.errorMessage);
         setImageUploading(false);
         return;
       }
-      const image_url = await uploadUserPicture(imagePath, registerBody.email);
+      const image_url = apiResponse.data.image_url;
+      const face_encoding = apiResponse.data.face_encoding;
+
       registerBody['image_url'] = image_url;
+      registerBody['face_encoding'] = face_encoding;
+
       dispatch(register(registerBody, onRegisterSuccess));
       setImageUploading(false);
     } catch (err) {

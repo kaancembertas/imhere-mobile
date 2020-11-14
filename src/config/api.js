@@ -1,4 +1,6 @@
 const IMHERE_API_HOST = 'http://192.168.0.12:5000';
+const FACE_RECOGNITION_API_HOST = 'http://192.168.0.12:5001';
+
 const ENTITY = {
   USER: {
     STUDENT: 0,
@@ -11,4 +13,4 @@ const ENTITY = {
   },
 };
 
-export { ENTITY, IMHERE_API_HOST };
+export { ENTITY, IMHERE_API_HOST, FACE_RECOGNITION_API_HOST };

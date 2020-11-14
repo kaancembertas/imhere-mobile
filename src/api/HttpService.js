@@ -2,6 +2,7 @@ import ApiResponseModel from './models/ApiResponseModel';
 import { getData, storageKeys, storageTypes } from '../utils/asyncStorage';
 import store from '../redux/store';
 import { logout } from '../redux/actions/authActions';
+import RNFetchBlob from 'rn-fetch-blob';
 
 export default class HttpService {
   apiHost = '';
@@ -10,28 +11,7 @@ export default class HttpService {
     this.apiHost = apiHost;
   };
 
-  anonymousFetch = async (options) => {
-    const body = options.body || {};
-    const method = options.method || 'get';
-    const endpoint = options.endpoint;
-    const headers = options.headers || {};
-
-    const REQUEST_URL = this.apiHost + endpoint;
-
-    const fetchOptions = {
-      method: method,
-      headers: {
-        ...headers,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    };
-
-    if (method === 'post' || method === 'put' || method === 'delete') {
-      fetchOptions.body = JSON.stringify(body);
-    }
-
-    const response = await fetch(REQUEST_URL, fetchOptions);
+  createApiResponse = async (response) => {
     const apiResponse = new ApiResponseModel();
     apiResponse.setStatusCode(response.status);
 
@@ -46,6 +26,12 @@ export default class HttpService {
         'Your session has been expired, please login again.',
       );
       store.dispatch(logout());
+      return apiResponse;
+    }
+
+    if (response.status === 404) {
+      const responseBody = await response.json();
+      apiResponse.setErrorMessage(responseBody.errorMessage || 'Not Found');
       return apiResponse;
     }
 
@@ -65,6 +51,32 @@ export default class HttpService {
     return apiResponse;
   };
 
+  anonymousFetch = async (options) => {
+    const body = options.body || {};
+    const method = options.method || 'get';
+    const endpoint = options.endpoint;
+    const headers = options.headers || {};
+
+    const REQUEST_URL = this.apiHost + endpoint;
+
+    const fetchOptions = {
+      method: method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        ...headers,
+      },
+    };
+
+    if (method === 'post' || method === 'put' || method === 'delete') {
+      fetchOptions.body = JSON.stringify(body);
+    }
+
+    const response = await fetch(REQUEST_URL, fetchOptions);
+    const apiResponse = await this.createApiResponse(response);
+    return apiResponse;
+  };
+
   fetch = async (options) => {
     const authData = await getData(storageKeys.AUTH_DATA, storageTypes.JSON);
     const accessToken = authData.token;
@@ -78,5 +90,30 @@ export default class HttpService {
 
     const response = await this.anonymousFetch(newOptions);
     return response;
+  };
+
+  fetchBlob = async (options) => {
+    const endpoint = options.endpoint;
+    const REQUEST_URL = this.apiHost + endpoint;
+
+    const method = 'post' || options.method;
+    const body = options.body || {};
+    const _headers = options.headers || {};
+
+    const headers = {
+      'Content-Type': 'multipart/form-data',
+      Accept: 'application/json',
+      ..._headers,
+    };
+
+    const response = await RNFetchBlob.fetch(
+      method,
+      REQUEST_URL,
+      headers,
+      body,
+    );
+    response.status = response.info().status;
+    const apiResponse = await this.createApiResponse(response);
+    return apiResponse;
   };
 }
