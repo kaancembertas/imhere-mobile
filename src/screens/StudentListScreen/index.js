@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { images } from '../../assets';
-import { Loading, Seperator } from '../../components';
+import { ImageModal, Loading, Seperator } from '../../components';
 import { convert, normalize } from '../../helpers/pixelSizeHelper';
 import { Label, Input, Button, StudentListItem } from '../../components';
 import {
@@ -20,6 +20,9 @@ const StudentListScreen = (props) => {
   const { lectureCode, lectureStartDate } = params;
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
+
+  //Refs
+  const imageModalRef = useRef(null);
 
   //Redux
   const dispatch = useDispatch();
@@ -43,6 +46,12 @@ const StudentListScreen = (props) => {
     });
   };
 
+  const onStudentImagePress = (image_url) => {
+    imageModalRef.current.show({
+      uri: image_url,
+    });
+  };
+
   //Conditional Style
   const _styles = {
     container: {
@@ -58,6 +67,7 @@ const StudentListScreen = (props) => {
     ({ item }) => (
       <StudentListItem
         onPress={onStudentItemPress}
+        onImagePress={onStudentImagePress}
         id={item.id}
         name={item.name}
         surname={item.surname}
@@ -93,6 +103,7 @@ const StudentListScreen = (props) => {
 
   return (
     <View style={[styles.container, _styles.container]}>
+      <ImageModal ref={imageModalRef} />
       <StudentList />
     </View>
   );

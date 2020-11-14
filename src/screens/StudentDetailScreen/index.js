@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
@@ -12,6 +12,8 @@ import {
   Seperator,
   Loading,
   LectureDetailListItem,
+  ImageModal,
+  Touchable,
 } from '../../components';
 import {
   getAttendenceByUser,
@@ -31,6 +33,9 @@ const StudentDetailScreen = (props) => {
 
   const { theme, changeTheme } = useTheme();
   const insets = useSafeAreaInsets();
+
+  //Refs
+  const imageModalRef = useRef(null);
 
   //Redux
   const dispatch = useDispatch();
@@ -64,6 +69,11 @@ const StudentDetailScreen = (props) => {
   }, []);
 
   //Functions
+  const onImagePress = () => {
+    imageModalRef.current.show({
+      uri: student.image_url,
+    });
+  };
 
   //Conditional Style
   const _styles = {
@@ -115,14 +125,17 @@ const StudentDetailScreen = (props) => {
 
   return (
     <View style={[styles.container, _styles.container]}>
+      <ImageModal ref={imageModalRef} />
       <View style={styles.headerContainer}>
-        <Image
-          resizeMethod="scale"
-          width={convert(110)}
-          height={convert(110)}
-          style={styles.profilePicture}
-          source={{ uri: student.image_url }}
-        />
+        <Touchable onPress={onImagePress}>
+          <Image
+            resizeMethod="scale"
+            width={convert(110)}
+            height={convert(110)}
+            style={styles.profilePicture}
+            source={{ uri: student.image_url }}
+          />
+        </Touchable>
         <View style={styles.studentInfoContainer}>
           <Label>{student.name + ' ' + student.surname}</Label>
           <Label style={styles.label}>{student.no}</Label>

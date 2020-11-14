@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { useTheme } from '../../providers/ThemeProvider';
 import { fonts, images } from '../../assets';
 import { convert, normalize } from '../../helpers/pixelSizeHelper';
-import { Label, Input, Button } from '../../components';
+import { Label, Input, Button, ImageModal, Touchable } from '../../components';
 import { ENTITY } from '../../config/api';
 import { useAuthentication } from '../../providers/AuthenticationProvider';
 
@@ -21,9 +21,18 @@ const ProfileScreen = (props) => {
   const userRoleText =
     userInfo.role === ENTITY.USER.STUDENT ? 'Student' : 'Instructor';
 
+  // Refs
+  const imageModalRef = useRef(null);
+
   // Functions
   const onLogoutPress = () => {
     logout();
+  };
+
+  onProfilePicturePress = () => {
+    imageModalRef.current.show({
+      uri: userInfo.image_url,
+    });
   };
 
   // Conditional Style
@@ -45,17 +54,21 @@ const ProfileScreen = (props) => {
 
   return (
     <KeyboardAwareScrollView style={[styles.container, _styles.container]}>
+      <ImageModal ref={imageModalRef} />
+
       <View style={[styles.cameraContainer, _styles.cameraContainer]}>
         <View style={styles.pictureIndicatorContainer}>
           <ActivityIndicator size="large" color={theme.secondaryDarkColor} />
         </View>
-        <Image
-          resizeMethod="scale"
-          width={convert(110)}
-          height={convert(110)}
-          style={styles.profilePicture}
-          source={{ uri: userInfo.image_url }}
-        />
+        <Touchable onPress={onProfilePicturePress}>
+          <Image
+            resizeMethod="scale"
+            width={convert(110)}
+            height={convert(110)}
+            style={styles.profilePicture}
+            source={{ uri: userInfo.image_url }}
+          />
+        </Touchable>
       </View>
       <Label style={[styles.userRoleText, _styles.userRoleText]}>
         {userRoleText}

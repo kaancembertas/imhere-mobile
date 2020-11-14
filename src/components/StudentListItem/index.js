@@ -9,7 +9,17 @@ import Label from '../Label';
 
 const StudentListItem = (props) => {
   const { theme } = useTheme();
-  const { style, onPress, id, name, surname, no, image_url, email } = props;
+  const {
+    style,
+    onPress,
+    onImagePress,
+    id,
+    name,
+    surname,
+    no,
+    image_url,
+    email,
+  } = props;
 
   const _onPress = () => {
     if (onPress) {
@@ -18,12 +28,18 @@ const StudentListItem = (props) => {
     }
   };
 
+  const _onImagePress = () => {
+    if (onImagePress) {
+      onImagePress(image_url);
+    }
+  };
+
   const _styles = {};
 
   return (
     <Touchable onPress={_onPress} style={[styles.container, style]}>
       <View style={styles.leftContainer}>
-        <View style={styles.studentImageContainer}>
+        <Touchable onPress={_onImagePress} style={styles.studentImageContainer}>
           <View style={styles.pictureIndicatorContainer}>
             <ActivityIndicator color={theme.primaryTextColor} />
           </View>
@@ -32,7 +48,7 @@ const StudentListItem = (props) => {
             source={{ uri: image_url }}
             style={styles.profilePicture}
           />
-        </View>
+        </Touchable>
         <View style={styles.studentInfoContainer}>
           <Label>{name + ' ' + surname}</Label>
           <Label style={styles.noLabel}>{no}</Label>
@@ -93,6 +109,7 @@ const styles = StyleSheet.create({
 StudentListItem.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onPress: PropTypes.func,
+  onImagePress: PropTypes.func,
   id: PropTypes.number,
   name: PropTypes.string,
   surname: PropTypes.string,

@@ -11,6 +11,7 @@ const icons = {
   camera: require('./icCamera.png'),
   people: require('./icPeople.png'),
   checkWhite: require('./icCheckWhite.png'),
+  close: require('./icClose.png'),
 };
 
 export default icons;
