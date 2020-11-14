@@ -11,58 +11,56 @@ import {
   RESET_USER_ATTENDENCE,
 } from '../actionTypes';
 
-export const getAttendence = (lectureCode) => {
-  return async (dispatch) => {
-    try {
-      dispatch({
-        type: ATTENDENCE_PROGRESS,
-      });
-      const response = await ImHereApi.getAttendence(lectureCode);
-      if (!response.success) {
-        Alert.alert('', response.errorMessage);
-        dispatch({
-          type: ATTENDENCE_FAIL,
-        });
-        return;
-      }
-
-      dispatch({
-        type: ATTENDENCE_SUCCESS,
-        payload: response.data,
-      });
-    } catch (err) {
+export const getAttendence = (lectureCode) => async (dispatch) => {
+  try {
+    dispatch({
+      type: ATTENDENCE_PROGRESS,
+    });
+    const response = await ImHereApi.getAttendence(lectureCode);
+    if (!response.success) {
+      Alert.alert('', response.errorMessage);
       dispatch({
         type: ATTENDENCE_FAIL,
       });
+      return;
     }
-  };
+
+    dispatch({
+      type: ATTENDENCE_SUCCESS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: ATTENDENCE_FAIL,
+    });
+  }
 };
 
-export const getAttendenceByUser = (lectureCode, userId) => {
-  return async (dispatch) => {
-    try {
-      dispatch({
-        type: USER_ATTENDENCE_PROGRESS,
-      });
-      const response = await ImHereApi.getAttendenceByUser(lectureCode, userId);
-      if (!response.success) {
-        Alert.alert('', response.errorMessage);
-        dispatch({
-          type: USER_ATTENDENCE_FAIL,
-        });
-        return;
-      }
-
-      dispatch({
-        type: USER_ATTENDENCE_SUCCESS,
-        payload: response.data,
-      });
-    } catch (err) {
+export const getAttendenceByUser = (lectureCode, userId) => async (
+  dispatch,
+) => {
+  try {
+    dispatch({
+      type: USER_ATTENDENCE_PROGRESS,
+    });
+    const response = await ImHereApi.getAttendenceByUser(lectureCode, userId);
+    if (!response.success) {
+      Alert.alert('', response.errorMessage);
       dispatch({
         type: USER_ATTENDENCE_FAIL,
       });
+      return;
     }
-  };
+
+    dispatch({
+      type: USER_ATTENDENCE_SUCCESS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: USER_ATTENDENCE_FAIL,
+    });
+  }
 };
 
 export const resetAttendence = () => ({

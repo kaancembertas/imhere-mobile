@@ -9,53 +9,49 @@ import {
   USER_INFO_PROGRESS,
 } from '../actionTypes';
 
-export const register = (registerBody, onSuccess) => {
-  return async (dispatch) => {
-    try {
-      dispatch({
-        type: USER_REGISTER_PROGRESS,
-      });
+export const register = (registerBody, onSuccess) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_REGISTER_PROGRESS,
+    });
 
-      const response = await ImHereApi.register(registerBody);
-      if (!response.success) {
-        Alert.alert('', response.errorMessage);
-      } else {
-        Alert.alert('', 'Successfully registered!');
-        if (onSuccess) onSuccess();
-      }
-    } finally {
-      dispatch({
-        type: USER_REGISTER_COMPLETE,
-      });
+    const response = await ImHereApi.register(registerBody);
+    if (!response.success) {
+      Alert.alert('', response.errorMessage);
+    } else {
+      Alert.alert('', 'Successfully registered!');
+      if (onSuccess) onSuccess();
     }
-  };
+  } finally {
+    dispatch({
+      type: USER_REGISTER_COMPLETE,
+    });
+  }
 };
 
-export const getUserInfo = () => {
-  return async (dispatch) => {
-    try {
-      dispatch({
-        type: USER_INFO_PROGRESS,
-      });
-      const response = await ImHereApi.getUserInfo();
-      if (!response.success) {
-        Alert.alert('', response.errorMessage);
-        dispatch({
-          type: USER_INFO_FAIL,
-        });
-        return;
-      }
-
-      dispatch({
-        type: USER_INFO_SUCCESS,
-        payload: response.data,
-      });
-    } catch (err) {
+export const getUserInfo = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_INFO_PROGRESS,
+    });
+    const response = await ImHereApi.getUserInfo();
+    if (!response.success) {
+      Alert.alert('', response.errorMessage);
       dispatch({
         type: USER_INFO_FAIL,
       });
+      return;
     }
-  };
+
+    dispatch({
+      type: USER_INFO_SUCCESS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: USER_INFO_FAIL,
+    });
+  }
 };
 
 export const resetUserInfo = {

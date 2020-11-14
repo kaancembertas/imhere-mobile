@@ -9,42 +9,38 @@ import {
   RESET_LECTURES,
 } from '../actionTypes';
 
-export const authenticate = (email, password) => {
-  return async (dispatch) => {
-    try {
-      dispatch({
-        type: AUTH_PROGRESS,
-      });
+export const authenticate = (email, password) => async (dispatch) => {
+  try {
+    dispatch({
+      type: AUTH_PROGRESS,
+    });
 
-      const response = await ImHereApi.authenticate({
-        email,
-        password,
-      });
+    const response = await ImHereApi.authenticate({
+      email,
+      password,
+    });
 
-      if (!response.success) {
-        Alert.alert('', response.errorMessage);
-        dispatch({
-          type: AUTH_FAIL,
-        });
-        return;
-      }
-
-      dispatch({
-        type: AUTH_SUCCESS,
-        payload: response.data,
-      });
-    } catch (err) {
+    if (!response.success) {
+      Alert.alert('', response.errorMessage);
       dispatch({
         type: AUTH_FAIL,
       });
+      return;
     }
-  };
+
+    dispatch({
+      type: AUTH_SUCCESS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_FAIL,
+    });
+  }
 };
 
-export const logout = () => {
-  return async (dispatch) => {
-    dispatch({ type: RESET_USER_INFO });
-    dispatch({ type: RESET_LECTURES });
-    dispatch({ type: LOGOUT });
-  };
+export const logout = () => async (dispatch) => {
+  dispatch({ type: RESET_USER_INFO });
+  dispatch({ type: RESET_LECTURES });
+  dispatch({ type: LOGOUT });
 };

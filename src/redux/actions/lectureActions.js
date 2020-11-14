@@ -18,96 +18,88 @@ import {
   SET_IS_SELECTED_LECTURES,
 } from '../actionTypes';
 
-export const getLectures = () => {
-  return async (dispatch) => {
-    try {
-      dispatch({ type: LECTURES_PROGRESS });
-      const response = await ImHereApi.getLectures();
+export const getLectures = () => async (dispatch) => {
+  try {
+    dispatch({ type: LECTURES_PROGRESS });
+    const response = await ImHereApi.getLectures();
 
-      if (!response.success) {
-        Alert.alert('', response.errorMessage);
-        dispatch({ type: LECTURES_FAIL });
-        return;
-      }
-
-      dispatch({
-        type: LECTURES_SUCCESS,
-        payload: response.data,
-      });
-    } catch (err) {
+    if (!response.success) {
+      Alert.alert('', response.errorMessage);
       dispatch({ type: LECTURES_FAIL });
+      return;
     }
-  };
+
+    dispatch({
+      type: LECTURES_SUCCESS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({ type: LECTURES_FAIL });
+  }
 };
 
 export const resetLectures = () => ({
   type: RESET_LECTURES,
 });
 
-export const getLectureStudents = (lectureCode) => {
-  return async (dispatch) => {
-    try {
-      dispatch({ type: LECTURE_STUDENTS_PROGRESS });
+export const getLectureStudents = (lectureCode) => async (dispatch) => {
+  try {
+    dispatch({ type: LECTURE_STUDENTS_PROGRESS });
 
-      const response = await ImHereApi.getLectureStudents(lectureCode);
+    const response = await ImHereApi.getLectureStudents(lectureCode);
 
-      if (!response.success) {
-        Alert.alert('', response.errorMessage);
-        dispatch({ type: LECTURE_STUDENTS_FAIL });
-        return;
-      }
-
-      dispatch({
-        type: LECTURE_STUDENTS_SUCCESS,
-        payload: response.data,
-      });
-    } catch (err) {
+    if (!response.success) {
+      Alert.alert('', response.errorMessage);
       dispatch({ type: LECTURE_STUDENTS_FAIL });
+      return;
     }
-  };
+
+    dispatch({
+      type: LECTURE_STUDENTS_SUCCESS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({ type: LECTURE_STUDENTS_FAIL });
+  }
 };
 
 export const resetLectureStudents = () => ({
   type: RESET_LECTURE_STUDENTS,
 });
 
-export const getAllLectures = () => {
-  return async (dispatch) => {
-    dispatch({ type: ALL_LECTURES_PROGRESS });
-    try {
-      const response = await ImHereApi.getAllLectures();
-      if (!response.success) {
-        Alert.alert('', response.errorMessage);
-        dispatch({ type: ALL_LECTURES_FAIL });
-        return;
-      }
-
-      dispatch({
-        type: ALL_LECTURES_SUCCESS,
-        payload: response.data,
-      });
-    } catch (err) {
+export const getAllLectures = () => async (dispatch) => {
+  dispatch({ type: ALL_LECTURES_PROGRESS });
+  try {
+    const response = await ImHereApi.getAllLectures();
+    if (!response.success) {
+      Alert.alert('', response.errorMessage);
       dispatch({ type: ALL_LECTURES_FAIL });
+      return;
     }
-  };
+
+    dispatch({
+      type: ALL_LECTURES_SUCCESS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({ type: ALL_LECTURES_FAIL });
+  }
 };
 
-export const selectLectures = (lectureCodes) => {
-  return async (dispatch) => {
-    dispatch({ type: SELECT_LECTURES_PROGRESS });
-    try {
-      const response = await ImHereApi.selectLectures(lectureCodes);
-      if (!response.success) {
-        Alert.alert('', response.errorMessage);
-        dispatch({ type: SELECT_LECTURES_FAIL });
-        return;
-      }
-
-      Alert.alert('', 'Successfully registered to lectures!');
-      dispatch({ type: SELECT_LECTURES_SUCCESS });
-      dispatch({ type: SET_IS_SELECTED_LECTURES });
-    } catch {
+export const selectLectures = (lectureCodes) => async (dispatch) => {
+  dispatch({ type: SELECT_LECTURES_PROGRESS });
+  try {
+    const response = await ImHereApi.selectLectures(lectureCodes);
+    if (!response.success) {
+      Alert.alert('', response.errorMessage);
       dispatch({ type: SELECT_LECTURES_FAIL });
+      return;
     }
-  };
+
+    Alert.alert('', 'Successfully registered to lectures!');
+    dispatch({ type: SELECT_LECTURES_SUCCESS });
+    dispatch({ type: SET_IS_SELECTED_LECTURES });
+  } catch {
+    dispatch({ type: SELECT_LECTURES_FAIL });
+  }
 };
