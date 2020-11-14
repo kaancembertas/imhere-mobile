@@ -43,7 +43,30 @@ const SignUpScreen = (props) => {
     navigation.goBack();
   };
 
-  const onSubmitPress = async () => {
+  const executeSignupFlow = async (registerBody, image) => {
+    try {
+      setImageUploading(true);
+      const apiResponse = await FaceRecognitionApi.checkFace(image.data);
+      if (!apiResponse.success) {
+        Alert.alert('', apiResponse.errorMessage);
+        setImageUploading(false);
+        return;
+      }
+      const image_url = apiResponse.data.image_url;
+      const face_encoding = apiResponse.data.face_encoding;
+
+      registerBody['image_url'] = image_url;
+      registerBody['face_encoding'] = face_encoding;
+
+      dispatch(register(registerBody, onRegisterSuccess));
+      setImageUploading(false);
+    } catch (err) {
+      console.log('[SignUpScreen - onSubmitPress]', err);
+      setImageUploading(false);
+    }
+  };
+
+  const onSubmitPress = () => {
     const image = imageRef.current.getImage();
 
     const registerBody = {
@@ -75,26 +98,8 @@ const SignUpScreen = (props) => {
       return;
     }
 
-    try {
-      setImageUploading(true);
-      const apiResponse = await FaceRecognitionApi.checkFace(image.data);
-      if (!apiResponse.success) {
-        Alert.alert('', apiResponse.errorMessage);
-        setImageUploading(false);
-        return;
-      }
-      const image_url = apiResponse.data.image_url;
-      const face_encoding = apiResponse.data.face_encoding;
-
-      registerBody['image_url'] = image_url;
-      registerBody['face_encoding'] = face_encoding;
-
-      dispatch(register(registerBody, onRegisterSuccess));
-      setImageUploading(false);
-    } catch (err) {
-      console.log('[SignUpScreen - onSubmitPress]', err);
-      setImageUploading(false);
-    }
+    // Validations complete, call the APIs
+    executeSignupFlow(registerBody, image);
   };
 
   const getTextInputRefs = () => {
