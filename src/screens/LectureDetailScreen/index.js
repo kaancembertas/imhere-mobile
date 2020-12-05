@@ -95,6 +95,7 @@ const LectureDetailScreen = (props) => {
 
     try {
       const image = await showImagePicker(500);
+      console.log(image);
       dispatch(addAttendence(image.data, lectureCode, week));
     } catch (error) {
       console.log('[LectureDetailScreen]', error);

@@ -24,11 +24,11 @@ class FaceRecognitionApi extends BaseApi {
       },
       {
         name: 'lectureCode',
-        data: lectureCode,
+        data: lectureCode.toString(),
       },
       {
         name: 'week',
-        data: week,
+        data: week.toString(),
       },
     ];
     return this._doFetchBlob('/api/addAttendence', body);
