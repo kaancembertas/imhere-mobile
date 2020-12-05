@@ -94,7 +94,7 @@ const LectureDetailScreen = (props) => {
     if (status !== ENTITY.ATTENDENCE.NOT_PROCESSED) return;
 
     try {
-      const image = await showImagePicker(500);
+      const image = await showImagePicker(1000);
       console.log(image);
       dispatch(addAttendence(image.data, lectureCode, week));
     } catch (error) {
