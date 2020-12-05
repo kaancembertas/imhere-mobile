@@ -20,6 +20,11 @@ const LectureDetailListItem = (props) => {
   const { style, status, week, date, onPress, disableCameraIcon } = props;
   const userRole = useSelector(({ user }) => user.info.role);
 
+  const isClickable =
+    userRole === ENTITY.USER.INSTRUCTOR &&
+    !disableCameraIcon &&
+    status === ENTITY.ATTENDENCE.NOT_PROCESSED;
+
   const _onPress = () => {
     if (userRole === ENTITY.USER.INSTRUCTOR && onPress) {
       onPress(week);
@@ -46,12 +51,11 @@ const LectureDetailListItem = (props) => {
       />
     );
   };
+
   return (
     <Touchable
       onPress={_onPress}
-      opacity={
-        userRole === ENTITY.USER.INSTRUCTOR && !disableCameraIcon ? 0.8 : 1
-      }
+      opacity={isClickable ? 0.8 : 1}
       style={[styles.container, style]}>
       <View style={styles.leftContainer}>
         <Label>Week {week}</Label>
