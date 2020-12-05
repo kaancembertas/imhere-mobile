@@ -7,6 +7,7 @@ import { icons, fonts } from '../../assets';
 import { convert } from '../../helpers/pixelSizeHelper';
 import { showImagePicker } from '../../helpers/imageHelper';
 import {
+  ImageModal,
   Label,
   LectureDetailListItem,
   Loading,
@@ -32,6 +33,7 @@ const LectureDetailScreen = (props) => {
 
   //Refs
   const loadingModalRef = useRef(null);
+  const imageModalRef = useRef(null);
 
   //Redux
   const dispatch = useDispatch();
@@ -54,6 +56,7 @@ const LectureDetailScreen = (props) => {
         date: formatDate(lectureDate),
         week: a.week,
         status: a.status,
+        image_url: a.image_url,
       };
     });
   }, [attendenceProgress, attendence]);
@@ -89,17 +92,28 @@ const LectureDetailScreen = (props) => {
     });
   };
 
-  const onLecturePress = async (week, status) => {
-    if (userRole !== ENTITY.USER.INSTRUCTOR) return;
-    if (status !== ENTITY.ATTENDENCE.NOT_PROCESSED) return;
-
-    try {
-      const image = await showImagePicker(1000);
-      console.log(image);
-      dispatch(addAttendence(image.data, lectureCode, week));
-    } catch (error) {
-      console.log('[LectureDetailScreen]', error);
+  const onAttendencePress = async (week, status, imageUrl) => {
+    if (
+      userRole === ENTITY.USER.INSTRUCTOR &&
+      status === ENTITY.ATTENDENCE.NOT_PROCESSED
+    ) {
+      try {
+        const image = await showImagePicker(1000);
+        dispatch(addAttendence(image.data, lectureCode, week));
+      } catch (error) {
+        console.log('[LectureDetailScreen]', error);
+      }
+      return;
     }
+
+    if (
+      userRole === ENTITY.USER.STUDENT &&
+      status === ENTITY.ATTENDENCE.NOT_PROCESSED
+    ) {
+      return;
+    }
+
+    imageModalRef.current.show({ uri: imageUrl });
   };
 
   // Design Renders
@@ -145,7 +159,8 @@ const LectureDetailScreen = (props) => {
         status={item.status}
         date={item.date}
         week={item.week}
-        onPress={onLecturePress}
+        imageUrl={item.image_url}
+        onPress={onAttendencePress}
       />
     ),
     [attendenceList],
@@ -199,6 +214,7 @@ const LectureDetailScreen = (props) => {
   return (
     <View style={[styles.container, _styles.container]}>
       <LoadingModal ref={loadingModalRef} />
+      <ImageModal style={styles.imageModal} ref={imageModalRef} />
       <Attendence />
     </View>
   );
@@ -239,5 +255,9 @@ const styles = StyleSheet.create({
   peopleIcon: {
     width: convert(30),
     height: convert(30),
+  },
+  imageModal: {
+    width: convert(360),
+    height: convert(500),
   },
 });

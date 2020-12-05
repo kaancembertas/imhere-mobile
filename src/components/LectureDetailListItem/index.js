@@ -17,17 +17,28 @@ const LectureDetailListItem = (props) => {
   1 - Joined
   2 - Not Joined
   */
-  const { style, status, week, date, onPress, disableCameraIcon } = props;
+  const {
+    style,
+    status,
+    week,
+    date,
+    onPress,
+    disableCameraIcon,
+    imageUrl,
+  } = props;
   const userRole = useSelector(({ user }) => user.info.role);
 
-  const isClickable =
-    userRole === ENTITY.USER.INSTRUCTOR &&
-    !disableCameraIcon &&
-    status === ENTITY.ATTENDENCE.NOT_PROCESSED;
+  let isClickable;
+  if (userRole === ENTITY.USER.INSTRUCTOR) {
+    isClickable = !disableCameraIcon ? true : false;
+  } else if (userRole === ENTITY.USER.STUDENT) {
+    isClickable = status !== ENTITY.ATTENDENCE.NOT_PROCESSED;
+  }
 
   const _onPress = () => {
-    if (userRole === ENTITY.USER.INSTRUCTOR && onPress) {
-      onPress(week, status);
+    if (onPress) {
+      console.log(imageUrl);
+      onPress(week, status, imageUrl);
     }
   };
 
@@ -107,4 +118,5 @@ LectureDetailListItem.propTypes = {
   date: PropTypes.string,
   onPress: PropTypes.func,
   disableCameraIcon: PropTypes.bool,
+  imageUrl: PropTypes.string,
 };

@@ -65,8 +65,12 @@ export const addAttendence = (image, lectureCode, week) => async (dispatch) => {
     );
 
     if (!response.success) {
-      dispatch({ type: ADD_ATTENDENCE_FAIL });
-      Alert.alert('', response.errorMessage);
+      Alert.alert('', response.errorMessage, [
+        {
+          text: 'Ok',
+          onPress: () => dispatch({ type: ADD_ATTENDENCE_FAIL }),
+        },
+      ]);
       return;
     }
 
