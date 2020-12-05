@@ -1,19 +1,22 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { View, StyleSheet, Image, FlatList } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../providers/ThemeProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { icons, fonts } from '../../assets';
 import { convert } from '../../helpers/pixelSizeHelper';
+import { showImagePicker } from '../../helpers/imageHelper';
 import {
   Label,
   LectureDetailListItem,
   Loading,
+  LoadingModal,
   Seperator,
   Touchable,
 } from '../../components';
 import { ENTITY } from '../../config/api';
 import {
+  addAttendence,
   getAttendence,
   resetAttendence,
 } from '../../redux/actions/attendenceActions';
@@ -27,6 +30,9 @@ const LectureDetailScreen = (props) => {
   const lecture = route.params.lecture;
   const { lectureCode, lectureName, lectureStartDate } = lecture;
 
+  //Refs
+  const loadingModalRef = useRef(null);
+
   //Redux
   const dispatch = useDispatch();
   const userRole = useSelector(({ user }) => user.info.role);
@@ -34,6 +40,10 @@ const LectureDetailScreen = (props) => {
     ({ attendence }) => attendence.attendenceProgress,
   );
   const attendence = useSelector(({ attendence }) => attendence.attendence);
+  const addAttendenceProgress = useSelector(
+    ({ attendence }) => attendence.addAttendenceProgress,
+  );
+
   const attendenceList = useMemo(() => {
     if (attendenceProgress) return [];
 
@@ -63,27 +73,48 @@ const LectureDetailScreen = (props) => {
 
   useEffect(() => {
     dispatch(getAttendence(lectureCode));
-
     return () => dispatch(resetAttendence());
   }, []);
 
+  useEffect(() => {
+    if (addAttendenceProgress) loadingModalRef.current.show();
+    else loadingModalRef.current.hide();
+  }, [addAttendenceProgress]);
+
   // Functions
   const onStudentsPress = () => {
+    dispatch(getAttendence(lectureCode));
+    return;
     navigation.navigate('StudentListScreen', {
       lectureCode,
       lectureStartDate,
     });
   };
 
+  const onLecturePress = async (week, status) => {
+    if (userRole !== ENTITY.USER.INSTRUCTOR) return;
+    if (status !== ENTITY.ATTENDENCE.NOT_PROCESSED) return;
+
+    try {
+      const image = await showImagePicker(500);
+      dispatch(addAttendence(image.data, lectureCode, week));
+    } catch (error) {
+      console.log('[LectureDetailScreen]', error);
+    }
+  };
+
   // Design Renders
   const renderHeader = useCallback(() => {
     if (userRole === ENTITY.USER.INSTRUCTOR) return null;
+
     const joined = attendence.filter(
       (a) => a.status === ENTITY.ATTENDENCE.JOINED,
     ).length;
+
     const notJoined = attendence.filter(
       (a) => a.status === ENTITY.ATTENDENCE.NOT_JOINED,
     ).length;
+
     return (
       <>
         <View style={styles.header}>
@@ -115,6 +146,7 @@ const LectureDetailScreen = (props) => {
         status={item.status}
         date={item.date}
         week={item.week}
+        onPress={onLecturePress}
       />
     ),
     [],
@@ -167,6 +199,7 @@ const LectureDetailScreen = (props) => {
 
   return (
     <View style={[styles.container, _styles.container]}>
+      <LoadingModal ref={loadingModalRef} />
       <Attendence />
     </View>
   );

@@ -13,6 +13,26 @@ class FaceRecognitionApi extends BaseApi {
     ];
     return this._doFetchBlob('/api/checkFace', body);
   };
+
+  addAttendence = (image, lectureCode, week) => {
+    const body = [
+      {
+        name: 'image',
+        filename: 'image.png',
+        type: 'image/png',
+        data: image,
+      },
+      {
+        name: 'lectureCode',
+        data: lectureCode,
+      },
+      {
+        name: 'week',
+        data: week,
+      },
+    ];
+    return this._doFetchBlob('/api/addAttendence', body);
+  };
 }
 
 const faceRecognitionApi = new FaceRecognitionApi();

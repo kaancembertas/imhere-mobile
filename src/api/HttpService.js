@@ -93,6 +93,9 @@ export default class HttpService {
   };
 
   fetchBlob = async (options) => {
+    const authData = await getData(storageKeys.AUTH_DATA, storageTypes.JSON);
+    const accessToken = authData.token;
+
     const endpoint = options.endpoint;
     const REQUEST_URL = this.apiHost + endpoint;
 
@@ -101,6 +104,7 @@ export default class HttpService {
     const _headers = options.headers || {};
 
     const headers = {
+      Authorization: 'Bearer ' + accessToken,
       'Content-Type': 'multipart/form-data',
       Accept: 'application/json',
       ..._headers,

@@ -6,6 +6,9 @@ import {
   USER_ATTENDENCE_PROGRESS,
   USER_ATTENDENCE_SUCCESS,
   USER_ATTENDENCE_FAIL,
+  ADD_ATTENDENCE_PROGRESS,
+  ADD_ATTENDENCE_SUCCESS,
+  ADD_ATTENDENCE_FAIL,
 } from '../actionTypes';
 
 const INITIAL_STATE = {
@@ -13,6 +16,7 @@ const INITIAL_STATE = {
   attendence: [],
   userAttendenceProgress: true,
   userAttendence: [],
+  addAttendenceProgress: false,
 };
 
 export default (state = INITIAL_STATE, action = {}) => {
@@ -53,6 +57,7 @@ export default (state = INITIAL_STATE, action = {}) => {
     return {
       ...state,
       userAttendenceProgress: true,
+      userAttendence: [],
     };
   }
 
@@ -69,6 +74,27 @@ export default (state = INITIAL_STATE, action = {}) => {
       ...state,
       userAttendenceProgress: false,
       userAttendence: [],
+    };
+  }
+
+  if (type === ADD_ATTENDENCE_PROGRESS) {
+    return {
+      ...state,
+      addAttendenceProgress: true,
+    };
+  }
+
+  if (type === ADD_ATTENDENCE_SUCCESS) {
+    return {
+      ...state,
+      addAttendenceProgress: false,
+    };
+  }
+
+  if (type === ADD_ATTENDENCE_FAIL) {
+    return {
+      ...state,
+      addAttendenceProgress: false,
     };
   }
   return state;
