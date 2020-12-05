@@ -27,7 +27,7 @@ const LectureDetailListItem = (props) => {
 
   const _onPress = () => {
     if (userRole === ENTITY.USER.INSTRUCTOR && onPress) {
-      onPress(week);
+      onPress(week, status);
     }
   };
 

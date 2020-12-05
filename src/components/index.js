@@ -10,6 +10,7 @@ import Loading from './Loading';
 import StudentListItem from './StudentListItem';
 import SelectLectureItem from './SelectLectureItem';
 import ImageModal from './ImageModal';
+import LoadingModal from './LoadingModal';
 
 export {
   Label,
@@ -24,4 +25,5 @@ export {
   StudentListItem,
   SelectLectureItem,
   ImageModal,
+  LoadingModal,
 };

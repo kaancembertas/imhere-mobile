@@ -5,7 +5,7 @@ import { useTheme } from '../../providers/ThemeProvider';
 import { images } from '../../assets';
 import { convert } from '../../helpers/pixelSizeHelper';
 import Touchable from '../Touchable';
-import ImagePicker from 'react-native-image-picker';
+import { showImagePicker } from '../../helpers/imageHelper';
 
 const ProfilePictureTouchable = (props, ref) => {
   const { theme } = useTheme();
@@ -16,43 +16,11 @@ const ProfilePictureTouchable = (props, ref) => {
   const [loading, setLoading] = useState(false);
 
   // Functions
-  const showImagePicker = async () => {
-    const options = {
-      title: 'Select Photo',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-      maxWidth: 400,
-      maxHeight: 400,
-    };
-
-    return new Promise((resolve, reject) => {
-      ImagePicker.showImagePicker(options, (response) => {
-        if (response.didCancel) {
-          reject('User cancelled image picker');
-        } else if (response.error) {
-          reject('ImagePicker Error: ' + response.error);
-        } else if (response.customButton) {
-          reject('User tapped custom button: ' + response.customButton);
-        } else {
-          resolve({
-            ...response,
-            uri:
-              Platform.OS === 'android'
-                ? 'file:///' + response.path
-                : response.uri,
-          });
-        }
-      });
-    });
-  };
-
   const onCameraPress = async () => {
     try {
       setLoading(true);
-      const response = await showImagePicker();
-      setImage(response);
+      const image = await showImagePicker(400);
+      setImage(image);
       setLoading(false);
     } catch (err) {
       console.log('[ProfilePictureTouchable]', err);
