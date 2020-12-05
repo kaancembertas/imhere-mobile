@@ -56,7 +56,7 @@ const LectureDetailScreen = (props) => {
         status: a.status,
       };
     });
-  }, [attendenceProgress]);
+  }, [attendenceProgress, attendence]);
 
   //Effects
   useEffect(() => {
@@ -83,8 +83,6 @@ const LectureDetailScreen = (props) => {
 
   // Functions
   const onStudentsPress = () => {
-    dispatch(getAttendence(lectureCode));
-    return;
     navigation.navigate('StudentListScreen', {
       lectureCode,
       lectureStartDate,
@@ -149,7 +147,7 @@ const LectureDetailScreen = (props) => {
         onPress={onLecturePress}
       />
     ),
-    [],
+    [attendenceList],
   );
 
   const headerRight = useMemo(
@@ -185,7 +183,7 @@ const LectureDetailScreen = (props) => {
         ListFooterComponent={renderFooter}
       />
     );
-  }, [attendenceProgress]);
+  }, [attendenceProgress, attendenceList]);
 
   //Conditional Style
   const _styles = {

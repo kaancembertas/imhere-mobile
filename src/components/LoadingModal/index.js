@@ -15,6 +15,8 @@ const LoadingModal = (props, ref) => {
 
   return (
     <Modal
+      animationIn="fadeIn"
+      animationOut="fadeOut"
       isVisible={isVisible}
       coverScreen={true}
       style={styles.modalContainer}>

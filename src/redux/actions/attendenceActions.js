@@ -70,9 +70,15 @@ export const addAttendence = (image, lectureCode, week) => async (dispatch) => {
       return;
     }
 
-    dispatch({ type: ADD_ATTENDENCE_SUCCESS });
-    dispatch(getAttendence(lectureCode));
-    Alert.alert('The attendence successfully processed!');
+    Alert.alert('The attendence successfully processed!', '', [
+      {
+        text: 'Ok',
+        onPress: () => {
+          dispatch({ type: ADD_ATTENDENCE_SUCCESS });
+          dispatch(getAttendence(lectureCode));
+        },
+      },
+    ]);
   } catch (err) {
     dispatch({ type: ADD_ATTENDENCE_FAIL });
   }
