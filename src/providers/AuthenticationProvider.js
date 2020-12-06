@@ -7,7 +7,11 @@ import React, {
 } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import { useDispatch, useSelector } from 'react-redux';
-import { authenticate, logout } from '../redux/actions/authActions';
+import {
+  authenticate,
+  logout,
+  setIsAuthenticated,
+} from '../redux/actions/authActions';
 import { getUserInfo } from '../redux/actions/userActions';
 import auth from '@react-native-firebase/auth';
 import {
@@ -72,6 +76,7 @@ const AuthenticationProvider = ({ children }) => {
 
     // We have valid token, get userInfo
     console.log('[AutenticationProvider] We have valid token');
+    dispatch(setIsAuthenticated(true));
     dispatch(getUserInfo());
   };
 

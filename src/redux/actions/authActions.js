@@ -7,13 +7,12 @@ import {
   RESET_USER_INFO,
   LOGOUT,
   RESET_LECTURES,
+  SET_IS_AUTHENTICATED,
 } from '../actionTypes';
 
 export const authenticate = (email, password) => async (dispatch) => {
   try {
-    dispatch({
-      type: AUTH_PROGRESS,
-    });
+    dispatch({ type: AUTH_PROGRESS });
 
     const response = await ImHereApi.authenticate({
       email,
@@ -22,9 +21,7 @@ export const authenticate = (email, password) => async (dispatch) => {
 
     if (!response.success) {
       Alert.alert('', response.errorMessage);
-      dispatch({
-        type: AUTH_FAIL,
-      });
+      dispatch({ type: AUTH_FAIL });
       return;
     }
 
@@ -33,14 +30,13 @@ export const authenticate = (email, password) => async (dispatch) => {
       payload: response.data,
     });
   } catch (err) {
-    dispatch({
-      type: AUTH_FAIL,
-    });
+    dispatch({ type: AUTH_FAIL });
   }
 };
 
-export const logout = () => async (dispatch) => {
-  dispatch({ type: RESET_USER_INFO });
-  dispatch({ type: RESET_LECTURES });
-  dispatch({ type: LOGOUT });
-};
+export const setIsAuthenticated = (value) => ({
+  type: SET_IS_AUTHENTICATED,
+  payload: value,
+});
+
+export const logout = () => ({ type: LOGOUT });

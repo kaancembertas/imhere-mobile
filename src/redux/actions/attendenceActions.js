@@ -17,7 +17,6 @@ import {
 
 export const getAttendence = (lectureCode) => async (dispatch) => {
   try {
-    dispatch({ type: ATTENDENCE_PROGRESS });
     const response = await ImHereApi.getAttendence(lectureCode);
     if (!response.success) {
       Alert.alert('', response.errorMessage);
@@ -65,24 +64,13 @@ export const addAttendence = (image, lectureCode, week) => async (dispatch) => {
     );
 
     if (!response.success) {
-      Alert.alert('', response.errorMessage, [
-        {
-          text: 'Ok',
-          onPress: () => dispatch({ type: ADD_ATTENDENCE_FAIL }),
-        },
-      ]);
+      dispatch({ type: ADD_ATTENDENCE_FAIL });
+      Alert.alert('', response.errorMessage);
       return;
     }
-
-    Alert.alert('The attendence successfully processed!', '', [
-      {
-        text: 'Ok',
-        onPress: () => {
-          dispatch({ type: ADD_ATTENDENCE_SUCCESS });
-          dispatch(getAttendence(lectureCode));
-        },
-      },
-    ]);
+    dispatch({ type: ADD_ATTENDENCE_SUCCESS });
+    dispatch(getAttendence(lectureCode));
+    Alert.alert('The attendence successfully processed!');
   } catch (err) {
     dispatch({ type: ADD_ATTENDENCE_FAIL });
   }

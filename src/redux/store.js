@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import reduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { LOGOUT } from './actionTypes';
 
 //Middlewares
 import authMiddleware from './middlewares/authMiddleware';
@@ -20,6 +21,9 @@ const combinedReducers = combineReducers({
 });
 
 const rootReducer = (state, action) => {
+  if (action.type === LOGOUT) {
+    state = undefined;
+  }
   return combinedReducers(state, action);
 };
 

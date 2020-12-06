@@ -72,6 +72,7 @@ export default class HttpService {
       fetchOptions.body = JSON.stringify(body);
     }
 
+    console.log('HTTP Request:', REQUEST_URL);
     const response = await fetch(REQUEST_URL, fetchOptions);
     const apiResponse = await this.createApiResponse(response);
     return apiResponse;
@@ -110,6 +111,7 @@ export default class HttpService {
       ..._headers,
     };
 
+    console.log('HTTP Request:', REQUEST_URL);
     const response = await RNFetchBlob.fetch(
       method,
       REQUEST_URL,

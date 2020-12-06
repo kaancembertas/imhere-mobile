@@ -1,4 +1,9 @@
-import { AUTH_PROGRESS, AUTH_SUCCESS, AUTH_FAIL, LOGOUT } from '../actionTypes';
+import {
+  AUTH_PROGRESS,
+  AUTH_SUCCESS,
+  AUTH_FAIL,
+  SET_IS_AUTHENTICATED,
+} from '../actionTypes';
 
 const INITIAL_STATE = {
   authProgress: false,
@@ -30,8 +35,11 @@ export default (state = INITIAL_STATE, action = {}) => {
     };
   }
 
-  if (type === LOGOUT) {
-    return INITIAL_STATE;
+  if (type === SET_IS_AUTHENTICATED) {
+    return {
+      ...state,
+      isAuthenticated: payload,
+    };
   }
   return state;
 };
