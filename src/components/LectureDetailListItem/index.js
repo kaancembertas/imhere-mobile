@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import { useTheme } from '../../providers/ThemeProvider';
@@ -42,7 +42,7 @@ const LectureDetailListItem = (props) => {
     }
   };
 
-  const StatusBox = () => {
+  const StatusBox = useCallback(() => {
     if (status === 0) {
       if (!disableCameraIcon && userRole === ENTITY.USER.INSTRUCTOR)
         return (
@@ -61,7 +61,7 @@ const LectureDetailListItem = (props) => {
         source={status === 1 ? icons.tick : icons.cross}
       />
     );
-  };
+  }, []);
 
   return (
     <Touchable
