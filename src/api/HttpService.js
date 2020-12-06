@@ -85,6 +85,7 @@ export default class HttpService {
     const newOptions = {
       ...options,
       headers: {
+        ...options.headers,
         Authorization: 'Bearer ' + accessToken,
       },
     };
@@ -93,10 +94,7 @@ export default class HttpService {
     return response;
   };
 
-  fetchBlob = async (options) => {
-    const authData = await getData(storageKeys.AUTH_DATA, storageTypes.JSON);
-    const accessToken = authData.token;
-
+  anonymousfetchBlob = async (options) => {
     const endpoint = options.endpoint;
     const REQUEST_URL = this.apiHost + endpoint;
 
@@ -105,7 +103,6 @@ export default class HttpService {
     const _headers = options.headers || {};
 
     const headers = {
-      Authorization: 'Bearer ' + accessToken,
       'Content-Type': 'multipart/form-data',
       Accept: 'application/json',
       ..._headers,
@@ -121,5 +118,21 @@ export default class HttpService {
     response.status = response.info().status;
     const apiResponse = await this.createApiResponse(response);
     return apiResponse;
+  };
+
+  fetchBlob = async (options) => {
+    const authData = await getData(storageKeys.AUTH_DATA, storageTypes.JSON);
+    const accessToken = authData.token;
+
+    const newOptions = {
+      ...options,
+      headers: {
+        ...options.headers,
+        Authorization: 'Bearer ' + accessToken,
+      },
+    };
+
+    const response = await this.anonymousfetchBlob(newOptions);
+    return response;
   };
 }

@@ -42,4 +42,12 @@ export default class BaseApi extends HttpService {
       body,
       headers,
     });
+
+  _doAnonymousFetchBlob = (endpoint, body, headers = {}) =>
+    this.anonymousfetchBlob({
+      method: 'post',
+      endpoint,
+      body,
+      headers,
+    });
 }

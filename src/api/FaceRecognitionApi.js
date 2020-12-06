@@ -11,7 +11,7 @@ class FaceRecognitionApi extends BaseApi {
         data: image,
       },
     ];
-    return this._doFetchBlob('/api/checkFace', body);
+    return this._doAnonymousFetchBlob('/api/checkFace', body);
   };
 
   addAttendence = (image, lectureCode, week) => {
