@@ -37,7 +37,6 @@ const LectureDetailListItem = (props) => {
 
   const _onPress = () => {
     if (onPress) {
-      console.log(imageUrl);
       onPress(week, status, imageUrl);
     }
   };
