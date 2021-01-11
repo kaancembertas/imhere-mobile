@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import React from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';

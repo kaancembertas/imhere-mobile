@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import ApiResponseModel from './models/ApiResponseModel';
 import { getData, storageKeys, storageTypes } from '../utils/asyncStorage';
 import store from '../redux/store';

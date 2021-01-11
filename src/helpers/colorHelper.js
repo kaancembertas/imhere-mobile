@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 export const hexToRgba = (hex, opacity) => {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result

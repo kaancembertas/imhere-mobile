@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import AsyncStorage from '@react-native-community/async-storage';
 
 export const storageTypes = {

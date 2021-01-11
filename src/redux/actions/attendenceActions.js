@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import ImHereApi from '../../api/ImHereApi';
 import FaceRecognitionApi from '../../api/FaceRecognitionApi';
 import { Alert } from 'react-native';

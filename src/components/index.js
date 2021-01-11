@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import Label from './Label';
 import Input from './Input';
 import Button from './Button';

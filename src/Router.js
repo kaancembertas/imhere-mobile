@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {

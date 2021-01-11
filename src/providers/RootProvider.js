@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import React, { useEffect } from 'react';
 import store from '../redux/store';
 import { Provider } from 'react-redux';

@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import React, { useRef } from 'react';
 import { View, StyleSheet, Image, Alert } from 'react-native';
 import { useTheme } from '../../providers/ThemeProvider';

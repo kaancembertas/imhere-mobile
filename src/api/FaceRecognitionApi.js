@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import BaseApi from './BaseApi';
 import { FACE_RECOGNITION_API_HOST } from '../config/api';
 

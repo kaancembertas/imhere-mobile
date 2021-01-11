@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import HttpService from './HttpService';
 
 export default class BaseApi extends HttpService {

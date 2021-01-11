@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import React, { forwardRef, useState } from 'react';
 import { StyleSheet, Image, ActivityIndicator, Platform } from 'react-native';
 import PropTypes from 'prop-types';

@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import { Platform } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 

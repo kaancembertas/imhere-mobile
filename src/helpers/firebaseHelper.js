@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import storage from '@react-native-firebase/storage';
 
 export const uploadUserPicture = async (imagePath, email) => {

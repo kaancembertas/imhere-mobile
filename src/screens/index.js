@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import LoginScreen from './LoginScreen';
 import SignUpScreen from './SignUpScreen';
 import LecturesScreen from './LecturesScreen';

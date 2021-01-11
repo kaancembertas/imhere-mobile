@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 const icons = {
   backBlack: require('./icBackBlack.png'),
   backWhite: require('./icBackWhite.png'),

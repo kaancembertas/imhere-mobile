@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import {
   AUTH_PROGRESS,
   AUTH_SUCCESS,

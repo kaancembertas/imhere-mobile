@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 const IMHERE_API_HOST = 'http://192.168.0.12:5000';
 const FACE_RECOGNITION_API_HOST = 'http://192.168.0.12:5001';
 

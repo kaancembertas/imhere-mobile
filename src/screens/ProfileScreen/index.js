@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import React, { useRef } from 'react';
 import { View, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';

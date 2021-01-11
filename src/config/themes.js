@@ -1,4 +1,8 @@
 /*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
+/*
 #FCFDFD
 #DFDCEC
 #4A4849

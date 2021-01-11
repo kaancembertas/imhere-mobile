@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import {
   ALL_LECTURES_FAIL,
   ALL_LECTURES_PROGRESS,

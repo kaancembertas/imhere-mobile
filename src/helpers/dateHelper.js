@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 export const formatDate = (date) => {
   let day = date.getUTCDate();
   let month = date.getUTCMonth() + 1;

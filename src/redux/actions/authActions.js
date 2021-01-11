@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import { Alert } from 'react-native';
 import ImHereApi from '../../api/ImHereApi';
 import {

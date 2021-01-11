@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
 import themes from '../config/themes';

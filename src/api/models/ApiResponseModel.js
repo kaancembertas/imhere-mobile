@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 export default class ApiResponseModel {
   statusCode = null;
   success = null;

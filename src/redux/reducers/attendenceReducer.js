@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import {
   RESET_ATTENDENCE,
   ATTENDENCE_SUCCESS,

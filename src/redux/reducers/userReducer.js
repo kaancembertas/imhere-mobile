@@ -1,3 +1,7 @@
+/*
+ * Author: Kaan Çembertaş
+ * No: 200001684
+ */
 import {
   USER_REGISTER_PROGRESS,
   USER_REGISTER_COMPLETE,
